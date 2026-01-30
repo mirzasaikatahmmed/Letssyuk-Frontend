@@ -30,16 +30,14 @@ const FatigueRecovery = () => {
       fatigueLevel: "",
       hasSponsorship: "",
       openToSponsorship: "",
+      injuryHistory: "",
+      availabilityStatus: "",
     },
   });
 
-  const selectedFatigue = watch("fatigueLevel");
-  const hasSponsorship = watch("hasSponsorship");
-  const openToSponsorship = watch("openToSponsorship");
-
   const onSubmit = (values: FormValues) => {
     updateStep("fatigueRecovery", values);
-    // navigate("/next-step-url"); // Apnar next route ekhane hobe
+    // navigate("/next-step-url");
   };
 
   const onSaveLater = (values: FormValues) => {
@@ -68,7 +66,7 @@ const FatigueRecovery = () => {
           </p>
         </div>
 
-        {/* --- Dropdown Sections (Sleep, Match, Availability) --- */}
+        {/* --- Dropdown Sections --- */}
         <div className="grid grid-cols-1 gap-6">
           <div className="space-y-2">
             <label className="text-gray-300 text-sm font-medium">
@@ -79,10 +77,12 @@ const FatigueRecovery = () => {
               className={`w-full bg-[#111820] border ${errors.sleepDuration ? "border-red-500" : "border-slate-800"} rounded-xl px-4 py-3.5 outline-none appearance-none focus:border-cyan-500/50 transition-colors`}
             >
               <option value="">Select sleep duration</option>
-              <option value="Less than 6hrs">Less than 6 hrs</option>
-              <option value="6-7 hrs">6 - 7 hrs</option>
-              <option value="8-9 hrs">8 - 9 hrs</option>
-              <option value="10+ hrs">10+ hrs</option>
+              <option value="Less than 5hrs">Less than 5 hours</option>
+              <option value="5-6 hrs">5 - 6 hours</option>
+              <option value="6-7 hrs">6 - 7 hours</option>
+              <option value="7-8 hrs">7 - 8 hours</option>
+              <option value="8-9 hrs">8 - 9 hours</option>
+              <option value="9+ hrs">9+ hours</option>
             </select>
           </div>
 
@@ -103,7 +103,7 @@ const FatigueRecovery = () => {
           </div>
         </div>
 
-        {/* Fatigue Buttons */}
+        {/* Fatigue Buttons with fresh/fatigued labels */}
         <div className="space-y-4">
           <label className="text-gray-300 text-sm font-medium">
             Current self-reported fatigue level *
@@ -118,7 +118,7 @@ const FatigueRecovery = () => {
                   trigger("fatigueLevel");
                 }}
                 className={`flex-1 py-3 rounded-lg border transition-all font-bold ${
-                  selectedFatigue === level
+                  watch("fatigueLevel") === level
                     ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
                     : "bg-[#111820] border-slate-800 text-gray-500"
                 }`}
@@ -127,13 +127,48 @@ const FatigueRecovery = () => {
               </button>
             ))}
           </div>
+          <div className="flex justify-between text-[10px] text-gray-500 px-1 italic">
+            <span>Very fresh</span>
+            <span>Extremely fatigued</span>
+          </div>
           <input
             type="hidden"
             {...register("fatigueLevel", { required: "Required" })}
           />
         </div>
 
-        {/* --- Sponsorship Section (Screenshot 044109 Design) --- */}
+        {/* Injury History (Updated) */}
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm font-medium">
+            Injury history (last 12 months)
+          </label>
+          <textarea
+            {...register("injuryHistory")}
+            placeholder="e.g., Minor hamstring strain in August 2025 (2 weeks out)"
+            className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3 h-24 outline-none focus:border-cyan-500/50 transition-colors text-sm resize-none"
+          />
+          <p className="text-[10px] text-gray-500 italic">This helps us provide safer development recommendations</p>
+        </div>
+
+        {/* Availability Status (Updated) */}
+        <div className="space-y-2">
+          <label className="text-gray-300 text-sm font-medium">
+            Current availability status *
+          </label>
+          <select
+            {...register("availabilityStatus", { required: "Required" })}
+            className={`w-full bg-[#111820] border ${errors.availabilityStatus ? "border-red-500" : "border-slate-800"} rounded-xl px-4 py-3.5 outline-none appearance-none focus:border-cyan-500/50 transition-colors`}
+          >
+            <option value="">Select availability *</option>
+            <option value="Fully available">Fully available</option>
+            <option value="Available with minor restriction">Available with minor restriction</option>
+            <option value="Returning from injury">Returning from injury</option>
+            <option value="Currently injured">Currently injured</option>
+            <option value="Unavailable">Unavailable</option>
+          </select>
+        </div>
+
+        {/* --- Sponsorship Section --- */}
         <div className="bg-[#090f15]/50 border border-slate-800/60 rounded-2xl p-6 space-y-6">
           <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-lg items-center">
             <Trophy className="text-cyan-500 shrink-0" size={18} />
@@ -160,7 +195,7 @@ const FatigueRecovery = () => {
                   trigger("hasSponsorship");
                 }}
                 className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
-                  hasSponsorship === "yes"
+                  watch("hasSponsorship") === "yes"
                     ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
@@ -174,7 +209,7 @@ const FatigueRecovery = () => {
                   trigger("hasSponsorship");
                 }}
                 className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
-                  hasSponsorship === "no"
+                  watch("hasSponsorship") === "no"
                     ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
@@ -184,15 +219,8 @@ const FatigueRecovery = () => {
             </div>
             <input
               type="hidden"
-              {...register("hasSponsorship", {
-                required: "Selection required",
-              })}
+              {...register("hasSponsorship", { required: "Selection required" })}
             />
-            {errors.hasSponsorship && (
-              <p className="text-red-500 text-[10px]">
-                {errors.hasSponsorship.message}
-              </p>
-            )}
           </div>
 
           <div className="space-y-3">
@@ -207,7 +235,7 @@ const FatigueRecovery = () => {
                   trigger("openToSponsorship");
                 }}
                 className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
-                  openToSponsorship === "yes"
+                  watch("openToSponsorship") === "yes"
                     ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
@@ -221,7 +249,7 @@ const FatigueRecovery = () => {
                   trigger("openToSponsorship");
                 }}
                 className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
-                  openToSponsorship === "no"
+                  watch("openToSponsorship") === "no"
                     ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
@@ -231,25 +259,14 @@ const FatigueRecovery = () => {
             </div>
             <input
               type="hidden"
-              {...register("openToSponsorship", {
-                required: "Selection required",
-              })}
+              {...register("openToSponsorship", { required: "Selection required" })}
             />
-            {errors.openToSponsorship && (
-              <p className="text-red-500 text-[10px]">
-                {errors.openToSponsorship.message}
-              </p>
-            )}
           </div>
 
           <div className="bg-[#0d161d] border border-slate-800/40 p-4 rounded-xl">
             <p className="text-[10px] text-gray-500 leading-relaxed flex flex-col gap-2">
               <span className="text-gray-300 font-bold">Important:</span>{" "}
-              OnyxSport AI does not act as an agent or negotiate sponsorship
-              deals. We provide intelligence and may share opportunities, but all
-              agreements are between you and the sponsor. Always consult with
-              your agent, legal advisor, or guardian before signing any
-              contracts.
+              OnyxSport AI does not act as an agent or negotiate sponsorship deals. We provide intelligence and may share opportunities, but all agreements are between you and the sponsor. Always consult with your agent, legal advisor, or guardian before signing any contracts.
             </p>
           </div>
         </div>
