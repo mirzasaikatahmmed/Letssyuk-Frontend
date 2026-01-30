@@ -149,6 +149,40 @@ const TrainingRoutine = () => {
             </p>
           </div>
 
+          {/* Gym sessions per week */}
+          <div className="space-y-2">
+            <label className="text-gray-300 text-sm font-medium">
+              Gym sessions per week *
+            </label>
+            <div className="relative">
+              <select
+                {...register("gymSessions", {
+                  required: "Gym session frequency is required",
+                })}
+                className={`w-full bg-[#111820] border ${
+                  errors.gymSessions ? "border-red-500" : "border-slate-800"
+                } rounded-xl px-4 py-3.5 outline-none appearance-none focus:border-cyan-500/50 transition-colors`}
+              >
+                <option value="">Select gym frequency</option>
+                <option value="None">None</option>
+                <option value="1 Session">1 Session</option>
+                <option value="2 Session">2 Session</option>
+                <option value="3 Session">3 Session</option>
+                <option value="4 Session">4 Session</option>
+                <option value="5+ Session">5+ Session</option>
+              </select>
+              <ChevronRight
+                className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-gray-500 pointer-events-none"
+                size={18}
+              />
+            </div>
+            {errors.gymSessions && (
+              <p className="text-red-500 text-[11px] mt-1">
+                {errors.gymSessions.message}
+              </p>
+            )}
+          </div>
+
           {/* Recovery Days */}
           <div className="space-y-2">
             <label className="text-gray-300 text-sm font-medium">
