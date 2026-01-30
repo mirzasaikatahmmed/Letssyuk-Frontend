@@ -5,11 +5,11 @@ import logo from "@/assets/logo/logo.png";
 
 const AgentDSidebar = () => {
   const menuItems = [
-    { icon: Home, label: 'Home', path: '/player/dashboard/overview' },
-    { icon: Database, label: 'Data', path: '/player/dashboard/data' },
-    { icon: User, label: 'Profile', path: '/player/dashboard/profile' },
-    { icon: LifeBuoy, label: 'Help and Support', path: '/player/dashboard/support' },
-    { icon: Bell, label: 'Notifications', path: '/player/dashboard/notifications' },
+    { icon: Home, label: 'Home', path: '/agent/dashboard/overview' },
+    { icon: Database, label: 'Player Data', path: '/agent/dashboard/player-data' },
+    { icon: User, label: 'Profile', path: '/agent/dashboard/profile' },
+    { icon: LifeBuoy, label: 'Help and Support', path: '/agent/dashboard/support' },
+    { icon: Bell, label: 'Notifications', path: '/agent/dashboard/notifications' },
   ];
 
   return (

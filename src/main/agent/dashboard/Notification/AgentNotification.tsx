@@ -1,7 +1,7 @@
 import  { useState } from 'react';
 import { Check, Trash2, Info, CheckCircle2, AlertCircle, CheckSquare } from 'lucide-react';
 
-const ClubNotification = () => {
+const AgentNotification = () => {
   // Functional State for Notifications
   const [notifications, setNotifications] = useState([
     {
@@ -144,4 +144,4 @@ const ClubNotification = () => {
   );
 };
 
-export default ClubNotification;
+export default AgentNotification;
