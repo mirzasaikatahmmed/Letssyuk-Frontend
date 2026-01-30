@@ -34,13 +34,7 @@ const CareerHistory = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("careerHistory", values);
-
-    const finalPayload = {
-      ...data.personalDetails,
-      ...data.footballProfile,
-      ...values,
-    };
-    console.log(finalPayload);
+    navigate("/player/onboarding/physical-development");
   };
 
   const onSaveLater = (values: FormValues) => {
@@ -52,7 +46,6 @@ const CareerHistory = () => {
       <h2 className="text-xl font-bold mb-10">Career & Match History</h2>
 
       <form
-        id="career-history-form"
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-8 shadow-2xl"
       >
@@ -191,9 +184,7 @@ const CareerHistory = () => {
             )}
           </div>
         </div>
-      </form>
-
-      {/* Navigation Buttons */}
+            {/* Navigation Buttons */}
       <div className="flex justify-between items-center mt-10">
         <button
           onClick={() => navigate(-1)}
@@ -206,20 +197,22 @@ const CareerHistory = () => {
           <button
             type="button"
             onClick={handleSubmit(onSaveLater)}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium cursor-pointer"
           >
             Save & Continue Later <Save size={16} />
           </button>
 
           <button
             type="submit"
-            form="career-history-form"
-            className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg"
+            className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg cursor-pointer"
           >
             Continue <ChevronRight size={18} />
           </button>
         </div>
       </div>
+      </form>
+
+  
     </div>
   );
 };

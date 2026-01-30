@@ -23,6 +23,8 @@ import PlayerOnboardingLayout from "@/layout/PlayerOnboardingLayout";
 import PersonalDetails from "@/main/player/onboarding/PersonalDetails";
 import FootballProfile from "@/main/player/onboarding/FootballProfile";
 import CareerHistory from "@/main/player/onboarding/CareerHistory";
+import PhysicalDevelopment from "@/main/player/onboarding/PhysicalDevelopment";
+import TrainingRoutine from "@/main/player/onboarding/TrainingRoutine";
 // import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 
 export const Routes = createBrowserRouter([
@@ -122,6 +124,14 @@ export const Routes = createBrowserRouter([
           {
             path: "career-history",
             element: <CareerHistory />,
+          },
+          {
+            path: "physical-development",
+            element: <PhysicalDevelopment />,
+          },
+          {
+            path: "training-routine",
+            element: <TrainingRoutine />,
           },
         ],
       },

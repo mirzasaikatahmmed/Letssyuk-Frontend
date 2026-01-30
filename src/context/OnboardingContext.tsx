@@ -6,6 +6,8 @@ type OnboardingData = {
   personalDetails?: any;
   footballProfile?: any;
   careerHistory?: any;
+  physicalDevelopment?: any;
+  trainingRoutine?: any;
 };
 
 type ContextType = {

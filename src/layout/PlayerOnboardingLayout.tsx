@@ -6,6 +6,8 @@ const steps = [
   { path: "personal-details", label: "Personal Details" },
   { path: "football-profile", label: "Football Profile" },
   { path: "career-history", label: "Career & Match History" },
+  { path: "physical-development", label: "Physical Development" },
+  { path: "training-routine", label: "Training Routine" },
 ];
 
 const PlayerOnboardingLayout = () => {
@@ -15,7 +17,7 @@ const PlayerOnboardingLayout = () => {
     location.pathname.includes(step.path),
   );
 
-  // ❌ Invalid route protection
+  //  Invalid route protection
   if (currentIndex === -1) {
     return <Navigate to="personal-details" replace />;
   }
