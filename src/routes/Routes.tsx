@@ -17,6 +17,9 @@ import PlayerNotifications from "@/main/player/dashboard/notification/PlayerNoti
 import PlayerData from "@/main/player/dashboard/playerData/PlayerData";
 import PlayerProfile from "@/main/player/dashboard/profile/PlayerProfile";
 import { createBrowserRouter } from "react-router";
+import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
+import { AvailablePlayerDetails } from "@/main/club/_components/availablePlayers/_components/AvailablePlayerDetails";
+// import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 
 export const Routes = createBrowserRouter([
   {
@@ -85,6 +88,14 @@ export const Routes = createBrowserRouter([
           {
             path: "players/edit/:id",
             element: <ClubPlayerEdit />
+          },
+          {
+            path: "available-players" ,
+            element: <AvailablePlayers />
+          },
+          {
+            path: "available-players/:id" ,
+            element: <AvailablePlayerDetails />
           }
         ],
       },
