@@ -12,7 +12,7 @@ const PlayerOnboardingLayout = () => {
   const location = useLocation();
 
   const currentIndex = steps.findIndex((step) =>
-    location.pathname.includes(step.path)
+    location.pathname.includes(step.path),
   );
 
   // ❌ Invalid route protection
@@ -26,7 +26,7 @@ const PlayerOnboardingLayout = () => {
   return (
     <OnboardingProvider>
       <div className="min-h-screen bg-[#0b0f14] flex justify-center">
-        <div className="w-full py-10 px-6">
+        <div className="w-full py-5 px-6">
           {/* Top Navbar */}
           <div className="w-full max-w-4xl mx-auto">
             <OnboardingNavbar />
@@ -34,23 +34,23 @@ const PlayerOnboardingLayout = () => {
 
           {/* Form Wrapper */}
           <div className="w-full max-w-3xl mx-auto">
-            <div className="mb-6">
-              <h1 className="text-white text-xl font-semibold">
-                Complete your athlete profile
-              </h1>
-
+            <div className="">
               {/* Progress Bar */}
               <div className="mt-3">
+                <div className="flex justify-between mb-5">
+                  <p className=" text-gray-400 mt-1">
+                    Step {currentStep} of {steps.length} • profile
+                  </p>
+                  <p className=" text-gray-400 mt-1">
+                    {progress}% complete
+                  </p>
+                </div>
                 <div className="h-2 bg-gray-700 rounded">
                   <div
                     className="h-2 bg-cyan-500 rounded transition-all duration-300"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-
-                <p className="text-xs text-gray-400 mt-1">
-                  Step {currentStep} of {steps.length} • {progress}% complete
-                </p>
               </div>
             </div>
 

@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/incompatible-library */
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { Save } from "lucide-react";
+import { Info, Save, ChevronLeft, ChevronRight } from "lucide-react";
+import { useOnboarding } from "@/context/OnboardingContext";
 
 type FormValues = {
   matches: number;
   timeframe: string;
-  avgMinutes: number;
+  avgMinutes: string;
   goals: number;
   assists: number;
   cleanSheets: number;
@@ -14,124 +16,197 @@ type FormValues = {
 
 const CareerHistory = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { data, updateStep } = useOnboarding();
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Final submit", data);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: data.careerHistory || {
+      matches: 0,
+      goals: 0,
+      assists: 0,
+      cleanSheets: 0,
+      timeframe: "This Season",
+    },
+  });
+
+  const onSubmit = (values: FormValues) => {
+    updateStep("careerHistory", values);
+
+    const finalPayload = {
+      ...data.personalDetails,
+      ...data.footballProfile,
+      ...values,
+    };
+    console.log(finalPayload);
+  };
+
+  const onSaveLater = (values: FormValues) => {
+    updateStep("careerHistory", values);
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-white font-bold text-lg mb-4">
-        Career & Match History
-      </h2>
+    <div className=" p-4 text-white min-h-screen">
+      <h2 className="text-xl font-bold mb-10">Career & Match History</h2>
+
       <form
         id="career-history-form"
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-[#0b1219] border border-slate-800 rounded-xl p-8 space-y-6 shadow-2xl"
+        className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-8 shadow-2xl"
       >
-        <div className="space-y-5">
-          <div className="space-y-2">
-            <label className="text-gray-300 text-sm font-medium">
-              Matches Played
-            </label>
-            <input
-              type="number"
-              {...register("matches")}
-              placeholder="Matches Played"
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none"
-            />
+        {/* Info Box */}
+        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl items-center">
+          <Info className="text-cyan-500 shrink-0" size={20} />
+          <p className="text-cyan-100/70 text-xs leading-relaxed">
+            Your match history helps our AI understand your playing experience
+            and performance trends. This data is used for career insights only.
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          {/* Matches & Timeframe Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-gray-300 text-sm font-medium">
+                Matches played *
+              </label>
+              <input
+                type="number"
+                {...register("matches", { required: "Required" })}
+                className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-gray-300 text-sm font-medium">
+                Time Frame *
+              </label>
+              <div className="relative">
+                <select
+                  {...register("timeframe")}
+                  className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 appearance-none"
+                >
+                  <option value="This Season">This Season</option>
+                  <option value="Last 5 Matches">Last 5 Matches</option>
+                  <option value="Last 10 Matches">Last 10 Matches</option>
+                  <option value="Last 12 Matches">Last 12 Matches</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                  <ChevronRight className="rotate-90" size={18} />
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* Avg Minutes */}
           <div className="space-y-2">
             <label className="text-gray-300 text-sm font-medium">
-              Timeframe
-            </label>
-            <select
-              {...register("timeframe")}
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none"
-            >
-              <option>This Season</option>
-              <option>Last Season</option>
-            </select>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-gray-300 text-sm font-medium">
-              Avg minutes per match
+              Average minutes played per match
             </label>
             <input
-              type="number"
+              type="text"
+              placeholder="e.g., 75"
               {...register("avgMinutes")}
-              placeholder="Avg minutes"
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none"
+              className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50"
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            <div className="space-y-2">
-              <label className="text-gray-300 text-xs font-medium">Goals</label>
-              <input
-                type="number"
-                {...register("goals")}
-                placeholder="0"
-                className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none text-center"
-              />
+          {/* Performance Statistics Grid */}
+          <div className="space-y-4 pt-4">
+            <h3 className="text-lg font-semibold">Performance Statistics</h3>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-gray-300 text-sm font-medium">
+                  Goals
+                </label>
+                <input
+                  type="number"
+                  {...register("goals")}
+                  className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 text-center"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-gray-300 text-sm font-medium">
+                  Assists
+                </label>
+                <input
+                  type="number"
+                  {...register("assists")}
+                  className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 text-center"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-gray-300 text-sm font-medium">
+                  Clean Sheets
+                </label>
+                <input
+                  type="number"
+                  {...register("cleanSheets")}
+                  className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 text-center"
+                />
+              </div>
             </div>
-            <div className="space-y-2">
-              <label className="text-gray-300 text-xs font-medium">
-                Assists
-              </label>
-              <input
-                type="number"
-                {...register("assists")}
-                placeholder="0"
-                className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none text-center"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-gray-300 text-xs font-medium">
-                Clean Sheets
-              </label>
-              <input
-                type="number"
-                {...register("cleanSheets")}
-                placeholder="0"
-                className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none text-center"
-              />
-            </div>
+            <p className="text-gray-500 text-xs italic">
+              Enter the most relevant stats for your position
+            </p>
           </div>
 
+          {/* Competition Level - Updated with Screenshot Options */}
           <div className="space-y-2">
             <label className="text-gray-300 text-sm font-medium">
-              Competition Level
+              Competition Level *
             </label>
-            <select
-              {...register("competitionLevel")}
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none"
-            >
-              <option value="">Select Level</option>
-              <option>Local</option>
-              <option>National</option>
-              <option>International</option>
-            </select>
+            <div className="relative">
+              <select
+                {...register("competitionLevel", {
+                  required: "Competition level is required",
+                })}
+                className={`w-full bg-[#111820] border ${errors.competitionLevel ? "border-red-500" : "border-slate-800"} rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 appearance-none`}
+              >
+                <option value="">Select competition level</option>
+                <option value="Youth academy (U18/U21)">
+                  Youth academy (U18/U21)
+                </option>
+                <option value="Professional Academy">
+                  Professional Academy
+                </option>
+                <option value="Semi-Professional">Semi-Professional</option>
+                <option value="League Two">League Two</option>
+                <option value="League One">League One</option>
+                <option value="League Championship">League Championship</option>
+                <option value="Premier League">Premier League</option>
+                <option value="National League">National League</option>
+                <option value="Grassroots/Amateur">Grassroots/Amateur</option>
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                <ChevronRight className="rotate-90" size={18} />
+              </div>
+            </div>
+            {errors.competitionLevel && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.competitionLevel.message}
+              </p>
+            )}
           </div>
         </div>
       </form>
 
-      <div className="flex justify-between items-center gap-4 pt-6">
+      {/* Navigation Buttons */}
+      <div className="flex justify-between items-center mt-10">
         <button
-          type="button"
           onClick={() => navigate(-1)}
-          className="px-6 py-2.5 rounded-lg border border-slate-700 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
         >
-          ← Back
+          <ChevronLeft size={18} /> Back
         </button>
 
         <div className="flex gap-4">
           <button
             type="button"
-            className="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-700 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
+            onClick={handleSubmit(onSaveLater)}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
           >
             Save & Continue Later <Save size={16} />
           </button>
@@ -139,9 +214,9 @@ const CareerHistory = () => {
           <button
             type="submit"
             form="career-history-form"
-            className="px-8 py-2.5 rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white transition-all text-sm font-medium flex items-center gap-2"
+            className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg"
           >
-            Finish <span className="text-lg">›</span>
+            Continue <ChevronRight size={18} />
           </button>
         </div>
       </div>

@@ -31,12 +31,11 @@ const PersonalDetails = () => {
 
   const onSaveLater = (values: FormValues) => {
     updateStep("personalDetails", values);
-    alert("Saved successfully. You can continue later.");
   };
 
   return (
     <div className="p-4">
-      <h2 className="text-white font-bold text-lg mb-4">Personal Details</h2>
+      <h2 className="text-white font-bold text-lg mb-10">Personal Details</h2>
 
       <form
         id="onboarding-form"
@@ -141,7 +140,7 @@ const PersonalDetails = () => {
         <button
           type="button"
           onClick={handleSubmit(onSaveLater)}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-700 text-gray-300 hover:bg-slate-800 text-sm"
+          className="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-slate-700 text-gray-300 hover:bg-slate-800 text-sm cursor-pointer"
         >
           Save & Continue Later <Save size={16} />
         </button>
@@ -149,7 +148,7 @@ const PersonalDetails = () => {
         <button
           type="submit"
           form="onboarding-form"
-          className="px-8 py-2.5 rounded-lg bg-[#235D67] text-[#12121A] text-sm flex items-center gap-2"
+          className="px-8 py-2.5 rounded-lg bg-[#235D67] text-[#12121A] text-sm flex items-center gap-2 cursor-pointer"
         >
           Continue <span className="text-lg">›</span>
         </button>
