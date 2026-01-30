@@ -14,7 +14,7 @@ import { TicketForm } from "./_components/TicketForm";
 // Sub-Component 2: Support Ticket Form
 
 
-const PlayerHelpAndSupport = () => {
+const ClubHelpAndSupport = () => {
   return (
     <div className="bg-[#0B0E14] min-h-screen p-4 md:p-8 space-y-10 font-sans">
       <div className="  space-y-10">
@@ -59,4 +59,4 @@ const PlayerHelpAndSupport = () => {
   );
 };
 
-export default PlayerHelpAndSupport;
+export default ClubHelpAndSupport;

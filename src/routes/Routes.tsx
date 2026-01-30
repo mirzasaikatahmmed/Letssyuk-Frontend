@@ -17,9 +17,13 @@ import PlayerNotifications from "@/main/player/dashboard/notification/PlayerNoti
 import PlayerData from "@/main/player/dashboard/playerData/PlayerData";
 import PlayerProfile from "@/main/player/dashboard/profile/PlayerProfile";
 import { createBrowserRouter } from "react-router";
-import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
-import { AvailablePlayerDetails } from "@/main/club/_components/availablePlayers/_components/AvailablePlayerDetails";
-// import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
+import AvailablePlayers from "@/main/club/dashboard/availablePlayers/AvailablePlayers";
+import { AvailablePlayerDetails } from "@/main/club/dashboard/availablePlayers/_components/AvailablePlayerDetails";
+import ClubUserProfile from "@/main/club/dashboard/profile/ClubUserProfile";
+import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/PlayerHelpAndSupport";
+import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
+// import ClubProfileChangePassword from "@/main/club/dashboard/profile/_components/ChangePassword";
+
 
 export const Routes = createBrowserRouter([
   {
@@ -96,6 +100,18 @@ export const Routes = createBrowserRouter([
           {
             path: "available-players/:id" ,
             element: <AvailablePlayerDetails />
+          },
+          {
+            path: "profile" , 
+            element: <ClubUserProfile />
+          }, 
+          {
+            path: "support" , 
+            element: <ClubHelpAndSupport />
+          },
+          {
+            path: "notifications" , 
+            element: <ClubNotification />
           }
         ],
       },

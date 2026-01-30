@@ -46,7 +46,7 @@ export const AvailablePlayerDetails = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Stats & Strengths */}
         <div className="lg:col-span-2 space-y-6">
-          <section className="bg-[#11161D]/50 border border-gray-800 rounded-2xl p-6">
+          <section className="bg-[#235D6710] border border-gray-800 rounded-2xl p-6">
             <h3 className="text-sm font-black text-white uppercase tracking-widest mb-6 flex items-center gap-2">
               <TrendingUp size={16} className="text-[#53DDF5]"/> Performance Summary (Last 20 Match)
             </h3>
@@ -61,24 +61,24 @@ export const AvailablePlayerDetails = () => {
           </section>
 
           {/* Strengths / Improvements */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[#11161D]/50 border border-gray-800 rounded-2xl p-6">
+          <div className="flex flex-col gap-6">
+            <div className="bg-[#235D6710] border border-gray-800 rounded-2xl p-6">
               <h3 className="text-sm font-black text-white uppercase mb-4 flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-[#05DF72]"/> Strengths
               </h3>
               <div className="space-y-3">
                 {["Excellent positioning", "Strong finishing with both feet", "High work rate"].map((s, i) => (
-                  <div key={i} className="bg-gray-900/50 p-3 rounded-lg text-xs text-gray-300 border border-gray-800">{s}</div>
+                  <div key={i} className="bg-gray-900/50 p-3 rounded-lg text-xs text-gray-300 border border-gray-800 flex  items-center  gap-2"><p className='h-2 w-2 bg-[#05DF72] rounded-full '></p> {s}</div>
                 ))}
               </div>
             </div>
-            <div className="bg-[#11161D]/50 border border-gray-800 rounded-2xl p-6">
+            <div className="bg-[#235D6710] border border-gray-800 rounded-2xl p-6">
               <h3 className="text-sm font-black text-white uppercase mb-4 flex items-center gap-2">
                 <AlertCircle size={16} className="text-yellow-500"/> Areas to Improve
               </h3>
               <div className="space-y-3">
                 {["Link-up play with midfielders", "Decision making", "Consistency"].map((s, i) => (
-                  <div key={i} className="bg-gray-900/50 p-3 rounded-lg text-xs text-gray-300 border border-gray-800">{s}</div>
+                  <div key={i} className="bg-gray-900/50 p-3 rounded-lg text-xs text-gray-300 border border-gray-800 flex  items-center  gap-2"><p className='h-2 w-2 bg-yellow-500 rounded-full '></p>{s}</div>
                 ))}
               </div>
             </div>
