@@ -3,7 +3,7 @@ import { NavLink } from 'react-router'; // Changed to react-router-dom
 import { Home, Database, User, LifeBuoy, Bell, ChevronLeft, LogOut } from 'lucide-react';
 import logo from "@/assets/logo/logo.png";
 
-const PlayerDSidebar = () => {
+const AgentDSidebar = () => {
   const menuItems = [
     { icon: Home, label: 'Home', path: '/player/dashboard/overview' },
     { icon: Database, label: 'Data', path: '/player/dashboard/data' },
@@ -60,4 +60,4 @@ const PlayerDSidebar = () => {
   );
 };
 
-export default PlayerDSidebar;
+export default AgentDSidebar;

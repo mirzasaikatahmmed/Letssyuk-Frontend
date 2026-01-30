@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 import { Bell } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const PlayerDNavbar = () => {
+const AgentDNavbar = () => {
   const location = useLocation();
 
   // Function to convert path to Title
@@ -55,4 +55,4 @@ const PlayerDNavbar = () => {
   );
 };
 
-export default PlayerDNavbar;
+export default AgentDNavbar;

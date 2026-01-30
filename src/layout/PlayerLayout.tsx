@@ -11,7 +11,7 @@ const PlayerLayout = () => {
 
       <div className="flex flex-col flex-1 h-full overflow-hidden">
         <PlayerDNavbar />
-        <main className="flex-1 overflow-y-auto scrollbar-hide">
+        <main className="flex-1 overflow-y-auto scrollbar-hide p-8">
           <Outlet />
         </main>
       </div>

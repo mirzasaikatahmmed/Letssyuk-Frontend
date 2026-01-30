@@ -3,11 +3,15 @@
 // import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { User, Target, Calendar, Activity, Zap } from 'lucide-react';
+import { User, Target, Calendar, Zap } from 'lucide-react';
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { MdDone } from "react-icons/md";
+import { SignalCard } from "./_components/SignalCard";
+import AIRecommendations from "./_components/AiRecommendation/AiRecommendation";
 
 const PlayerDHome = () => {
   return (
-    <div className="p-8 space-y-8 bg-[#0B0E14] min-h-screen text-white">
+    <div className=" space-y-8 bg-[#0B0E14] min-h-screen text-white">
       <div>
         <h1 className="text-3xl font-bold">Career Overview</h1>
         <p className="text-gray-400 text-sm">Your personal football career command centre</p>
@@ -15,7 +19,7 @@ const PlayerDHome = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Profile Completion Card */}
-        <Card className="md:col-span-2 bg-[#111820] border-gray-800 p-6 flex items-center justify-between">
+        <Card className="md:col-span-2 bg-[#235D6730] border-gray-800 p-6 flex items-center justify-between text-white">
           <div className="flex items-center gap-6">
             <div className="relative w-32 h-32 flex items-center justify-center">
                <svg className="w-full h-full transform -rotate-90">
@@ -34,12 +38,12 @@ const PlayerDHome = () => {
                 <h3 className="font-semibold text-lg">Complete Your Data & Profile</h3>
               </div>
               <p className="text-xs text-gray-400">2 sections remaining</p>
-              <div className="bg-[#0B0E14] p-3 rounded-lg border border-gray-800 max-w-md">
+              <div className="bg-[#235D6780] p-3 rounded-lg border border-gray-800 max-w-md">
                 <p className="text-[11px] text-gray-300">
                   <span className="text-[#53DDF5] font-bold">Tip:</span> Complete your profile and update daily to unlock personalized AI recommendations.
                 </p>
               </div>
-              <Button className="w-full bg-[#53DDF5] hover:bg-cyan-400 text-black font-bold h-12">
+              <Button className="w-full bg-[#53DDF5] hover:bg-cyan-400 text-black font-semibold h-12">
                 Complete Now &gt;
               </Button>
             </div>
@@ -47,7 +51,7 @@ const PlayerDHome = () => {
         </Card>
 
         {/* AI Confidence Card */}
-        <Card className="bg-[#111820] border-gray-800 p-6 flex flex-col justify-between">
+        <Card className="bg-[#121212] border-gray-800 p-6 flex flex-col justify-between">
           <div className="flex items-center gap-2 text-cyan-400">
             <Zap size={18} />
             <span className="text-xs font-bold uppercase">AI Confidence</span>
@@ -64,7 +68,7 @@ const PlayerDHome = () => {
       </div>
 
       {/* Primary Career Goal */}
-      <Card className="bg-[#111820] border-gray-800 p-6">
+      <Card className=" bg-transparent border-gray-800 p-6 text-white">
         <div className="flex items-center gap-3 mb-8">
             <div className="p-2 bg-[#162129] rounded-lg border border-gray-700">
                 <Target className="text-cyan-400" size={24} />
@@ -77,9 +81,13 @@ const PlayerDHome = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
            <div className="bg-[#0B0E14] p-4 rounded-xl border border-gray-800">
-              <div className="flex justify-between items-end mb-2">
-                <span className="text-xs text-gray-400">Progress</span>
-                <span className="text-2xl font-bold">68 <span className="text-sm">%</span></span>
+              <div className="flex justify-between items-start items-end mb-2">
+               <div className="flex flex-col ">
+                 <span className="text-xs text-gray-400">Progress</span>
+                 <span className="text-2xl font-bold">68 <span className="text-sm">%</span></span>
+               </div>
+                <FaArrowTrendUp className="text-[#00C950]" />
+               
               </div>
               <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
                 <div className="h-full bg-[#53DDF5]" style={{ width: '68%' }}></div>
@@ -98,16 +106,19 @@ const PlayerDHome = () => {
               <Calendar className="text-gray-600" size={20} />
            </div>
 
-           <div className="bg-[#0B0E14] p-4 rounded-xl border border-gray-800">
-              <p className="text-xs text-gray-400">Next Milestone</p>
+           <div className="bg-[#0B0E14] p-4 rounded-xl border border-gray-800 flex justify-between items-start">
+              <div>
+                <p className="text-xs text-gray-400">Next Milestone</p>
               <h4 className="text-md font-bold mt-2">Trial Invitation</h4>
               <p className="text-[10px] text-gray-500">Est. March 2026</p>
+              </div>
+              <MdDone />
            </div>
         </div>
       </Card>
 
       {/* Performance Signals */}
-      <div className="space-y-4">
+      <div className="space-y-4 text-white">
         <h3 className="font-bold text-sm uppercase tracking-wider">Performance Signals</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <SignalCard label="Training" value="5.2" unit="days/week" color="#00C950" status="Excellent" />
@@ -115,29 +126,12 @@ const PlayerDHome = () => {
           <SignalCard label="Recovery" value="2" unit="days/week" color="#53DDF5" status="Balanced" />
         </div>
       </div>
+
+      <AIRecommendations />
     </div>
   );
 };
 
-const SignalCard = ({ label, value, unit, color, status } : any) => (
-  <Card className="bg-[#111820] border-gray-800 p-4">
-    <div className="flex justify-between items-center mb-4">
-      <div className="flex items-center gap-2">
-        <Activity size={16} style={{ color }} />
-        <span className="text-sm font-medium">{label}</span>
-      </div>
-    </div>
-    <div className="flex items-baseline gap-2 mb-4">
-      <span className="text-2xl font-bold">{value}</span>
-      <span className="text-gray-500 text-xs">{unit}</span>
-    </div>
-    <div className="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden mb-3">
-        <div className="h-full" style={{ width: '75%', backgroundColor: color }}></div>
-    </div>
-    <div className="bg-[#0B0E14] p-1.5 px-3 rounded-md inline-block">
-       <span className="text-[10px] font-bold" style={{ color }}>● {status}</span>
-    </div>
-  </Card>
-);
+
 
 export default PlayerDHome;
