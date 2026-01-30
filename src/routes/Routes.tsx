@@ -28,6 +28,7 @@ import AgentNotification from "@/main/agent/dashboard/Notification/AgentNotifica
 import AgentPlayerData from "@/main/agent/dashboard/playerData/AgentPlayerData";
 import AddNewPlayer from "@/main/agent/dashboard/playerData/_components/AddNewPlayer";
 import AgentUserProfile from "@/main/agent/dashboard/profile/AgentUserProfile";
+import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
 // import ClubProfileChangePassword from "@/main/club/dashboard/profile/_components/ChangePassword";
 
 
@@ -151,6 +152,10 @@ export const Routes = createBrowserRouter([
           }
         ]
       },
+      {
+        path: "agent/onboarding" , 
+        element: <AgentOnboarding />
+      }
     ],
   },
 ]);
