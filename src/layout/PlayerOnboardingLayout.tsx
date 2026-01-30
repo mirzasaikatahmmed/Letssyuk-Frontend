@@ -1,0 +1,66 @@
+import { OnboardingProvider } from "@/context/OnboardingContext";
+import OnboardingNavbar from "@/main/player/onboarding/_components/OnboardingNavbar/OnboardingNavbar";
+import { Outlet, useLocation, Navigate } from "react-router";
+
+const steps = [
+  { path: "personal-details", label: "Personal Details" },
+  { path: "football-profile", label: "Football Profile" },
+  { path: "career-history", label: "Career & Match History" },
+];
+
+const PlayerOnboardingLayout = () => {
+  const location = useLocation();
+
+  const currentIndex = steps.findIndex((step) =>
+    location.pathname.includes(step.path)
+  );
+
+  // ❌ Invalid route protection
+  if (currentIndex === -1) {
+    return <Navigate to="personal-details" replace />;
+  }
+
+  const currentStep = currentIndex + 1;
+  const progress = Math.round((currentStep / steps.length) * 100);
+
+  return (
+    <OnboardingProvider>
+      <div className="min-h-screen bg-[#0b0f14] flex justify-center">
+        <div className="w-full py-10 px-6">
+          {/* Top Navbar */}
+          <div className="w-full max-w-4xl mx-auto">
+            <OnboardingNavbar />
+          </div>
+
+          {/* Form Wrapper */}
+          <div className="w-full max-w-3xl mx-auto">
+            <div className="mb-6">
+              <h1 className="text-white text-xl font-semibold">
+                Complete your athlete profile
+              </h1>
+
+              {/* Progress Bar */}
+              <div className="mt-3">
+                <div className="h-2 bg-gray-700 rounded">
+                  <div
+                    className="h-2 bg-cyan-500 rounded transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+
+                <p className="text-xs text-gray-400 mt-1">
+                  Step {currentStep} of {steps.length} • {progress}% complete
+                </p>
+              </div>
+            </div>
+
+            {/* Active Step */}
+            <Outlet />
+          </div>
+        </div>
+      </div>
+    </OnboardingProvider>
+  );
+};
+
+export default PlayerOnboardingLayout;

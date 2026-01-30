@@ -19,6 +19,10 @@ import PlayerProfile from "@/main/player/dashboard/profile/PlayerProfile";
 import { createBrowserRouter } from "react-router";
 import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 import { AvailablePlayerDetails } from "@/main/club/_components/availablePlayers/_components/AvailablePlayerDetails";
+import PlayerOnboardingLayout from "@/layout/PlayerOnboardingLayout";
+import PersonalDetails from "@/main/player/onboarding/PersonalDetails";
+import FootballProfile from "@/main/player/onboarding/FootballProfile";
+import CareerHistory from "@/main/player/onboarding/CareerHistory";
 // import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 
 export const Routes = createBrowserRouter([
@@ -79,29 +83,47 @@ export const Routes = createBrowserRouter([
           },
           {
             path: "players",
-            element: <PlayerManagement />
+            element: <PlayerManagement />,
           },
           {
-            path: "players/details/:id" ,
-            element: <ClubPlayerDetails />
-          }, 
+            path: "players/details/:id",
+            element: <ClubPlayerDetails />,
+          },
           {
             path: "players/edit/:id",
-            element: <ClubPlayerEdit />
+            element: <ClubPlayerEdit />,
           },
           {
-            path: "available-players" ,
-            element: <AvailablePlayers />
+            path: "available-players",
+            element: <AvailablePlayers />,
           },
           {
-            path: "available-players/:id" ,
-            element: <AvailablePlayerDetails />
-          }
+            path: "available-players/:id",
+            element: <AvailablePlayerDetails />,
+          },
         ],
       },
       {
         path: "agent/dashboard",
         element: <AgentLayout />,
+      },
+      {
+        path: "player/onboarding",
+        element: <PlayerOnboardingLayout />,
+        children: [
+          {
+            path: "personal-details",
+            element: <PersonalDetails />,
+          },
+          {
+            path: "football-profile",
+            element: <FootballProfile />,
+          },
+          {
+            path: "career-history",
+            element: <CareerHistory />,
+          },
+        ],
       },
     ],
   },
