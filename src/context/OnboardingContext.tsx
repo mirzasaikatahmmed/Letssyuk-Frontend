@@ -8,6 +8,7 @@ type OnboardingData = {
   careerHistory?: any;
   physicalDevelopment?: any;
   trainingRoutine?: any;
+  fatigueRecovery?: any;
 };
 
 type ContextType = {

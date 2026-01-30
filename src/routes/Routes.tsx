@@ -25,6 +25,7 @@ import FootballProfile from "@/main/player/onboarding/FootballProfile";
 import CareerHistory from "@/main/player/onboarding/CareerHistory";
 import PhysicalDevelopment from "@/main/player/onboarding/PhysicalDevelopment";
 import TrainingRoutine from "@/main/player/onboarding/TrainingRoutine";
+import FatigueRecovery from "@/main/player/onboarding/FatigueRecovery";
 // import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 
 export const Routes = createBrowserRouter([
@@ -132,6 +133,10 @@ export const Routes = createBrowserRouter([
           {
             path: "training-routine",
             element: <TrainingRoutine />,
+          },
+          {
+            path: "fatigue-recovery",
+            element: <FatigueRecovery />,
           },
         ],
       },

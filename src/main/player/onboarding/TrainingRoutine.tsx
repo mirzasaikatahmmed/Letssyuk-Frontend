@@ -38,7 +38,7 @@ const TrainingRoutine = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("trainingRoutine", { ...values, focusAreas });
-    navigate("/player/onboarding/training-routine");
+    navigate("/player/onboarding/fatigue-recovery");
   };
 
   const onSaveLater = (values: FormValues) => {
@@ -243,7 +243,7 @@ const TrainingRoutine = () => {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm cursor-pointer"
           >
             <ChevronLeft size={18} /> Back
           </button>
@@ -252,14 +252,14 @@ const TrainingRoutine = () => {
             <button
               type="button"
               onClick={handleSubmit(onSaveLater)}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium cursor-pointer"
             >
               Save & Continue Later <Save size={16} />
             </button>
 
             <button
               type="submit"
-              className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg"
+              className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg cursor-pointer"
             >
               Continue <ChevronRight size={18} />
             </button>

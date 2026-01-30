@@ -8,6 +8,7 @@ const steps = [
   { path: "career-history", label: "Career & Match History" },
   { path: "physical-development", label: "Physical Development" },
   { path: "training-routine", label: "Training Routine" },
+  { path: "fatigue-recovery", label: "Fatigue & Recovery" },
 ];
 
 const PlayerOnboardingLayout = () => {
