@@ -34,59 +34,61 @@ export default function ConsentStep({ onComplete, onBack }: ConsentStepProps) {
   const allConsented = formData.consentAI && formData.consentGDPR;
 
   return (
-    <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
-      <h2 className="text-2xl font-bold text-white mb-2">Consent</h2>
-      <p className="text-gray-400 text-sm mb-6">
-        Please review and accept our terms.
-      </p>
-
-      <div className="space-y-4 mb-6">
-        {CONSENT_ITEMS.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-start gap-3 p-4 rounded-xl border border-slate-700 bg-[#161d26] hover:border-[#53DDF5]/30 transition-colors cursor-pointer"
-            onClick={() => handleToggle(item.id === "ai" ? "ai" : "gdpr")}
-          >
-            <Checkbox
-              id={item.id}
-              checked={
-                item.id === "ai" ? formData.consentAI : formData.consentGDPR
-              }
-              onCheckedChange={() =>
-                handleToggle(item.id === "ai" ? "ai" : "gdpr")
-              }
-              className="mt-1 w-5 h-5 rounded border-gray-500 data-[state=checked]:bg-[#53DDF5] data-[state=checked]:border-[#53DDF5]"
-            />
-            <Label
-              htmlFor={item.id}
-              className="text-gray-300 font-medium cursor-pointer flex-1"
-            >
-              {item.label}
-            </Label>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex gap-3 bg-[#0d1e21] border border-[#53DDF5]/20 p-4 rounded-xl items-start mb-8">
-        <Shield className="text-[#53DDF5] shrink-0 mt-0.5" size={18} />
-        <p className="text-gray-400 text-sm">
-          Your data is protected and used solely to enhance your OnyxSport AI
-          experience. We comply with all data protection regulations.
+    <div className="w-full max-w-4xl bg-[#11161D]">
+      <div className="space-y-6 border border-[#53DDF5]/30 rounded-2xl p-8">
+        <h2 className="text-2xl font-bold text-white mb-2">Consent</h2>
+        <p className="text-gray-400 text-sm mb-6">
+          Please review and accept our terms.
         </p>
+
+        <div className="space-y-4 mb-6">
+          {CONSENT_ITEMS.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-start gap-3 p-4 rounded-xl border border-slate-700 bg-[#161d26] hover:border-[#53DDF5]/30 transition-colors cursor-pointer"
+              onClick={() => handleToggle(item.id === "ai" ? "ai" : "gdpr")}
+            >
+              <Checkbox
+                id={item.id}
+                checked={
+                  item.id === "ai" ? formData.consentAI : formData.consentGDPR
+                }
+                onCheckedChange={() =>
+                  handleToggle(item.id === "ai" ? "ai" : "gdpr")
+                }
+                className="mt-1 w-5 h-5 rounded border-gray-500 data-[state=checked]:bg-[#53DDF5] data-[state=checked]:border-[#53DDF5]"
+              />
+              <Label
+                htmlFor={item.id}
+                className="text-gray-300 font-medium cursor-pointer flex-1"
+              >
+                {item.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-3 bg-[#0d1e21] border border-[#53DDF5]/20 p-4 rounded-xl items-start mb-8">
+          <Shield className="text-[#53DDF5] shrink-0 mt-0.5" size={18} />
+          <p className="text-gray-400 text-sm">
+            Your data is protected and used solely to enhance your OnyxSport AI
+            experience. We comply with all data protection regulations.
+          </p>
+        </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-8">
         <Button
           onClick={onBack}
           variant="outline"
-          className="border-slate-600 text-gray-400 hover:bg-slate-800 px-6 h-11 rounded-xl"
+          className="border-slate-600 text-gray-400 hover:bg-[#53DDF5]/90 px-6 h-11 rounded-xl cursor-pointer bg-transparent"
         >
           &lt; Back
         </Button>
         <Button
           onClick={onComplete}
           disabled={!allConsented}
-          className={`px-8 h-11 rounded-xl font-medium ${
+          className={`px-8 h-11 rounded-xl font-medium cursor-pointer ${
             allConsented
               ? "bg-[#53DDF5] hover:bg-[#53DDF5]/90 text-slate-950"
               : "bg-slate-700 text-gray-500 cursor-not-allowed"
