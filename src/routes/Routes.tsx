@@ -17,20 +17,27 @@ import PlayerNotifications from "@/main/player/dashboard/notification/PlayerNoti
 import PlayerData from "@/main/player/dashboard/playerData/PlayerData";
 import PlayerProfile from "@/main/player/dashboard/profile/PlayerProfile";
 import { createBrowserRouter } from "react-router";
-import AvailablePlayers from "@/main/club/dashboard/availablePlayers/AvailablePlayers";
-import { AvailablePlayerDetails } from "@/main/club/dashboard/availablePlayers/_components/AvailablePlayerDetails";
-import ClubUserProfile from "@/main/club/dashboard/profile/ClubUserProfile";
-import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAndSupport";
-import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
+import PlayerOnboardingLayout from "@/layout/PlayerOnboardingLayout";
+import ClubOnboardingLayout from "@/layout/ClubOnboardingLayout";
+import PersonalDetails from "@/main/player/onboarding/PersonalDetails";
+import FootballProfile from "@/main/player/onboarding/FootballProfile";
+import CareerHistory from "@/main/player/onboarding/CareerHistory";
+import PhysicalDevelopment from "@/main/player/onboarding/PhysicalDevelopment";
+import TrainingRoutine from "@/main/player/onboarding/TrainingRoutine";
+import FatigueRecovery from "@/main/player/onboarding/FatigueRecovery";
+import LifestyleNutrition from "@/main/player/onboarding/LifestyleNutrition";
+import GoalsAmbitions from "@/main/player/onboarding/GoalsAmbitions";
+import ConsentDeclarations from "@/main/player/onboarding/ConsentDeclarations";
+import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
+import AgentUserProfile from "@/main/agent/dashboard/profile/AgentUserProfile";
+import AddNewPlayer from "@/main/agent/dashboard/playerData/_components/AddNewPlayer";
+import AgentPlayerData from "@/main/agent/dashboard/playerData/AgentPlayerData";
+import AgentNotification from "@/main/agent/dashboard/Notification/AgentNotification";
 import AgentHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAndSupport";
 import AgentOverview from "@/main/agent/dashboard/overview/AgentOverview";
-import AgentNotification from "@/main/agent/dashboard/Notification/AgentNotification";
-import AgentPlayerData from "@/main/agent/dashboard/playerData/AgentPlayerData";
-import AddNewPlayer from "@/main/agent/dashboard/playerData/_components/AddNewPlayer";
-import AgentUserProfile from "@/main/agent/dashboard/profile/AgentUserProfile";
-import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
-// import ClubProfileChangePassword from "@/main/club/dashboard/profile/_components/ChangePassword";
-
+import AvailablePlayers from "@/main/club/dashboard/availablePlayers/AvailablePlayers";
+import { AvailablePlayerDetails } from "@/main/club/dashboard/availablePlayers/_components/AvailablePlayerDetails";
+// import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 
 export const Routes = createBrowserRouter([
   {
@@ -90,36 +97,24 @@ export const Routes = createBrowserRouter([
           },
           {
             path: "players",
-            element: <PlayerManagement />
+            element: <PlayerManagement />,
           },
           {
-            path: "players/details/:id" ,
-            element: <ClubPlayerDetails />
-          }, 
+            path: "players/details/:id",
+            element: <ClubPlayerDetails />,
+          },
           {
             path: "players/edit/:id",
-            element: <ClubPlayerEdit />
+            element: <ClubPlayerEdit />,
           },
           {
-            path: "available-players" ,
-            element: <AvailablePlayers />
+            path: "available-players",
+            element: <AvailablePlayers />,
           },
           {
-            path: "available-players/:id" ,
-            element: <AvailablePlayerDetails />
+            path: "available-players/:id",
+            element: <AvailablePlayerDetails />,
           },
-          {
-            path: "profile" , 
-            element: <ClubUserProfile />
-          }, 
-          {
-            path: "support" , 
-            element: <ClubHelpAndSupport />
-          },
-          {
-            path: "notifications" , 
-            element: <ClubNotification />
-          }
         ],
       },
       {
@@ -153,9 +148,57 @@ export const Routes = createBrowserRouter([
         ]
       },
       {
-        path: "agent/onboarding" , 
-        element: <AgentOnboarding />
-      }
+        path: "club/onboarding",
+        element: <ClubOnboardingLayout />,
+        children: [
+          {
+            index: true,
+            element: <ClubOnboarding />,
+          },
+        ],
+      },
+      {
+        path: "player/onboarding",
+        element: <PlayerOnboardingLayout />,
+        children: [
+          {
+            path: "personal-details",
+            element: <PersonalDetails />,
+          },
+          {
+            path: "football-profile",
+            element: <FootballProfile />,
+          },
+          {
+            path: "career-history",
+            element: <CareerHistory />,
+          },
+          {
+            path: "physical-development",
+            element: <PhysicalDevelopment />,
+          },
+          {
+            path: "training-routine",
+            element: <TrainingRoutine />,
+          },
+          {
+            path: "fatigue-recovery",
+            element: <FatigueRecovery />,
+          },
+          {
+            path: "lifestyle-nutrition",
+            element: <LifestyleNutrition />,
+          },
+          {
+            path: "goals-ambition",
+            element: <GoalsAmbitions />,
+          },
+          {
+            path: "consent-declarations",
+            element: <ConsentDeclarations />,
+          },
+        ],
+      },
     ],
   },
 ]);

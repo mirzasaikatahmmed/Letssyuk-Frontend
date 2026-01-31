@@ -121,3 +121,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ---- Global Form Helpers ---- */
+.input {
+  @apply w-full bg-[#020617] border border-gray-700 rounded px-3 py-2 text-white;
+}
+
+.btn-primary {
+  @apply bg-cyan-500 text-black px-5 py-2 rounded;
+}
+
+.btn-secondary {
+  @apply border border-gray-600 text-white px-5 py-2 rounded;
+}
