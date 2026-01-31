@@ -38,7 +38,11 @@ const TrainingRoutine = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("trainingRoutine", { ...values, focusAreas });
-    navigate("/player/onboarding/fatigue-recovery");
+
+
+   
+
+    navigate("../fatigue-recovery");
   };
 
   const onSaveLater = (values: FormValues) => {

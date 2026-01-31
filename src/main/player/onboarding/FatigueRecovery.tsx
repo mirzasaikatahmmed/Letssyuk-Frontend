@@ -37,7 +37,9 @@ const FatigueRecovery = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("fatigueRecovery", values);
-    navigate("/player/onboarding/lifestyle-nutrition");
+
+   
+    navigate("../lifestyle-nutrition");
   };
 
   const onSaveLater = (values: FormValues) => {

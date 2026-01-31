@@ -15,7 +15,7 @@ type FormValues = {
 
 const ConsentDeclarations = () => {
   const navigate = useNavigate();
-  // 'data' variable-er moddhe OnboardingContext theke ager shob step-er data ashche
+
   const { data, updateStep } = useOnboarding();
 
   const {
@@ -35,26 +35,22 @@ const ConsentDeclarations = () => {
   const onSubmit = (values: FormValues) => {
     updateStep("consentDeclarations", values);
 
-    const finalPayload = {
-      personalDetails: data.personalDetails,
-      footballProfile: data.footballProfile,
-      careerHistory: data.careerHistory,
-      physicalDevelopment: data.physicalDevelopment,
-      trainingRoutine: data.trainingRoutine,
-      fatigueRecovery: data.fatigueRecovery,
-      lifestyleNutrition: data.lifestyleNutrition,
-      goalsAmbitions: data.goalsAmbition,
-      consentDeclarations: values,
-    };
+    const payload = {
+      ...data.personalDetails,
+      ...data.footballProfile,
+      ...data.careerHistory,
+      ...data.physicalDevelopment,
+      ...data.trainingRoutine,
+      ...data.fatigueRecovery,
+      ...data.lifestyleNutrition,
+      ...data.goalsAmbition,
+      ...values
+    }
 
-    console.log("Structured Payload:", finalPayload);
-
-    // Pro-tip: Console table-e dekhle bujhte aro subidha hobe
-    console.table(finalPayload);
+    console.log(payload)
 
     alert("Onboarding Complete! Check the browser console (F12) to see all form data.");
 
-    // Final API Call ekhane korte paren
     // navigate("/dashboard");
   };
 
@@ -89,8 +85,8 @@ const ConsentDeclarations = () => {
                 // Card click korle toggle hobe, loop avoid korar jonno logical check
                 onClick={() => setValue(section.id as keyof FormValues, !isChecked, { shouldValidate: true })}
                 className={`flex gap-4 p-6 rounded-2xl border transition-all cursor-pointer select-none ${isChecked
-                    ? "bg-cyan-900/10 border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.05)]"
-                    : "bg-[#0d1218] border-slate-800 hover:border-slate-700"
+                  ? "bg-cyan-900/10 border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.05)]"
+                  : "bg-[#0d1218] border-slate-800 hover:border-slate-700"
                   }`}
               >
                 <div className="mt-1" onClick={(e) => e.stopPropagation()}>
@@ -131,8 +127,8 @@ const ConsentDeclarations = () => {
             type="submit"
             disabled={!watch("consentAI") || !watch("gdprCompliance") || !watch("roleUnderstanding")}
             className={`flex items-center gap-2 px-10 h-11 rounded-xl transition-all text-sm font-medium shadow-lg ${isValid
-                ? "bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 ring-1 ring-cyan-500/30"
-                : "bg-slate-800 text-gray-500 cursor-not-allowed opacity-50"
+              ? "bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 ring-1 ring-cyan-500/30"
+              : "bg-slate-800 text-gray-500 cursor-not-allowed opacity-50"
               }`}
           >
             Continue <ChevronRight size={18} />

@@ -34,7 +34,10 @@ const CareerHistory = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("careerHistory", values);
-    navigate("/player/onboarding/physical-development");
+
+
+
+    navigate("../physical-development");
   };
 
   const onSaveLater = (values: FormValues) => {

@@ -26,7 +26,7 @@ const PhysicalDevelopment = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("physicalDevelopment", values);
-    navigate("/player/onboarding/training-routine");
+    navigate("../training-routine");
   };
 
   const onSaveLater = (values: FormValues) => {

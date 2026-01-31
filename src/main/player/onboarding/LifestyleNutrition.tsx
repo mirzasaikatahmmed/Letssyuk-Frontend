@@ -41,7 +41,7 @@ const LifestyleNutrition = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("lifestyleNutrition", values);
-    navigate("/player/onboarding/goals-ambition");
+    navigate("../goals-ambition");
   };
 
   const onSaveLater = (values: FormValues) => {

@@ -44,6 +44,8 @@ const FootballProfile = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("footballProfile", values);
+
+
     navigate("../career-history");
   };
 

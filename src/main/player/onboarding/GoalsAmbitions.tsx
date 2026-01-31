@@ -59,7 +59,7 @@ const GoalsAmbitions = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("goalsAmbition", values);
-    navigate("/player/onboarding/consent-declarations");
+    navigate("../consent-declarations");
   };
 
   const areas = [
