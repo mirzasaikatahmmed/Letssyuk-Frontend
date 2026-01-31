@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useClubFormContext } from "../context/ClubFormContext";
+import { useClubFormContext } from "../context/AgentFormContext";
 
 const POSITIONS = [
   "Goalkeeper",
@@ -24,7 +24,10 @@ interface SquadRosterStepProps {
   onBack: () => void;
 }
 
-export default function SquadRosterStep({ onNext, onBack }: SquadRosterStepProps) {
+export default function SquadRosterStep({
+  onNext,
+  onBack,
+}: SquadRosterStepProps) {
   const { formData, updateFormData } = useClubFormContext();
 
   const updatePlayer = (field: "name" | "position" | "age", value: string) => {
@@ -38,19 +41,22 @@ export default function SquadRosterStep({ onNext, onBack }: SquadRosterStepProps
   const playerComplete =
     formData.player.name && formData.player.position && formData.player.age;
   const canProceed =
-    formData.numberOfPlayers &&
-    (!playerFilled || playerComplete);
+    formData.numberOfPlayers && (!playerFilled || playerComplete);
 
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
       <h2 className="text-2xl font-bold text-white mb-2">Squad Roster</h2>
       <p className="text-gray-400 text-sm mb-6">
-        You can add full performance and contract data later inside the dashboard.
+        You can add full performance and contract data later inside the
+        dashboard.
       </p>
 
       <div className="space-y-6">
         <div>
-          <Label htmlFor="playerCount" className="text-gray-300 text-sm font-medium">
+          <Label
+            htmlFor="playerCount"
+            className="text-gray-300 text-sm font-medium"
+          >
             Number of players in squad (Approximately)
           </Label>
           <Input
@@ -58,14 +64,17 @@ export default function SquadRosterStep({ onNext, onBack }: SquadRosterStepProps
             type="text"
             placeholder="e.g., 5"
             value={formData.numberOfPlayers}
-            onChange={(e) => updateFormData({ numberOfPlayers: e.target.value })}
+            onChange={(e) =>
+              updateFormData({ numberOfPlayers: e.target.value })
+            }
             className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
           />
         </div>
 
         <div>
           <Label className="text-gray-300 text-sm font-medium block mb-1">
-            Add 1 Player to start <span className="text-gray-500">(Optional)</span>
+            Add 1 Player to start{" "}
+            <span className="text-gray-500">(Optional)</span>
           </Label>
           <p className="text-gray-500 text-xs mb-4">
             You can add players later inside the dashboard.

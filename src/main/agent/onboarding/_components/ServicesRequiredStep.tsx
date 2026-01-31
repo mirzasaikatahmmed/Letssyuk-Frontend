@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useClubFormContext } from "../context/ClubFormContext";
+import { useClubFormContext } from "../context/AgentFormContext";
 import {
   BarChart3,
   CircleDot,
@@ -47,7 +47,10 @@ interface ServicesRequiredStepProps {
   onBack: () => void;
 }
 
-export default function ServicesRequiredStep({ onNext, onBack }: ServicesRequiredStepProps) {
+export default function ServicesRequiredStep({
+  onNext,
+  onBack,
+}: ServicesRequiredStepProps) {
   const { formData, updateFormData } = useClubFormContext();
 
   const canProceed = !!formData.primaryGoal;
@@ -55,8 +58,12 @@ export default function ServicesRequiredStep({ onNext, onBack }: ServicesRequire
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
       <h2 className="text-2xl font-bold text-white mb-2">Services Required</h2>
-      <p className="text-gray-400 text-sm mb-2">Help us personalize your experience</p>
-      <p className="text-gray-300 text-sm font-medium mb-6">What&apos;s your primary goal? *</p>
+      <p className="text-gray-400 text-sm mb-2">
+        Help us personalize your experience
+      </p>
+      <p className="text-gray-300 text-sm font-medium mb-6">
+        What&apos;s your primary goal? *
+      </p>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
         {PRIMARY_GOALS.map((goal) => {
@@ -110,7 +117,8 @@ export default function ServicesRequiredStep({ onNext, onBack }: ServicesRequire
       <div className="flex gap-3 bg-[#0d1e21] border border-[#53DDF5]/20 p-4 rounded-xl items-start mb-8">
         <Target className="text-[#53DDF5] shrink-0 mt-0.5" size={18} />
         <p className="text-gray-400 text-sm">
-          Your data is protected and used solely to enhance your OnyxSport AI experience.
+          Your data is protected and used solely to enhance your OnyxSport AI
+          experience.
         </p>
       </div>
 

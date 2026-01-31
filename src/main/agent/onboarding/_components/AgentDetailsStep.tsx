@@ -8,16 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useClubFormContext } from "../context/ClubFormContext";
+import { useClubFormContext } from "../context/AgentFormContext";
 
 interface ClubDetailsStepProps {
   onNext: () => void;
 }
 
-export default function ClubDetailsStep({ onNext }: ClubDetailsStepProps) {
+export default function AgentDetailsStep({ onNext }: ClubDetailsStepProps) {
   const { formData, updateFormData } = useClubFormContext();
 
-  const canProceed = formData.fullName && formData.email && formData.phone && formData.country;
+  const canProceed =
+    formData.fullName && formData.email && formData.phone && formData.country;
 
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
@@ -28,7 +29,10 @@ export default function ClubDetailsStep({ onNext }: ClubDetailsStepProps) {
 
       <div className="space-y-5">
         <div>
-          <Label htmlFor="fullName" className="text-gray-300 text-sm font-medium">
+          <Label
+            htmlFor="fullName"
+            className="text-gray-300 text-sm font-medium"
+          >
             Full Name <span className="text-red-400">*</span>
           </Label>
           <Input
@@ -41,7 +45,10 @@ export default function ClubDetailsStep({ onNext }: ClubDetailsStepProps) {
         </div>
 
         <div>
-          <Label htmlFor="clubName" className="text-gray-300 text-sm font-medium">
+          <Label
+            htmlFor="clubName"
+            className="text-gray-300 text-sm font-medium"
+          >
             Club Name <span className="text-gray-500 text-xs">(optional)</span>
           </Label>
           <Input
@@ -55,7 +62,10 @@ export default function ClubDetailsStep({ onNext }: ClubDetailsStepProps) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="email" className="text-gray-300 text-sm font-medium">
+            <Label
+              htmlFor="email"
+              className="text-gray-300 text-sm font-medium"
+            >
               Email Address <span className="text-red-400">*</span>
             </Label>
             <Input
@@ -68,7 +78,10 @@ export default function ClubDetailsStep({ onNext }: ClubDetailsStepProps) {
             />
           </div>
           <div>
-            <Label htmlFor="phone" className="text-gray-300 text-sm font-medium">
+            <Label
+              htmlFor="phone"
+              className="text-gray-300 text-sm font-medium"
+            >
               Phone / WhatsApp <span className="text-red-400">*</span>
             </Label>
             <Input
@@ -82,7 +95,10 @@ export default function ClubDetailsStep({ onNext }: ClubDetailsStepProps) {
         </div>
 
         <div>
-          <Label htmlFor="country" className="text-gray-300 text-sm font-medium">
+          <Label
+            htmlFor="country"
+            className="text-gray-300 text-sm font-medium"
+          >
             Country of Operation
           </Label>
           <Select
