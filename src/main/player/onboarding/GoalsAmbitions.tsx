@@ -78,15 +78,15 @@ const GoalsAmbitions = () => {
   ];
 
   return (
-    <div className="p-4 text-white min-h-screen max-w-4xl mx-auto">
-      <h2 className="text-xl font-bold mb-10 italic">Goals & Ambitions</h2>
+    <div className="p-4 text-white min-h-screen">
+      <h2 className="text-xl font-bold mb-10">Goals & Ambitions</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-10 shadow-2xl"
       >
         {/* Info Box */}
-        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl items-start">
+        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl items-center">
           <Info className="text-cyan-500 shrink-0 mt-0.5" size={18} />
           <div>
             <p className="text-cyan-100/90 text-[11px] font-bold mb-1">
@@ -101,7 +101,7 @@ const GoalsAmbitions = () => {
         </div>
 
         {/* Primary Career Goal */}
-        <div className="space-y-3">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Primary career goal *
           </label>
@@ -123,7 +123,7 @@ const GoalsAmbitions = () => {
         </div>
 
         {/* Target Timeframe */}
-        <div className="space-y-3">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Target timeframe *
           </label>
@@ -133,7 +133,7 @@ const GoalsAmbitions = () => {
             }}
           >
             <SelectTrigger
-              className={`w-full bg-[#111820] border ${errors.targetTimeframe ? "border-red-500" : "border-slate-800"} rounded-xl h-12 text-gray-400`}
+              className={`w-full bg-[#111820] border ${errors.targetTimeframe ? "border-red-500" : "border-slate-800"} rounded-lg h-12 text-gray-400`}
             >
               <SelectValue placeholder="Select Timeframe*" />
             </SelectTrigger>
@@ -159,7 +159,7 @@ const GoalsAmbitions = () => {
 
         {/* Short-term & Season Goals */}
         <div className="space-y-10">
-          <div className="space-y-3">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Short-term goals (next 3 months)
             </label>
@@ -173,7 +173,7 @@ const GoalsAmbitions = () => {
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Season goals (12 months)
             </label>
@@ -189,7 +189,7 @@ const GoalsAmbitions = () => {
         </div>
 
         {/* Long-term Ambition */}
-        <div className="space-y-3">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Long-term ambition
           </label>
@@ -204,7 +204,7 @@ const GoalsAmbitions = () => {
         </div>
 
         {/* Willing to Adjust Routine */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-2">
           <p className="text-[13px] text-gray-300">
             Are you willing to adjust your routine to achieve your goals? *
           </p>
@@ -269,7 +269,7 @@ const GoalsAmbitions = () => {
               }
               className={`py-6 rounded-xl border transition-all font-bold ${
                 willingToRelocate === "yes"
-                  ? "bg-[#5eead4] border-transparent text-[#0b1219] hover:bg-[#5eead4]/90"
+                  ?"bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
                   : "bg-[#111820] border-slate-800 text-gray-500"
               }`}
             >
@@ -339,7 +339,7 @@ const GoalsAmbitions = () => {
             variant="outline"
             type="button"
             onClick={() => navigate(-1)}
-            className="px-6 h-11 rounded-xl border-slate-800 text-gray-300"
+            className="px-6 h-11 rounded-xl border-slate-800 text-gray-300 cursor-pointer bg-transparent hover:bg-transparent hover:text-white"
           >
             <ChevronLeft size={18} className="mr-2" /> Back
           </Button>
@@ -347,13 +347,13 @@ const GoalsAmbitions = () => {
             <Button
               variant="outline"
               type="button"
-              className="px-6 h-11 rounded-xl border-slate-800 text-gray-300"
+              className="px-6 h-11 rounded-xl border-slate-800 text-gray-300 cursor-pointer bg-transparent hover:bg-transparent hover:text-white"
             >
               Save & Continue Later <Save size={16} className="ml-2" />
             </Button>
             <Button
               type="submit"
-              className="px-8 h-11 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100"
+              className="px-8 h-11 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 cursor-pointer"
             >
               Continue <ChevronRight size={18} className="ml-2" />
             </Button>

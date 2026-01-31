@@ -73,7 +73,7 @@ const FootballProfile = () => {
 
         <div className="space-y-6">
           {/* Primary Position - Updated with Image Options */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Primary Position*
             </label>
@@ -105,7 +105,7 @@ const FootballProfile = () => {
           </div>
 
           {/* Secondary Position */}
-          <div className="space-y-3">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Secondary Position (Optional)
             </label>
@@ -129,7 +129,7 @@ const FootballProfile = () => {
           </div>
 
           {/* Club Status */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Current Club or Status*
             </label>
@@ -145,7 +145,7 @@ const FootballProfile = () => {
           </div>
 
           {/* Playing Level - Updated with Image Options */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Playing Level*
             </label>
@@ -171,7 +171,7 @@ const FootballProfile = () => {
           </div>
 
           {/* Dominant Foot */}
-          <div className="space-y-3">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Dominant Foot*
             </label>

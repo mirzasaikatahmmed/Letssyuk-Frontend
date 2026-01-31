@@ -55,7 +55,7 @@ const PhysicalDevelopment = () => {
         <div className="space-y-6">
           {/* Height and Weight Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <label className="text-gray-300 text-sm font-medium">
                 Height (cm)*
               </label>
@@ -75,7 +75,7 @@ const PhysicalDevelopment = () => {
               )}
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <label className="text-gray-300 text-sm font-medium">
                 Weight (kg) *
               </label>
@@ -97,7 +97,7 @@ const PhysicalDevelopment = () => {
           </div>
 
           {/* Injury History */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Injury history (last 12 months)*
             </label>
@@ -120,7 +120,7 @@ const PhysicalDevelopment = () => {
           </div>
 
           {/* Self-identified strengths */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Self-identified strengths*
             </label>
@@ -138,7 +138,7 @@ const PhysicalDevelopment = () => {
           </div>
 
           {/* Areas to improve */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Areas to improve*
             </label>

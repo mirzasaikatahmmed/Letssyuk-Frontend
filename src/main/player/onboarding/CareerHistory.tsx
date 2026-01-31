@@ -64,7 +64,7 @@ const CareerHistory = () => {
         <div className="space-y-6">
           {/* Matches & Timeframe Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <label className="text-gray-300 text-sm font-medium">
                 Matches played *
               </label>
@@ -75,7 +75,7 @@ const CareerHistory = () => {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <label className="text-gray-300 text-sm font-medium">
                 Time Frame *
               </label>
@@ -97,7 +97,7 @@ const CareerHistory = () => {
           </div>
 
           {/* Avg Minutes */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Average minutes played per match
             </label>
@@ -110,10 +110,10 @@ const CareerHistory = () => {
           </div>
 
           {/* Performance Statistics Grid */}
-          <div className="space-y-4 pt-4">
+          <div className="flex flex-col gap-2">
             <h3 className="text-lg font-semibold">Performance Statistics</h3>
             <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <label className="text-gray-300 text-sm font-medium">
                   Goals
                 </label>
@@ -123,7 +123,7 @@ const CareerHistory = () => {
                   className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 text-center"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <label className="text-gray-300 text-sm font-medium">
                   Assists
                 </label>
@@ -133,7 +133,7 @@ const CareerHistory = () => {
                   className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3.5 outline-none focus:border-cyan-500/50 text-center"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <label className="text-gray-300 text-sm font-medium">
                   Clean Sheets
                 </label>
@@ -144,13 +144,13 @@ const CareerHistory = () => {
                 />
               </div>
             </div>
-            <p className="text-gray-500 text-xs italic">
+            <p className="text-gray-500 text-xs ">
               Enter the most relevant stats for your position
             </p>
           </div>
 
           {/* Competition Level - Updated with Screenshot Options */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Competition Level *
             </label>

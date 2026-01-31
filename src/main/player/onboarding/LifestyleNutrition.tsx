@@ -79,7 +79,7 @@ const LifestyleNutrition = () => {
   };
 
   return (
-    <div className="p-4 text-white max-w-4xl mx-auto">
+    <div className="p-4 text-white">
       <h2 className="text-xl font-bold mb-10">
         Lifestyle & Nutrition Habits
       </h2>
@@ -89,7 +89,7 @@ const LifestyleNutrition = () => {
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-10 shadow-2xl"
       >
         {/* Info Box */}
-        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl items-start">
+        <div className="flex items-center gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl">
           <Info className="text-cyan-500 shrink-0 mt-0.5" size={18} />
           <div>
             <p className="text-cyan-100/90 text-[11px] font-semibold mb-1">
@@ -103,7 +103,7 @@ const LifestyleNutrition = () => {
         </div>
 
         {/* Typical Meals */}
-        <div className="space-y-3">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Typical meals per day*
           </label>
@@ -134,7 +134,7 @@ const LifestyleNutrition = () => {
         </div>
 
         {/* Hydration */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Do you actively monitor hydration?
           </label>
@@ -145,7 +145,7 @@ const LifestyleNutrition = () => {
         </div>
 
         {/* Nutrition Routine */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Do you have a post-training nutrition routine?
           </label>
@@ -156,7 +156,7 @@ const LifestyleNutrition = () => {
         </div>
 
         {/* Sleep */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Do you maintain consistent sleep times?
           </label>
@@ -167,7 +167,7 @@ const LifestyleNutrition = () => {
         </div>
 
         {/* Bottom Note */}
-        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl items-start">
+        <div className="flex items-center gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl">
           <Info className="text-cyan-500 mt-1" size={16} />
           <div>
             <p className="text-cyan-100/90 text-[11px] font-semibold mb-1">
