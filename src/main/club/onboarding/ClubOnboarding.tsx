@@ -11,9 +11,9 @@ import ConsentStep from "./_components/ConsentStep";
 import type { StepItem } from "./_components/StepIndicator";
 
 const STEPS: StepItem[] = [
-  { id: 1, label: "Club Details" },
+  { id: 1, label: "Agent Details" },
   { id: 2, label: "Licensing" },
-  { id: 3, label: "Squad Roster" },
+  { id: 3, label: "Client Roster" },
   { id: 4, label: "Services Required" },
   { id: 5, label: "Workflow Preferences" },
   { id: 6, label: "Consent" },
