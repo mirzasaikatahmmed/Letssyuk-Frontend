@@ -55,8 +55,8 @@ const ConsentDeclarations = () => {
   };
 
   return (
-    <div className="p-4 text-white min-h-screen max-w-4xl mx-auto pb-20">
-      <h2 className="text-xl font-bold mb-10 italic tracking-wide">Consent & Declarations</h2>
+    <div className="p-4 text-white min-h-screen pb-20">
+      <h2 className="text-xl font-bold mb-10 tracking-wide">Consent & Declarations</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -118,7 +118,7 @@ const ConsentDeclarations = () => {
             variant="outline"
             type="button"
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 px-6 h-11 rounded-xl border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
+            className="flex items-center gap-2 px-6 h-11 rounded-xl bg-transparent border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium cursor-pointer hover:text-white"
           >
             <ChevronLeft size={18} /> Back
           </Button>
@@ -126,7 +126,7 @@ const ConsentDeclarations = () => {
           <Button
             type="submit"
             disabled={!watch("consentAI") || !watch("gdprCompliance") || !watch("roleUnderstanding")}
-            className={`flex items-center gap-2 px-10 h-11 rounded-xl transition-all text-sm font-medium shadow-lg ${isValid
+            className={`flex items-center gap-2 px-10 h-11 rounded-xl transition-all text-sm font-medium shadow-lg cursor-pointer ${isValid
               ? "bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 ring-1 ring-cyan-500/30"
               : "bg-slate-800 text-gray-500 cursor-not-allowed opacity-50"
               }`}

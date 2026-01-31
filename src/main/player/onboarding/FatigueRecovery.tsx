@@ -69,7 +69,7 @@ const FatigueRecovery = () => {
 
         {/* --- Dropdown Sections --- */}
         <div className="grid grid-cols-1 gap-6">
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Average sleep duration per night *
             </label>
@@ -92,7 +92,7 @@ const FatigueRecovery = () => {
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Typical match congestion per week*
             </label>
@@ -115,7 +115,7 @@ const FatigueRecovery = () => {
         </div>
 
         {/* Fatigue Buttons with fresh/fatigued labels */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Current self-reported fatigue level *
           </label>
@@ -156,7 +156,7 @@ const FatigueRecovery = () => {
         </div>
 
         {/* Injury History (Updated) */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Injury history (last 12 months)
           </label>
@@ -171,7 +171,7 @@ const FatigueRecovery = () => {
         </div>
 
         {/* Availability Status (Updated) */}
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <label className="text-gray-300 text-sm font-medium">
             Current availability status *
           </label>

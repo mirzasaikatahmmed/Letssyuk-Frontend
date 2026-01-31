@@ -78,7 +78,7 @@ const TrainingRoutine = () => {
 
         <div className="space-y-5">
           {/* Training Days */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Training days per week *
             </label>
@@ -108,7 +108,7 @@ const TrainingRoutine = () => {
           </div>
 
           {/* Training Duration */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Average daily training duration *
             </label>
@@ -138,7 +138,7 @@ const TrainingRoutine = () => {
           </div>
 
           {/* Weekly Hours */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Total weekly exercise hours
             </label>
@@ -154,7 +154,7 @@ const TrainingRoutine = () => {
           </div>
 
           {/* Gym sessions per week */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Gym sessions per week *
             </label>
@@ -188,7 +188,7 @@ const TrainingRoutine = () => {
           </div>
 
           {/* Recovery Days */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Recovery days per week *
             </label>
@@ -219,7 +219,7 @@ const TrainingRoutine = () => {
           </div>
 
           {/* Multi-select Focus Areas */}
-          <div className="space-y-3 pt-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Training focus areas (Select all that apply)
             </label>
