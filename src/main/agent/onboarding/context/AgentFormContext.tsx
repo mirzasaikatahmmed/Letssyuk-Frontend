@@ -38,7 +38,7 @@ const initialFormData: AgentFormData = {
   email: "",
   phone: "",
   country: "",
-  isLicensed: false,
+  isLicensed: true,
   licensingAuthority: "",
   licenseNumber: "",
   numberOfPlayers: "",

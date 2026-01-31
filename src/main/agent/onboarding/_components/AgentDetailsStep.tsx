@@ -21,102 +21,104 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
     formData.fullName && formData.email && formData.phone && formData.country;
 
   return (
-    <div className="w-full max-w-4xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
-      <h2 className="text-2xl font-bold text-white mb-2">Agent Details</h2>
-      <p className="text-gray-400 text-sm mb-6">
-        This information helps clubs verify your professional identity.
-      </p>
+    <div className="w-full max-w-4xl  bg-[#11161D]">
+      <div className="space-y-6 border border-[#53DDF5]/30 rounded-2xl p-8">
+        <h2 className="text-2xl font-bold text-white mb-2">Agent Details</h2>
+        <p className="text-gray-400 text-sm mb-6">
+          This information helps clubs verify your professional identity.
+        </p>
 
-      <div className="space-y-5">
-        <div>
-          <Label
-            htmlFor="fullName"
-            className="text-gray-300 text-sm font-medium"
-          >
-            Full Name <span className="text-red-400">*</span>
-          </Label>
-          <Input
-            id="fullName"
-            placeholder="Enter your full name"
-            value={formData.fullName}
-            onChange={(e) => updateFormData({ fullName: e.target.value })}
-            className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
-          />
-        </div>
-
-        <div>
-          <Label
-            htmlFor="agencyName"
-            className="text-gray-300 text-sm font-medium"
-          >
-            Agency Name
-          </Label>
-          <Input
-            id="agencyName"
-            placeholder="Enter your agency name"
-            value={formData.agencyName}
-            onChange={(e) => updateFormData({ agencyName: e.target.value })}
-            className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-5">
           <div>
             <Label
-              htmlFor="email"
+              htmlFor="fullName"
               className="text-gray-300 text-sm font-medium"
             >
-              Email Address <span className="text-red-400">*</span>
+              Full Name <span className="text-red-400">*</span>
             </Label>
             <Input
-              id="email"
-              type="email"
-              placeholder="your.email@example.com"
-              value={formData.email}
-              onChange={(e) => updateFormData({ email: e.target.value })}
-              className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl w-full"
+              id="fullName"
+              placeholder="Enter your full name"
+              value={formData.fullName}
+              onChange={(e) => updateFormData({ fullName: e.target.value })}
+              className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
             />
           </div>
+
           <div>
             <Label
-              htmlFor="phone"
+              htmlFor="agencyName"
               className="text-gray-300 text-sm font-medium"
             >
-              Phone / WhatsApp <span className="text-red-400">*</span>
+              Agency Name
             </Label>
             <Input
-              id="phone"
-              placeholder="+44 20 1234 5678"
-              value={formData.phone}
-              onChange={(e) => updateFormData({ phone: e.target.value })}
-              className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl w-full"
+              id="agencyName"
+              placeholder="Enter your agency name"
+              value={formData.agencyName}
+              onChange={(e) => updateFormData({ agencyName: e.target.value })}
+              className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
             />
           </div>
-        </div>
 
-        <div>
-          <Label
-            htmlFor="country"
-            className="text-gray-300 text-sm font-medium"
-          >
-            Country of Operation
-          </Label>
-          <Select
-            value={formData.country}
-            onValueChange={(value) => updateFormData({ country: value })}
-          >
-            <SelectTrigger className="mt-2 bg-[#161d26] border-slate-700 text-white h-12 rounded-xl w-full">
-              <SelectValue placeholder="Select country" />
-            </SelectTrigger>
-            <SelectContent className="bg-[#161d26] border-slate-700 text-white">
-              <SelectItem value="England">England</SelectItem>
-              <SelectItem value="Spain">Spain</SelectItem>
-              <SelectItem value="France">France</SelectItem>
-              <SelectItem value="Germany">Germany</SelectItem>
-              <SelectItem value="Italy">Italy</SelectItem>
-              <SelectItem value="Bangladesh">Bangladesh</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label
+                htmlFor="email"
+                className="text-gray-300 text-sm font-medium"
+              >
+                Email Address <span className="text-red-400">*</span>
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="your.email@example.com"
+                value={formData.email}
+                onChange={(e) => updateFormData({ email: e.target.value })}
+                className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl w-full"
+              />
+            </div>
+            <div>
+              <Label
+                htmlFor="phone"
+                className="text-gray-300 text-sm font-medium"
+              >
+                Phone / WhatsApp <span className="text-red-400">*</span>
+              </Label>
+              <Input
+                id="phone"
+                placeholder="+44 20 1234 5678"
+                value={formData.phone}
+                onChange={(e) => updateFormData({ phone: e.target.value })}
+                className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl w-full"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Label
+              htmlFor="country"
+              className="text-gray-300 text-sm font-medium"
+            >
+              Country of Operation
+            </Label>
+            <Select
+              value={formData.country}
+              onValueChange={(value) => updateFormData({ country: value })}
+            >
+              <SelectTrigger className="mt-2 bg-[#161d26] border-slate-700 text-white h-12 rounded-xl w-full">
+                <SelectValue placeholder="Select country" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#161d26] border-slate-700 text-white">
+                <SelectItem value="England">England</SelectItem>
+                <SelectItem value="Spain">Spain</SelectItem>
+                <SelectItem value="France">France</SelectItem>
+                <SelectItem value="Germany">Germany</SelectItem>
+                <SelectItem value="Italy">Italy</SelectItem>
+                <SelectItem value="Bangladesh">Bangladesh</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
@@ -124,7 +126,7 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
         <Button
           onClick={onNext}
           disabled={!canProceed}
-          className={`px-8 h-11 rounded-xl font-medium ${
+          className={`px-8 h-11 rounded-xl font-medium cursor-pointer ${
             canProceed
               ? "bg-[#53DDF5] hover:bg-[#53DDF5]/90 text-slate-950"
               : "bg-slate-700 text-gray-500 cursor-not-allowed"
