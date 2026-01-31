@@ -9,6 +9,9 @@ const steps = [
   { path: "physical-development", label: "Physical Development" },
   { path: "training-routine", label: "Training Routine" },
   { path: "fatigue-recovery", label: "Fatigue & Recovery" },
+  { path: "lifestyle-nutrition", label: "Lifestyle & Nutrition" },
+  { path: "goals-ambition", label: "Goals & Ambition" },
+  { path: "consent-declarations", label: "Consent & Declarations" },
 ];
 
 const PlayerOnboardingLayout = () => {
