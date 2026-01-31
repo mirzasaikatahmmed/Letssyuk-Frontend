@@ -18,6 +18,7 @@ import PlayerData from "@/main/player/dashboard/playerData/PlayerData";
 import PlayerProfile from "@/main/player/dashboard/profile/PlayerProfile";
 import { createBrowserRouter } from "react-router";
 import PlayerOnboardingLayout from "@/layout/PlayerOnboardingLayout";
+import ClubOnboardingLayout from "@/layout/ClubOnboardingLayout";
 import PersonalDetails from "@/main/player/onboarding/PersonalDetails";
 import FootballProfile from "@/main/player/onboarding/FootballProfile";
 import CareerHistory from "@/main/player/onboarding/CareerHistory";
@@ -27,6 +28,7 @@ import FatigueRecovery from "@/main/player/onboarding/FatigueRecovery";
 import LifestyleNutrition from "@/main/player/onboarding/LifestyleNutrition";
 import GoalsAmbitions from "@/main/player/onboarding/GoalsAmbitions";
 import ConsentDeclarations from "@/main/player/onboarding/ConsentDeclarations";
+import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
 import AgentUserProfile from "@/main/agent/dashboard/profile/AgentUserProfile";
 import AddNewPlayer from "@/main/agent/dashboard/playerData/_components/AddNewPlayer";
 import AgentPlayerData from "@/main/agent/dashboard/playerData/AgentPlayerData";
@@ -144,6 +146,16 @@ export const Routes = createBrowserRouter([
             element: <AgentUserProfile />
           }
         ]
+      },
+      {
+        path: "club/onboarding",
+        element: <ClubOnboardingLayout />,
+        children: [
+          {
+            index: true,
+            element: <ClubOnboarding />,
+          },
+        ],
       },
       {
         path: "player/onboarding",
