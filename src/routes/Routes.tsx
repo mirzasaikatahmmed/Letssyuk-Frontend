@@ -90,19 +90,19 @@ export const Routes = createBrowserRouter([
           },
           {
             path: "players",
-            element: <PlayerManagement />
+            element: <PlayerManagement />,
           },
           {
-            path: "players/details/:id" ,
-            element: <ClubPlayerDetails />
-          }, 
+            path: "players/details/:id",
+            element: <ClubPlayerDetails />,
+          },
           {
             path: "players/edit/:id",
-            element: <ClubPlayerEdit />
+            element: <ClubPlayerEdit />,
           },
           {
-            path: "available-players" ,
-            element: <AvailablePlayers />
+            path: "available-players",
+            element: <AvailablePlayers />,
           },
           {
             path: "available-players/:id" ,
