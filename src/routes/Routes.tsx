@@ -18,7 +18,7 @@ import PlayerData from "@/main/player/dashboard/playerData/PlayerData";
 import PlayerProfile from "@/main/player/dashboard/profile/PlayerProfile";
 import { createBrowserRouter } from "react-router";
 import PlayerOnboardingLayout from "@/layout/PlayerOnboardingLayout";
-import ClubOnboardingLayout from "@/layout/ClubOnboardingLayout";
+// import ClubOnboardingLayout from "@/layout/ClubOnboardingLayout";
 import PersonalDetails from "@/main/player/onboarding/PersonalDetails";
 import FootballProfile from "@/main/player/onboarding/FootballProfile";
 import CareerHistory from "@/main/player/onboarding/CareerHistory";
@@ -28,7 +28,7 @@ import FatigueRecovery from "@/main/player/onboarding/FatigueRecovery";
 import LifestyleNutrition from "@/main/player/onboarding/LifestyleNutrition";
 import GoalsAmbitions from "@/main/player/onboarding/GoalsAmbitions";
 import ConsentDeclarations from "@/main/player/onboarding/ConsentDeclarations";
-import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
+// import ClubOnboarding from "@/main/club/onboarding/AgentOnboarding";
 import AgentUserProfile from "@/main/agent/dashboard/profile/AgentUserProfile";
 import AddNewPlayer from "@/main/agent/dashboard/playerData/_components/AddNewPlayer";
 import AgentPlayerData from "@/main/agent/dashboard/playerData/AgentPlayerData";
@@ -37,7 +37,10 @@ import AgentHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAn
 import AgentOverview from "@/main/agent/dashboard/overview/AgentOverview";
 import AvailablePlayers from "@/main/club/dashboard/availablePlayers/AvailablePlayers";
 import { AvailablePlayerDetails } from "@/main/club/dashboard/availablePlayers/_components/AvailablePlayerDetails";
-// import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
+import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
+import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
+// import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
+
 
 export const Routes = createBrowserRouter([
   {
@@ -122,40 +125,38 @@ export const Routes = createBrowserRouter([
         element: <AgentLayout />,
         children: [
           {
-            path: "overview", 
-            element: <AgentOverview />
+            path: "overview",
+            element: <AgentOverview />,
           },
           {
-            path: "support" , 
-            element: <AgentHelpAndSupport />
+            path: "support",
+            element: <AgentHelpAndSupport />,
           },
           {
-            path: "notifications" ,
-            element: <AgentNotification />
+            path: "notifications",
+            element: <AgentNotification />,
           },
           {
-            path: "player-data" , 
-            element: <AgentPlayerData />
+            path: "player-data",
+            element: <AgentPlayerData />,
           },
           {
-            path: "add-player" ,
-            element: <AddNewPlayer />
+            path: "add-player",
+            element: <AddNewPlayer />,
           },
           {
-            path: "profile", 
-            element: <AgentUserProfile />
-          }
-        ]
+            path: "profile",
+            element: <AgentUserProfile />,
+          },
+        ],
       },
       {
         path: "club/onboarding",
-        element: <ClubOnboardingLayout />,
-        children: [
-          {
-            index: true,
-            element: <ClubOnboarding />,
-          },
-        ],
+        element: <ClubOnboarding />
+      },
+      {
+        path: "agent/onboarding", 
+        element: <AgentOnboarding />
       },
       {
         path: "player/onboarding",

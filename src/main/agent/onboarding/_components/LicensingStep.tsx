@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useClubFormContext } from "../context/ClubFormContext";
+import { useClubFormContext } from "../context/AgentFormContext";
 import { Shield } from "lucide-react";
 
 interface LicensingStepProps {
@@ -14,13 +14,18 @@ export default function LicensingStep({ onNext, onBack }: LicensingStepProps) {
 
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
-      <h2 className="text-2xl font-bold text-white mb-2">Licensing Verification</h2>
-      <p className="text-gray-400 text-sm mb-6">Verify your professional credentials</p>
+      <h2 className="text-2xl font-bold text-white mb-2">
+        Licensing Verification
+      </h2>
+      <p className="text-gray-400 text-sm mb-6">
+        Verify your professional credentials
+      </p>
 
       <div className="space-y-6">
         <div>
           <Label className="text-gray-300 text-sm font-medium block mb-3">
-            Are you registered with a league? <span className="text-red-400">*</span>
+            Are you registered with a league?{" "}
+            <span className="text-red-400">*</span>
           </Label>
           <div className="grid grid-cols-2 gap-4">
             <button
@@ -47,7 +52,9 @@ export default function LicensingStep({ onNext, onBack }: LicensingStepProps) {
               }`}
             >
               <span className="block font-bold text-lg">No</span>
-              <span className="block text-sm mt-1 opacity-80">Not yet registered</span>
+              <span className="block text-sm mt-1 opacity-80">
+                Not yet registered
+              </span>
             </button>
           </div>
         </div>
@@ -55,7 +62,10 @@ export default function LicensingStep({ onNext, onBack }: LicensingStepProps) {
         {formData.isLicensed && (
           <>
             <div>
-              <Label htmlFor="authority" className="text-gray-300 text-sm font-medium">
+              <Label
+                htmlFor="authority"
+                className="text-gray-300 text-sm font-medium"
+              >
                 League / Licensing Authority
               </Label>
               <Input
@@ -69,7 +79,10 @@ export default function LicensingStep({ onNext, onBack }: LicensingStepProps) {
               />
             </div>
             <div>
-              <Label htmlFor="licenseNumber" className="text-gray-300 text-sm font-medium">
+              <Label
+                htmlFor="licenseNumber"
+                className="text-gray-300 text-sm font-medium"
+              >
                 Registration Number{" "}
                 <span className="text-gray-500 text-xs">(Optional)</span>
               </Label>
@@ -90,7 +103,9 @@ export default function LicensingStep({ onNext, onBack }: LicensingStepProps) {
           <Shield className="text-[#53DDF5] shrink-0 mt-0.5" size={18} />
           <p className="text-gray-400 text-sm">
             Your documents are{" "}
-            <span className="text-[#53DDF5]">encrypted and securely stored</span>{" "}
+            <span className="text-[#53DDF5]">
+              encrypted and securely stored
+            </span>{" "}
             in compliance with industry standards.
           </p>
         </div>

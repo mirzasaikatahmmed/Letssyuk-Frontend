@@ -19,7 +19,7 @@ const STEPS: StepItem[] = [
   { id: 6, label: "Consent" },
 ];
 
-export default function AgentOnboarding() {
+export default function AggentOnboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const { formData } = useClubFormContext();
 

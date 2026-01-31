@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useClubFormContext } from "../context/ClubFormContext";
+import { useClubFormContext } from "../context/AgentFormContext";
 import { FileText, LayoutDashboard } from "lucide-react";
 
 const REPORT_FORMATS = [
@@ -33,11 +33,14 @@ export default function WorkflowPreferencesStep({
     updateFormData({ notifications: updated });
   };
 
-  const canProceed = !!formData.reportFormat && formData.notifications.length > 0;
+  const canProceed =
+    !!formData.reportFormat && formData.notifications.length > 0;
 
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
-      <h2 className="text-2xl font-bold text-white mb-2">Workflow Preferences</h2>
+      <h2 className="text-2xl font-bold text-white mb-2">
+        Workflow Preferences
+      </h2>
       <p className="text-gray-400 text-sm mb-6">
         How would you like to receive your reports and updates?
       </p>
