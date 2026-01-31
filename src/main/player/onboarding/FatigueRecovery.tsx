@@ -37,7 +37,7 @@ const FatigueRecovery = () => {
 
   const onSubmit = (values: FormValues) => {
     updateStep("fatigueRecovery", values);
-    // navigate("/next-step-url");
+    navigate("/player/onboarding/lifestyle-nutrition");
   };
 
   const onSaveLater = (values: FormValues) => {
@@ -52,7 +52,6 @@ const FatigueRecovery = () => {
       </h2>
 
       <form
-        id="fatigue-form"
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-8 shadow-2xl"
       >
@@ -84,6 +83,11 @@ const FatigueRecovery = () => {
               <option value="8-9 hrs">8 - 9 hours</option>
               <option value="9+ hrs">9+ hours</option>
             </select>
+            {errors.sleepDuration && (
+              <p className="text-red-500 text-[10px] mt-1">
+                {errors.sleepDuration.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -100,6 +104,11 @@ const FatigueRecovery = () => {
               <option value="2 matches per week">2 matches per week</option>
               <option value="3+ matches per week">3+ matches per week</option>
             </select>
+            {errors.matchCongestion && (
+              <p className="text-red-500 text-[10px] mt-1">
+                {errors.matchCongestion.message}
+              </p>
+            )}
           </div>
         </div>
 
@@ -133,8 +142,15 @@ const FatigueRecovery = () => {
           </div>
           <input
             type="hidden"
-            {...register("fatigueLevel", { required: "Required" })}
+            {...register("fatigueLevel", {
+              required: "Please select a fatigue level",
+            })}
           />
+          {errors.fatigueLevel && (
+            <p className="text-red-500 text-[10px] mt-1">
+              {errors.fatigueLevel.message}
+            </p>
+          )}
         </div>
 
         {/* Injury History (Updated) */}
@@ -147,7 +163,9 @@ const FatigueRecovery = () => {
             placeholder="e.g., Minor hamstring strain in August 2025 (2 weeks out)"
             className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3 h-24 outline-none focus:border-cyan-500/50 transition-colors text-sm resize-none"
           />
-          <p className="text-[10px] text-gray-500 italic">This helps us provide safer development recommendations</p>
+          <p className="text-[10px] text-gray-500 italic">
+            This helps us provide safer development recommendations
+          </p>
         </div>
 
         {/* Availability Status (Updated) */}
@@ -161,11 +179,18 @@ const FatigueRecovery = () => {
           >
             <option value="">Select availability *</option>
             <option value="Fully available">Fully available</option>
-            <option value="Available with minor restriction">Available with minor restriction</option>
+            <option value="Available with minor restriction">
+              Available with minor restriction
+            </option>
             <option value="Returning from injury">Returning from injury</option>
             <option value="Currently injured">Currently injured</option>
             <option value="Unavailable">Unavailable</option>
           </select>
+          {errors.availabilityStatus && (
+            <p className="text-red-500 text-[10px] mt-1">
+              {errors.availabilityStatus.message}
+            </p>
+          )}
         </div>
 
         {/* --- Sponsorship Section --- */}
@@ -219,8 +244,15 @@ const FatigueRecovery = () => {
             </div>
             <input
               type="hidden"
-              {...register("hasSponsorship", { required: "Selection required" })}
+              {...register("hasSponsorship", {
+                required: "Please select if you have sponsorship",
+              })}
             />
+            {errors.hasSponsorship && (
+              <p className="text-red-500 text-[10px] mt-1">
+                {errors.hasSponsorship.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-3">
@@ -259,14 +291,25 @@ const FatigueRecovery = () => {
             </div>
             <input
               type="hidden"
-              {...register("openToSponsorship", { required: "Selection required" })}
+              {...register("openToSponsorship", {
+                required: "Please select if you are open to sponsorship",
+              })}
             />
+            {errors.openToSponsorship && (
+              <p className="text-red-500 text-[10px] mt-1">
+                {errors.openToSponsorship.message}
+              </p>
+            )}
           </div>
 
           <div className="bg-[#0d161d] border border-slate-800/40 p-4 rounded-xl">
             <p className="text-[10px] text-gray-500 leading-relaxed flex flex-col gap-2">
               <span className="text-gray-300 font-bold">Important:</span>{" "}
-              OnyxSport AI does not act as an agent or negotiate sponsorship deals. We provide intelligence and may share opportunities, but all agreements are between you and the sponsor. Always consult with your agent, legal advisor, or guardian before signing any contracts.
+              OnyxSport AI does not act as an agent or negotiate sponsorship
+              deals. We provide intelligence and may share opportunities, but
+              all agreements are between you and the sponsor. Always consult
+              with your agent, legal advisor, or guardian before signing any
+              contracts.
             </p>
           </div>
         </div>

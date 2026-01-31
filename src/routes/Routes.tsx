@@ -26,6 +26,9 @@ import CareerHistory from "@/main/player/onboarding/CareerHistory";
 import PhysicalDevelopment from "@/main/player/onboarding/PhysicalDevelopment";
 import TrainingRoutine from "@/main/player/onboarding/TrainingRoutine";
 import FatigueRecovery from "@/main/player/onboarding/FatigueRecovery";
+import LifestyleNutrition from "@/main/player/onboarding/LifestyleNutrition";
+import GoalsAmbitions from "@/main/player/onboarding/GoalsAmbitions";
+import ConsentDeclarations from "@/main/player/onboarding/ConsentDeclarations";
 // import AvailablePlayers from "@/main/club/_components/availablePlayers/AvailablePlayers";
 
 export const Routes = createBrowserRouter([
@@ -137,6 +140,18 @@ export const Routes = createBrowserRouter([
           {
             path: "fatigue-recovery",
             element: <FatigueRecovery />,
+          },
+          {
+            path: "lifestyle-nutrition",
+            element: <LifestyleNutrition />,
+          },
+          {
+            path: "goals-ambition",
+            element: <GoalsAmbitions />,
+          },
+          {
+            path: "consent-declarations",
+            element: <ConsentDeclarations />,
           },
         ],
       },

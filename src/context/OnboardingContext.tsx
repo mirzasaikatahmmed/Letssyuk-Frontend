@@ -9,6 +9,9 @@ type OnboardingData = {
   physicalDevelopment?: any;
   trainingRoutine?: any;
   fatigueRecovery?: any;
+  lifestyleNutrition?: any;
+  goalsAmbition?: any;
+  consentDeclarations?: any;
 };
 
 type ContextType = {
