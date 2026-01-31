@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useClubFormContext } from "../context/AgentFormContext";
+import { useAgentFormContext } from "../context/AgentFormContext";
 
 const POSITIONS = [
   "Goalkeeper",
@@ -28,7 +28,7 @@ export default function SquadRosterStep({
   onNext,
   onBack,
 }: SquadRosterStepProps) {
-  const { formData, updateFormData } = useClubFormContext();
+  const { formData, updateFormData } = useAgentFormContext();
 
   const updatePlayer = (field: "name" | "position" | "age", value: string) => {
     updateFormData({

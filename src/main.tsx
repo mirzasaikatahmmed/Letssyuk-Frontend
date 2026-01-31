@@ -5,17 +5,15 @@ import { RouterProvider } from "react-router";
 import { Routes } from "./routes/Routes";
 import { ToastContainer } from "react-toastify";
 import { FormProvider } from "./main/club/onboarding/context/FormContext";
-import { ClubFormProvider } from "./main/agent/onboarding/context/AgentFormContext";
-// import { FormProvider } from "./main/agent/onboarding/context/FormContext";
-
+import { AgentFormProvider } from "./main/agent/onboarding/context/AgentFormContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <FormProvider>
-      <ClubFormProvider >
-      <RouterProvider router={Routes} />
-      <ToastContainer />
-      </ClubFormProvider>
+      <AgentFormProvider>
+        <RouterProvider router={Routes} />
+        <ToastContainer />
+      </AgentFormProvider>
     </FormProvider>
-  </StrictMode>
+  </StrictMode>,
 );

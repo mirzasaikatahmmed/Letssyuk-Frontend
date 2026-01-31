@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useClubFormContext } from "../context/AgentFormContext";
+import { useAgentFormContext } from "../context/AgentFormContext";
 import { FileText, LayoutDashboard } from "lucide-react";
 
 const REPORT_FORMATS = [
@@ -23,7 +23,7 @@ export default function WorkflowPreferencesStep({
   onNext,
   onBack,
 }: WorkflowPreferencesStepProps) {
-  const { formData, updateFormData } = useClubFormContext();
+  const { formData, updateFormData } = useAgentFormContext();
 
   const toggleNotification = (id: string) => {
     const current = formData.notifications;

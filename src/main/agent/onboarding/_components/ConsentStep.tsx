@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useClubFormContext } from "../context/AgentFormContext";
 import { Shield } from "lucide-react";
+import { useAgentFormContext } from "../context/AgentFormContext";
 
 interface ConsentStepProps {
   onComplete: () => void;
@@ -21,7 +21,7 @@ const CONSENT_ITEMS = [
 ];
 
 export default function ConsentStep({ onComplete, onBack }: ConsentStepProps) {
-  const { formData, updateFormData } = useClubFormContext();
+  const { formData, updateFormData } = useAgentFormContext();
 
   const handleToggle = (id: "ai" | "gdpr") => {
     if (id === "ai") {

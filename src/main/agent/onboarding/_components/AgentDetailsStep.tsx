@@ -8,21 +8,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useClubFormContext } from "../context/AgentFormContext";
+import { useAgentFormContext } from "../context/AgentFormContext";
 
-interface ClubDetailsStepProps {
+interface AgentDetailsStepProps {
   onNext: () => void;
 }
 
-export default function AgentDetailsStep({ onNext }: ClubDetailsStepProps) {
-  const { formData, updateFormData } = useClubFormContext();
+export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
+  const { formData, updateFormData } = useAgentFormContext();
 
   const canProceed =
     formData.fullName && formData.email && formData.phone && formData.country;
 
   return (
-    <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
-      <h2 className="text-2xl font-bold text-white mb-2">Club Details</h2>
+    <div className="w-full max-w-4xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
+      <h2 className="text-2xl font-bold text-white mb-2">Agent Details</h2>
       <p className="text-gray-400 text-sm mb-6">
         This information helps clubs verify your professional identity.
       </p>
@@ -46,16 +46,16 @@ export default function AgentDetailsStep({ onNext }: ClubDetailsStepProps) {
 
         <div>
           <Label
-            htmlFor="clubName"
+            htmlFor="agencyName"
             className="text-gray-300 text-sm font-medium"
           >
-            Club Name <span className="text-gray-500 text-xs">(optional)</span>
+            Agency Name
           </Label>
           <Input
-            id="clubName"
-            placeholder="Enter your club name (optional)"
-            value={formData.clubName}
-            onChange={(e) => updateFormData({ clubName: e.target.value })}
+            id="agencyName"
+            placeholder="Enter your agency name"
+            value={formData.agencyName}
+            onChange={(e) => updateFormData({ agencyName: e.target.value })}
             className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
           />
         </div>
@@ -108,7 +108,7 @@ export default function AgentDetailsStep({ onNext }: ClubDetailsStepProps) {
             <SelectTrigger className="mt-2 bg-[#161d26] border-slate-700 text-white h-12 rounded-xl w-full">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
-            <SelectContent className="bg-[#161d26] border-slate-700">
+            <SelectContent className="bg-[#161d26] border-slate-700 text-white">
               <SelectItem value="England">England</SelectItem>
               <SelectItem value="Spain">Spain</SelectItem>
               <SelectItem value="France">France</SelectItem>

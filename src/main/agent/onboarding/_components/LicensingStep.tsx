@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useClubFormContext } from "../context/AgentFormContext";
 import { Shield } from "lucide-react";
+import { useAgentFormContext } from "../context/AgentFormContext";
 
 interface LicensingStepProps {
   onNext: () => void;
@@ -10,7 +10,7 @@ interface LicensingStepProps {
 }
 
 export default function LicensingStep({ onNext, onBack }: LicensingStepProps) {
-  const { formData, updateFormData } = useClubFormContext();
+  const { formData, updateFormData } = useAgentFormContext();
 
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">

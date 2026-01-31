@@ -7,9 +7,9 @@ export interface ClubPlayer {
   age: string;
 }
 
-export interface ClubFormData {
+export interface AgentFormData {
   fullName: string;
-  clubName: string;
+  agencyName: string;
   email: string;
   phone: string;
   country: string;
@@ -25,16 +25,16 @@ export interface ClubFormData {
   consentGDPR: boolean;
 }
 
-interface ClubFormContextType {
-  formData: ClubFormData;
-  updateFormData: (data: Partial<ClubFormData>) => void;
+interface AgentFormContextType {
+  formData: AgentFormData;
+  updateFormData: (data: Partial<AgentFormData>) => void;
 }
 
-const ClubFormContext = createContext<ClubFormContextType | undefined>(undefined);
+const AgentFormContext = createContext<AgentFormContextType | undefined>(undefined);
 
-const initialFormData: ClubFormData = {
+const initialFormData: AgentFormData = {
   fullName: "",
-  clubName: "",
+  agencyName: "",
   email: "",
   phone: "",
   country: "",
@@ -50,24 +50,24 @@ const initialFormData: ClubFormData = {
   consentGDPR: false,
 };
 
-export function ClubFormProvider({ children }: { children: React.ReactNode }) {
-  const [formData, setFormData] = useState<ClubFormData>(initialFormData);
+export function AgentFormProvider({ children }: { children: React.ReactNode }) {
+  const [formData, setFormData] = useState<AgentFormData>(initialFormData);
 
-  const updateFormData = (data: Partial<ClubFormData>) => {
+  const updateFormData = (data: Partial<AgentFormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
   };
 
   return (
-    <ClubFormContext.Provider value={{ formData, updateFormData }}>
+    <AgentFormContext.Provider value={{ formData, updateFormData }}>
       {children}
-    </ClubFormContext.Provider>
+    </AgentFormContext.Provider>
   );
 }
 
-export function useClubFormContext() {
-  const context = useContext(ClubFormContext);
+export function useAgentFormContext() {
+  const context = useContext(AgentFormContext);
   if (!context) {
-    throw new Error("useClubFormContext must be used within ClubFormProvider");
+    throw new Error("useAgentFormContext must be used within AgentFormProvider");
   }
   return context;
 }

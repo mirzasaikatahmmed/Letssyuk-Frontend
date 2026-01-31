@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useClubFormContext } from "./context/AgentFormContext";
 import WizardHeader from "./_components/WizardHeader";
 import StepIndicator from "./_components/StepIndicator";
 import AgentDetailsStep from "./_components/AgentDetailsStep";
@@ -9,6 +8,7 @@ import ServicesRequiredStep from "./_components/ServicesRequiredStep";
 import WorkflowPreferencesStep from "./_components/WorkflowPreferencesStep";
 import ConsentStep from "./_components/ConsentStep";
 import type { StepItem } from "./_components/StepIndicator";
+import { useAgentFormContext } from "./context/AgentFormContext";
 
 const STEPS: StepItem[] = [
   { id: 1, label: "Agent Details" },
@@ -21,7 +21,7 @@ const STEPS: StepItem[] = [
 
 export default function AgentOnboarding() {
   const [currentStep, setCurrentStep] = useState(1);
-  const { formData } = useClubFormContext();
+  const { formData } = useAgentFormContext();
 
   const handleNext = () => {
     if (currentStep < STEPS.length) {
@@ -36,7 +36,7 @@ export default function AgentOnboarding() {
   };
 
   const handleComplete = () => {
-    console.log("Club Onboarding - Form submitted with data:", formData);
+    console.log("Agent Onboarding - Form submitted with data:", formData);
     alert("Setup Complete! Check browser console (F12) for form data.");
   };
 

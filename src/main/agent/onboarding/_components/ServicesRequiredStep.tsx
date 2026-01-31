@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { useClubFormContext } from "../context/AgentFormContext";
 import {
   BarChart3,
   CircleDot,
@@ -8,6 +7,7 @@ import {
   RefreshCw,
   Target,
 } from "lucide-react";
+import { useAgentFormContext } from "../context/AgentFormContext";
 
 const PRIMARY_GOALS = [
   {
@@ -51,7 +51,7 @@ export default function ServicesRequiredStep({
   onNext,
   onBack,
 }: ServicesRequiredStepProps) {
-  const { formData, updateFormData } = useClubFormContext();
+  const { formData, updateFormData } = useAgentFormContext(); 
 
   const canProceed = !!formData.primaryGoal;
 
