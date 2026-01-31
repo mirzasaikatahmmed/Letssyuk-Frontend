@@ -9,7 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useClubFormContext } from "../context/ClubFormContext";
-import { Plus } from "lucide-react";
 
 const POSITIONS = [
   "Goalkeeper",
@@ -28,30 +27,19 @@ interface SquadRosterStepProps {
 export default function SquadRosterStep({ onNext, onBack }: SquadRosterStepProps) {
   const { formData, updateFormData } = useClubFormContext();
 
-  const addPlayer = () => {
+  const updatePlayer = (field: "name" | "position" | "age", value: string) => {
     updateFormData({
-      players: [
-        ...formData.players,
-        { name: "", position: "", age: "" },
-      ],
+      player: { ...formData.player, [field]: value },
     });
   };
 
-  const updatePlayer = (index: number, field: "name" | "position" | "age", value: string) => {
-    const updated = [...formData.players];
-    updated[index] = { ...updated[index], [field]: value };
-    updateFormData({ players: updated });
-  };
-
-  const removePlayer = (index: number) => {
-    const updated = formData.players.filter((_, i) => i !== index);
-    updateFormData({ players: updated });
-  };
-
+  const playerFilled =
+    formData.player.name || formData.player.position || formData.player.age;
+  const playerComplete =
+    formData.player.name && formData.player.position && formData.player.age;
   const canProceed =
     formData.numberOfPlayers &&
-    (formData.players.length === 0 ||
-      formData.players.every((p) => p.name && p.position && p.age));
+    (!playerFilled || playerComplete);
 
   return (
     <div className="w-full max-w-2xl border border-[#53DDF5]/30 rounded-2xl p-8 bg-[#11161D]">
@@ -77,68 +65,46 @@ export default function SquadRosterStep({ onNext, onBack }: SquadRosterStepProps
 
         <div>
           <Label className="text-gray-300 text-sm font-medium block mb-1">
-            Add Minimum 1 Player to start <span className="text-gray-500">(Optional)</span>
+            Add 1 Player to start <span className="text-gray-500">(Optional)</span>
           </Label>
           <p className="text-gray-500 text-xs mb-4">
             You can add players later inside the dashboard.
           </p>
 
-          {formData.players.map((player, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-[1fr_140px_80px_auto] gap-3 mb-3 items-end"
-            >
-              <div>
-                <Input
-                  placeholder="Player name"
-                  value={player.name}
-                  onChange={(e) => updatePlayer(index, "name", e.target.value)}
-                  className="bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-11 rounded-xl"
-                />
-              </div>
-              <Select
-                value={player.position}
-                onValueChange={(value) => updatePlayer(index, "position", value)}
-              >
-                <SelectTrigger className="bg-[#161d26] border-slate-700 text-gray-400 h-11 rounded-xl">
-                  <SelectValue placeholder="Position" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#161d26] border-slate-700">
-                  {POSITIONS.map((pos) => (
-                    <SelectItem key={pos} value={pos}>
-                      {pos}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="grid grid-cols-[1fr_140px_80px] gap-3 items-end">
+            <div>
               <Input
-                placeholder="Age"
-                type="number"
-                min="16"
-                max="50"
-                value={player.age}
-                onChange={(e) => updatePlayer(index, "age", e.target.value)}
+                placeholder="Player name"
+                value={formData.player.name}
+                onChange={(e) => updatePlayer("name", e.target.value)}
                 className="bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-11 rounded-xl"
               />
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => removePlayer(index)}
-                className="border-red-500/50 text-red-400 hover:bg-red-500/10 h-11"
-              >
-                Remove
-              </Button>
             </div>
-          ))}
-
-          <Button
-            type="button"
-            variant="outline"
-            onClick={addPlayer}
-            className="border-[#53DDF5]/50 text-[#53DDF5] hover:bg-[#53DDF5]/10 mt-2"
-          >
-            <Plus className="w-4 h-4 mr-2" /> Add Player
-          </Button>
+            <Select
+              value={formData.player.position}
+              onValueChange={(value) => updatePlayer("position", value)}
+            >
+              <SelectTrigger className="bg-[#161d26] border-slate-700 text-gray-400 h-11 rounded-xl">
+                <SelectValue placeholder="Position" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#161d26] border-slate-700">
+                {POSITIONS.map((pos) => (
+                  <SelectItem key={pos} value={pos}>
+                    {pos}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Input
+              placeholder="Age"
+              type="number"
+              min="16"
+              max="50"
+              value={formData.player.age}
+              onChange={(e) => updatePlayer("age", e.target.value)}
+              className="bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-11 rounded-xl"
+            />
+          </div>
         </div>
       </div>
 

@@ -17,7 +17,7 @@ export interface ClubFormData {
   licensingAuthority: string;
   licenseNumber: string;
   numberOfPlayers: string;
-  players: ClubPlayer[];
+  player: ClubPlayer;
   primaryGoal: string;
   reportFormat: string;
   notifications: string[];
@@ -42,7 +42,7 @@ const initialFormData: ClubFormData = {
   licensingAuthority: "",
   licenseNumber: "",
   numberOfPlayers: "",
-  players: [],
+  player: { name: "", position: "", age: "" },
   primaryGoal: "",
   reportFormat: "",
   notifications: [],
