@@ -3,8 +3,8 @@ import logo from "@/assets/logo/logo.png";
 
 const OnboardingNavbar = () => {
   return (
-    <header className="w-full bg-[#0a0c14] px-8 pt-8 pb-4">
-      <div className="max-w-7xl mx-auto">
+    <header className="w-full px-8 pt-8 pb-4">
+      <div className="">
         {/* Top Row: Logo and Badge */}
         <div className="flex justify-between items-center mb-6">
           {/* Logo Section */}
@@ -34,7 +34,7 @@ const OnboardingNavbar = () => {
           </h1>
 
           {/* Horizontal Line */}
-          <div className="w-full h-px bg-gray-800/50"></div>
+          <div className="w-full h-px bg-gray-800"></div>
         </div>
       </div>
     </header>

@@ -43,7 +43,7 @@ const PersonalDetails = () => {
         className="bg-[#0b1219] border border-slate-800 rounded-xl p-8 space-y-6 shadow-2xl"
       >
         {/* Info Box */}
-        <div className="flex gap-3 bg-[#112429] border border-cyan-900/50 p-4 rounded-lg items-start">
+        <div className="flex items-center gap-3 bg-[#112429] border border-cyan-900/50 p-4 rounded-lg">
           <Info className="text-cyan-500 shrink-0 mt-0.5" size={18} />
           <p className="text-cyan-100/80 text-xs leading-relaxed">
             We collect your personal details to create your unique athlete
@@ -54,7 +54,7 @@ const PersonalDetails = () => {
         {/* Fields */}
         <div className="space-y-5">
           {/* Full Name */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Full Name*
             </label>
@@ -69,7 +69,7 @@ const PersonalDetails = () => {
           </div>
 
           {/* Email */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Email Address*
             </label>
@@ -81,7 +81,7 @@ const PersonalDetails = () => {
           </div>
 
           {/* DOB */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Date of birth*
             </label>
@@ -93,7 +93,7 @@ const PersonalDetails = () => {
           </div>
 
           {/* Nationality */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Select Nationality*
             </label>
@@ -108,7 +108,7 @@ const PersonalDetails = () => {
           </div>
 
           {/* Gender */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">Gender*</label>
             <select
               {...register("gender", { required: true })}
@@ -120,7 +120,7 @@ const PersonalDetails = () => {
           </div>
 
           {/* Language */}
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">
               Preferred Language*
             </label>

@@ -34,12 +34,12 @@ const PlayerOnboardingLayout = () => {
       <div className="min-h-screen bg-[#0b0f14] flex justify-center">
         <div className="w-full py-5 px-6">
           {/* Top Navbar */}
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full max-w-5xl mx-auto">
             <OnboardingNavbar />
           </div>
 
           {/* Form Wrapper */}
-          <div className="w-full max-w-3xl mx-auto">
+          <div className="w-full max-w-4xl mx-auto">
             <div className="">
               {/* Progress Bar */}
               <div className="mt-3">
