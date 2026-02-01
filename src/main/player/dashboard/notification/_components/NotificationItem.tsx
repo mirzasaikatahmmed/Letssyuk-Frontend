@@ -8,7 +8,7 @@ import {
 
 
 export const NotificationItem = ({ icon: Icon, title, description, time, priority, actionText }: any) => {
-  const priorityColors = {
+  const priorityColors : any = {
     "High Priority": "bg-red-500/10 text-red-500 border-red-500/20",
     "Medium": "bg-amber-500/10 text-amber-500 border-amber-500/20"
   };
