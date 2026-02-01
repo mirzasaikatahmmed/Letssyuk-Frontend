@@ -11,6 +11,7 @@ import OutputPreferencesStep from './_components/OutputPreferencesStep';
 import ConsentStep from './_components/ConsentStep';
 import WizardHeader from './_components/WizardHeader';
 import StepIndicator from './_components/StepIndicator';
+import { useNavigate } from 'react-router';
 
 
 const STEPS = [
@@ -26,7 +27,7 @@ const STEPS = [
 export default function ClubOnboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const { formData } = useFormContext();
-
+const navigate = useNavigate()
   const handleNext = () => {
     if (currentStep < STEPS.length) {
       setCurrentStep(currentStep + 1);
@@ -42,6 +43,7 @@ export default function ClubOnboarding() {
   const handleComplete = () => {
     console.log('Form submitted with data:', formData);
     alert('Setup Complete! Check console for form data.');
+        navigate("/club/dashboard/overview")
   };
 
   const renderStep = () => {

@@ -48,7 +48,7 @@ const ConsentDeclarations = () => {
     }
 
     console.log(payload)
-
+     navigate("/player/dashboard/overview")
     alert("Onboarding Complete! Check the browser console (F12) to see all form data.");
 
     // navigate("/dashboard");

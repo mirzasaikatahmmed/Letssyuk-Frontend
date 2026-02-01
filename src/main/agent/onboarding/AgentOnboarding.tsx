@@ -9,6 +9,7 @@ import WorkflowPreferencesStep from "./_components/WorkflowPreferencesStep";
 import ConsentStep from "./_components/ConsentStep";
 import type { StepItem } from "./_components/StepIndicator";
 import { useAgentFormContext } from "./context/AgentFormContext";
+import { useNavigate } from "react-router";
 
 const STEPS: StepItem[] = [
   { id: 1, label: "Agent Details" },
@@ -20,6 +21,7 @@ const STEPS: StepItem[] = [
 ];
 
 export default function AgentOnboarding() {
+  const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(1);
   const { formData } = useAgentFormContext();
 
@@ -36,6 +38,7 @@ export default function AgentOnboarding() {
   };
 
   const handleComplete = () => {
+    navigate("/agent/dashboard/overview")
     console.log("Agent Onboarding - Form submitted with data:", formData);
     alert("Setup Complete! Check browser console (F12) for form data.");
   };
