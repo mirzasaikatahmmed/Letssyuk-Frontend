@@ -39,6 +39,9 @@ import AvailablePlayers from "@/main/club/dashboard/availablePlayers/AvailablePl
 import { AvailablePlayerDetails } from "@/main/club/dashboard/availablePlayers/_components/AvailablePlayerDetails";
 import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
 import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
+import ClubUserProfile from "@/main/club/dashboard/profile/ClubUserProfile";
+import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAndSupport";
+import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
 // import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
 
 
@@ -118,6 +121,18 @@ export const Routes = createBrowserRouter([
             path: "available-players/:id",
             element: <AvailablePlayerDetails />,
           },
+          {
+            path: "profile",
+            element: <ClubUserProfile />
+          },
+          {
+            path: "support",
+            element: <ClubHelpAndSupport />
+          },
+          {
+            path: "notifications" , 
+            element: <ClubNotification />
+          }
         ],
       },
       {
