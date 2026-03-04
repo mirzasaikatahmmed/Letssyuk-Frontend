@@ -7,10 +7,30 @@ interface Plan {
 
 const plans: Plan[] = [
   { name: "Free", price: "$0", users: "542 users", dotColor: "bg-gray-500" },
-  { name: "Free (Under-18)", price: "$0", users: "188 users", dotColor: "bg-gray-500" },
-  { name: "Pro Monthly", price: "$29", users: "1,456 users", dotColor: "bg-cyan-400" },
-  { name: "Club Monthly", price: "$99", users: "248 users", dotColor: "bg-amber-400" },
-  { name: "Enterprise Annual", price: "$1,200", users: "112 users", dotColor: "bg-purple-400" },
+  {
+    name: "Free (Under-18)",
+    price: "$0",
+    users: "188 users",
+    dotColor: "bg-gray-500",
+  },
+  {
+    name: "Pro Monthly",
+    price: "$29",
+    users: "1,456 users",
+    dotColor: "bg-cyan-400",
+  },
+  {
+    name: "Club Monthly",
+    price: "$99",
+    users: "248 users",
+    dotColor: "bg-amber-400",
+  },
+  {
+    name: "Enterprise Annual",
+    price: "$1,200",
+    users: "112 users",
+    dotColor: "bg-purple-400",
+  },
 ];
 
 const SubscriptionPlansPanel = () => {
