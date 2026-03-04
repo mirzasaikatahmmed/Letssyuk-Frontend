@@ -15,6 +15,7 @@ interface DataTableProps<T> {
   currentPage?: number;
   totalPages?: number;
   onPageChange?: (page: number) => void;
+  emptyMessage?: string;
 }
 
 function DataTable<T extends Record<string, any>>({
@@ -23,18 +24,19 @@ function DataTable<T extends Record<string, any>>({
   currentPage = 1,
   totalPages = 1,
   onPageChange,
+  emptyMessage = "No data found.",
 }: DataTableProps<T>) {
   return (
     <div className="bg-transparent overflow-hidden">
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="border-b border-gray-200">
-            <tr>
+          <thead>
+            <tr className="border-b border-white/[0.07]">
               {columns.map((column, index) => (
                 <th
                   key={index}
-                  className={`px-4 sm:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider ${
+                  className={`px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap ${
                     column.className || ""
                   }`}
                 >
@@ -43,51 +45,62 @@ function DataTable<T extends Record<string, any>>({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
-            {data.map((item, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="hover:bg-gray-50 transition-colors"
-              >
-                {columns.map((column, colIndex) => (
-                  <td
-                    key={colIndex}
-                    className={`px-4 sm:px-6 py-3 sm:py-4 text-sm text-gray-900 ${
-                      column.className || ""
-                    }`}
-                  >
-                    {column.render
-                      ? column.render(item)
-                      : String(item[column.key as keyof T] || "")}
-                  </td>
-                ))}
+          <tbody className="divide-y divide-white/4">
+            {data.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="px-6 py-10 text-center text-sm text-gray-500"
+                >
+                  {emptyMessage}
+                </td>
               </tr>
-            ))}
+            ) : (
+              data.map((item, rowIndex) => (
+                <tr
+                  key={rowIndex}
+                  className="hover:bg-white/2 transition-colors"
+                >
+                  {columns.map((column, colIndex) => (
+                    <td
+                      key={colIndex}
+                      className={`px-4 sm:px-6 py-3 sm:py-4 text-sm text-gray-300 ${
+                        column.className || ""
+                      }`}
+                    >
+                      {column.render
+                        ? column.render(item)
+                        : String(item[column.key as keyof T] || "")}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-200 flex items-center justify-center gap-2">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 border-t border-white/[0.07] flex items-center justify-center gap-2">
           <button
             onClick={() => onPageChange?.(currentPage - 1)}
             disabled={currentPage === 1}
-            className="p-2 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="p-2 rounded-lg hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Previous page"
           >
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            <ArrowLeft className="w-4 h-4 text-gray-400" />
           </button>
-          {/* <span className="text-xs sm:text-sm text-gray-600 px-2">
-            Page {currentPage} of {totalPages}
-          </span> */}
+          <span className="text-xs text-gray-500 px-2">
+            {currentPage} / {totalPages}
+          </span>
           <button
             onClick={() => onPageChange?.(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="p-2 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="p-2 rounded-lg hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             aria-label="Next page"
           >
-            <ArrowRight  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
+            <ArrowRight className="w-4 h-4 text-gray-400" />
           </button>
         </div>
       )}

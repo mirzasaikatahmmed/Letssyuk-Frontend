@@ -55,7 +55,7 @@ const RecentSignups = () => {
     <div className="bg-[#0f1117] border border-white/[0.07] rounded-xl p-5 flex flex-col gap-4">
       <h3 className="text-white font-semibold text-sm">Recent Sign-ups</h3>
 
-      <div className="flex flex-col divide-y divide-white/[0.05]">
+      <div className="flex flex-col divide-y divide-white/5">
         {signups.map((entry, i) => (
           <div key={i} className="flex items-start justify-between py-3 first:pt-0 last:pb-0">
             <div className="flex flex-col gap-1.5">
