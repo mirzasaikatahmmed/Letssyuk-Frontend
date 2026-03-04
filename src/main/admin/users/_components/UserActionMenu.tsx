@@ -8,7 +8,7 @@ interface UserActionMenuProps {
   onDelete?: () => void;
 }
 
-const UserActionMenu = ({  onSuspend, onDelete }: UserActionMenuProps) => {
+const UserActionMenu = ({ onSuspend, onDelete }: UserActionMenuProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -41,14 +41,20 @@ const UserActionMenu = ({  onSuspend, onDelete }: UserActionMenuProps) => {
             View Details
           </button> */}
           <button
-            onClick={() => { onSuspend?.(); setOpen(false); }}
+            onClick={() => {
+              onSuspend?.();
+              setOpen(false);
+            }}
             className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-amber-400 hover:bg-amber-500/10 transition-colors"
           >
             <UserX className="w-4 h-4" />
             Suspend
           </button>
           <button
-            onClick={() => { onDelete?.(); setOpen(false); }}
+            onClick={() => {
+              onDelete?.();
+              setOpen(false);
+            }}
             className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
           >
             <MdPassword className="w-4 h-4" />

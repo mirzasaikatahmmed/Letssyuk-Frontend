@@ -4,6 +4,7 @@ import UsersFilterBar from "./_components/UsersFilterBar";
 import UserRoleBadge from "./_components/UserRoleBadge";
 import UserStatusBadge from "./_components/UserStatusBadge";
 import UserActionMenu from "./_components/UserActionMenu";
+import PageHeading from "./../_components/PageHeading/PageHeading";
 
 type Role = "Athlete" | "Agent" | "Club";
 type UserStatus = "Active" | "Suspended" | "Pending";
@@ -221,7 +222,10 @@ const AdminUsers = () => {
 
   return (
     <div className="min-h-screen bg-[#080a0f] p-4 sm:p-6 flex flex-col gap-6">
-      <p className="text-gray-400 text-sm">Manage all platform users</p>
+      <PageHeading
+        title="User Management"
+        subTitle="Manage all platform users"
+      />
 
       {/* Filters */}
       <UsersFilterBar

@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const AdminSupport = () => {
-    return (
-        <div className='text-white'>
-            adminsupports
-        </div>
-    );
+  return <div className="text-white">adminsupports</div>;
 };
 
 export default AdminSupport;

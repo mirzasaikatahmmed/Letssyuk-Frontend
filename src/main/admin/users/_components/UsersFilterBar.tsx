@@ -137,8 +137,7 @@ const UsersFilterBar = ({
       {/* Count Row */}
       <div className="flex items-center justify-between">
         <span className="text-gray-400 text-sm">
-          Showing{" "}
-          <span className="text-white font-medium">{showing}</span> of{" "}
+          Showing <span className="text-white font-medium">{showing}</span> of{" "}
           <span className="text-white font-medium">{total}</span> users
         </span>
         {hasActiveFilters && (

@@ -57,9 +57,14 @@ const RecentPayments = () => {
 
       <div className="flex flex-col divide-y divide-white/5">
         {payments.map((entry, i) => (
-          <div key={i} className="flex items-start justify-between py-3 first:pt-0 last:pb-0">
+          <div
+            key={i}
+            className="flex items-start justify-between py-3 first:pt-0 last:pb-0"
+          >
             <div className="flex flex-col gap-1.5">
-              <span className="text-white text-sm font-medium">{entry.name}</span>
+              <span className="text-white text-sm font-medium">
+                {entry.name}
+              </span>
               <div className="flex items-center gap-2">
                 <span className="text-gray-500 text-[11px]">{entry.plan}</span>
                 <span
@@ -71,7 +76,9 @@ const RecentPayments = () => {
             </div>
 
             <div className="flex flex-col items-end gap-1 ml-3 shrink-0">
-              <span className="text-white text-sm font-semibold">{entry.amount}</span>
+              <span className="text-white text-sm font-semibold">
+                {entry.amount}
+              </span>
               <span className="text-gray-500 text-[11px]">{entry.date}</span>
             </div>
           </div>
