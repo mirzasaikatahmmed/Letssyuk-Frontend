@@ -42,6 +42,12 @@ import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
 import ClubUserProfile from "@/main/club/dashboard/profile/ClubUserProfile";
 import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAndSupport";
 import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
+import AdminLayout from "@/layout/AdminLayout";
+import AdminDashboard from "@/main/admin/dashboard/AdminDashboard";
+import AdminVerifications from "@/main/admin/verification/AdminVerifications";
+import AdminSupport from "@/main/admin/support/AdminSupport";
+import AdminPayments from "@/main/admin/payments/AdminPayments";
+import AdminUsers from "@/main/admin/users/AdminUsers";
 // import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
 
 
@@ -91,6 +97,32 @@ export const Routes = createBrowserRouter([
             path: "support",
             element: <PlayerHelpAndSupport />,
           },
+        ],
+      },
+      {
+        path: "admin/dashboard",
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <AdminDashboard />,
+          },
+          {
+            path: "verifications",
+            element: <AdminVerifications />,
+          },
+          {
+            path: "support",
+            element: <AdminSupport />,
+          },
+          {
+            path: "payments",
+            element: <AdminPayments />,
+          },
+          {
+            path: "users",
+            element: <AdminUsers />,
+          }
         ],
       },
       {
