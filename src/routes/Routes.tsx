@@ -11,6 +11,12 @@ import MentalHealth from "@/main/player/dashboard/home/_components/AiRecommendat
 import NutritionHydrationGuidance from "@/main/player/dashboard/home/_components/AiRecommendation/NutritionHydrationGuidance";
 import PriorityFocusAreas from "@/main/player/dashboard/home/_components/AiRecommendation/PriorityFocusAreas";
 import SuggestedWeeklyStructure from "@/main/player/dashboard/home/_components/AiRecommendation/SuggestedWeeklyStructure";
+import MatchPreparationSystem from "@/main/player/dashboard/home/_components/AiRecommendation/MatchPreparationSystem";
+import TechnicalSkillsEngine from "@/main/player/dashboard/home/_components/AiRecommendation/TechnicalSkillsEngine";
+import PhysicalPerformanceDashboard from "@/main/player/dashboard/home/_components/AiRecommendation/PhysicalPerformanceDashboard";
+import TacticalAwarenessAssistant from "@/main/player/dashboard/home/_components/AiRecommendation/TacticalAwarenessAssistant";
+import PlayerDevelopmentPathway from "@/main/player/dashboard/home/_components/AiRecommendation/PlayerDevelopmentPathway";
+import RecoveryLoadManagement from "@/main/player/dashboard/home/_components/AiRecommendation/RecoveryLoadManagement";
 import PlayerDHome from "@/main/player/dashboard/home/PlayerDHome";
 import PlayerHelpAndSupport from "@/main/player/dashboard/helpAndSupport/PlayerHelpAndSupport";
 import PlayerNotifications from "@/main/player/dashboard/notification/PlayerNotifications";
@@ -73,6 +79,30 @@ export const Routes = createBrowserRouter([
           {
             path: "overview/mental-health",
             element: <MentalHealth />,
+          },
+          {
+            path: "overview/match-preparation-system",
+            element: <MatchPreparationSystem />,
+          },
+          {
+            path: "overview/technical-skills-engine",
+            element: <TechnicalSkillsEngine />,
+          },
+          {
+            path: "overview/physical-performance-dashboard",
+            element: <PhysicalPerformanceDashboard />,
+          },
+          {
+            path: "overview/tactical-awareness-assistant",
+            element: <TacticalAwarenessAssistant />,
+          },
+          {
+            path: "overview/player-development-pathway",
+            element: <PlayerDevelopmentPathway />,
+          },
+          {
+            path: "overview/recovery-load-management",
+            element: <RecoveryLoadManagement />,
           },
           {
             path: "data",
