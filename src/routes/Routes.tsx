@@ -44,7 +44,6 @@ import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAnd
 import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
 // import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
 
-
 export const Routes = createBrowserRouter([
   {
     path: "/",
@@ -123,16 +122,16 @@ export const Routes = createBrowserRouter([
           },
           {
             path: "profile",
-            element: <ClubUserProfile />
+            element: <ClubUserProfile />,
           },
           {
             path: "support",
-            element: <ClubHelpAndSupport />
+            element: <ClubHelpAndSupport />,
           },
           {
-            path: "notifications" , 
-            element: <ClubNotification />
-          }
+            path: "notifications",
+            element: <ClubNotification />,
+          },
         ],
       },
       {
@@ -167,11 +166,11 @@ export const Routes = createBrowserRouter([
       },
       {
         path: "club/onboarding",
-        element: <ClubOnboarding />
+        element: <ClubOnboarding />,
       },
       {
-        path: "agent/onboarding", 
-        element: <AgentOnboarding />
+        path: "agent/onboarding",
+        element: <AgentOnboarding />,
       },
       {
         path: "player/onboarding",

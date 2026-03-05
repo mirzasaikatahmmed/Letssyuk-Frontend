@@ -38,7 +38,6 @@ const FatigueRecovery = () => {
   const onSubmit = (values: FormValues) => {
     updateStep("fatigueRecovery", values);
 
-   
     navigate("../lifestyle-nutrition");
   };
 
@@ -58,9 +57,9 @@ const FatigueRecovery = () => {
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-8 shadow-2xl"
       >
         {/* Info Box */}
-        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/30 p-4 rounded-xl items-start">
-          <Info className="text-cyan-500 shrink-0 mt-0.5" size={18} />
-          <p className="text-cyan-100/60 text-[11px] leading-relaxed">
+        <div className="flex items-center gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl">
+          <Info className="text-cyan-500 shrink-0 mt-0.5" size={20} />
+          <p className="text-cyan-100/70 text-base leading-relaxed">
             Your physical profile and self-assessment help our AI provide
             personalized development recommendations and match you with suitable
             opportunities.
@@ -128,9 +127,9 @@ const FatigueRecovery = () => {
                   setValue("fatigueLevel", level);
                   trigger("fatigueLevel");
                 }}
-                className={`flex-1 py-3 rounded-lg border transition-all font-bold ${
+                className={`flex-1 py-3 rounded-lg border transition-all font-bold cursor-pointer ${
                   watch("fatigueLevel") === level
-                    ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
+                    ? "bg-cyan-500 border-cyan-500 text-black shadow-[0_0_10px_rgba(6,182,212,0.1)]"
                     : "bg-[#111820] border-slate-800 text-gray-500"
                 }`}
               >
@@ -138,7 +137,7 @@ const FatigueRecovery = () => {
               </button>
             ))}
           </div>
-          <div className="flex justify-between text-[10px] text-gray-500 px-1 italic">
+          <div className="flex justify-between text-[10px] text-gray-500 px-1">
             <span>Very fresh</span>
             <span>Extremely fatigued</span>
           </div>
@@ -165,7 +164,7 @@ const FatigueRecovery = () => {
             placeholder="e.g., Minor hamstring strain in August 2025 (2 weeks out)"
             className="w-full bg-[#111820] border border-slate-800 rounded-xl px-4 py-3 h-24 outline-none focus:border-cyan-500/50 transition-colors text-sm resize-none"
           />
-          <p className="text-[10px] text-gray-500 italic">
+          <p className="text-[10px] text-gray-500">
             This helps us provide safer development recommendations
           </p>
         </div>
@@ -221,9 +220,9 @@ const FatigueRecovery = () => {
                   setValue("hasSponsorship", "yes");
                   trigger("hasSponsorship");
                 }}
-                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
+                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all cursor-pointer ${
                   watch("hasSponsorship") === "yes"
-                    ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
+                    ? "bg-cyan-500 border-cyan-500/50 text-black"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
               >
@@ -235,9 +234,9 @@ const FatigueRecovery = () => {
                   setValue("hasSponsorship", "no");
                   trigger("hasSponsorship");
                 }}
-                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
+                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all cursor-pointer ${
                   watch("hasSponsorship") === "no"
-                    ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
+                    ? "bg-cyan-500 border-cyan-500/50 text-black"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
               >
@@ -268,9 +267,9 @@ const FatigueRecovery = () => {
                   setValue("openToSponsorship", "yes");
                   trigger("openToSponsorship");
                 }}
-                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
+                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all cursor-pointer ${
                   watch("openToSponsorship") === "yes"
-                    ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
+                    ? "bg-cyan-500 border-cyan-500/50 text-black"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
               >
@@ -282,9 +281,9 @@ const FatigueRecovery = () => {
                   setValue("openToSponsorship", "no");
                   trigger("openToSponsorship");
                 }}
-                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all ${
+                className={`py-3.5 rounded-xl border text-[11px] font-medium transition-all cursor-pointer ${
                   watch("openToSponsorship") === "no"
-                    ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
+                    ? "bg-cyan-500 border-cyan-500/50 text-black"
                     : "bg-[#111820] border-slate-800/80 text-gray-500 hover:border-slate-700"
                 }`}
               >

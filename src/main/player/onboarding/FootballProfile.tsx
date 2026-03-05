@@ -45,7 +45,6 @@ const FootballProfile = () => {
   const onSubmit = (values: FormValues) => {
     updateStep("footballProfile", values);
 
-
     navigate("../career-history");
   };
 
@@ -65,7 +64,7 @@ const FootballProfile = () => {
       >
         <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl items-center">
           <Info className="text-cyan-500 shrink-0" size={20} />
-          <p className="text-cyan-100/70 text-xs leading-relaxed">
+          <p className="text-cyan-100/70 text-base leading-relaxed">
             Your football profile helps us match you with the right
             opportunities and provide position-specific development guidance.
           </p>

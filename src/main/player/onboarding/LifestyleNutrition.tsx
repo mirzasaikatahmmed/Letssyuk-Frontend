@@ -60,10 +60,10 @@ const LifestyleNutrition = () => {
               key={opt}
               type="button"
               onClick={() => setValue(field, opt, { shouldValidate: true })}
-              className={`h-11 rounded-xl border text-sm font-medium transition-all
+              className={`h-11 rounded-xl border text-sm font-medium transition-all cursor-pointer
                 ${
                   selected === opt
-                    ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
+                    ? "bg-cyan-500 border-cyan-500 text-black"
                     : "bg-[#111820] border-slate-800 text-gray-500 hover:border-slate-700"
                 }`}
             >
@@ -80,9 +80,7 @@ const LifestyleNutrition = () => {
 
   return (
     <div className="p-4 text-white">
-      <h2 className="text-xl font-bold mb-10">
-        Lifestyle & Nutrition Habits
-      </h2>
+      <h2 className="text-xl font-bold mb-10">Lifestyle & Nutrition Habits</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -98,6 +96,10 @@ const LifestyleNutrition = () => {
             <p className="text-cyan-100/60 text-[11px] leading-relaxed">
               We collect lifestyle habits to understand your routine, not to
               provide medical or nutritional advice.
+            </p>
+            <p className="text-cyan-100/60 text-[11px] leading-relaxed">
+              This section is entirely optional. Used for AI career insights
+              only.
             </p>
           </div>
         </div>

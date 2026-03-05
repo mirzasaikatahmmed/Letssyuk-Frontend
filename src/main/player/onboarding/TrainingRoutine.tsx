@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/incompatible-library */
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Info, Save, ChevronLeft, ChevronRight } from "lucide-react";
@@ -39,9 +38,6 @@ const TrainingRoutine = () => {
   const onSubmit = (values: FormValues) => {
     updateStep("trainingRoutine", { ...values, focusAreas });
 
-
-   
-
     navigate("../fatigue-recovery");
   };
 
@@ -67,9 +63,9 @@ const TrainingRoutine = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-6 shadow-2xl"
       >
-        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl items-start">
+        <div className="flex items-center gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl">
           <Info className="text-cyan-500 shrink-0 mt-0.5" size={20} />
-          <p className="text-cyan-100/70 text-xs leading-relaxed">
+          <p className="text-cyan-100/70 text-base leading-relaxed">
             Understanding your training routine helps us provide balanced,
             realistic development recommendations tailored to your current
             schedule.
@@ -229,9 +225,9 @@ const TrainingRoutine = () => {
                   key={area}
                   type="button"
                   onClick={() => toggleFocusArea(area)}
-                  className={`px-4 py-3.5 rounded-xl border text-sm font-medium transition-all text-center ${
+                  className={`px-4 py-3.5 rounded-xl border text-sm font-medium transition-all text-center cursor-pointer ${
                     focusAreas.includes(area)
-                      ? "bg-cyan-500/10 border-cyan-500 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.1)]"
+                      ? "bg-cyan-500 border-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.1)]"
                       : "bg-[#111820] border-slate-800 text-gray-400 hover:border-slate-700"
                   }`}
                 >

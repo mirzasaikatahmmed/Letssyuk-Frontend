@@ -94,8 +94,11 @@ const GoalsAmbitions = () => {
             </p>
             <p className="text-cyan-100/60 text-[11px] leading-relaxed">
               Your goals drive our entire recommendation system. Be specific and
-              honest. Your goals help our AI align opportunities and development
-              plans with your ambitions.
+              honest.
+            </p>
+            <p className="text-cyan-100/60 text-[11px] leading-relaxed">
+              Your goals help our AI align opportunities and development plans
+              with your ambitions.
             </p>
           </div>
         </div>
@@ -217,10 +220,10 @@ const GoalsAmbitions = () => {
                   shouldValidate: true,
                 })
               }
-              className={`py-6 rounded-xl border transition-all ${
+              className={`py-6 rounded-xl border transition-all cursor-pointer ${
                 willingToAdjust === "committed"
-                  ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
-                  : "bg-[#111820] border-slate-800 text-gray-500"
+                  ? "bg-cyan-500 border-cyan-500/50 text-black hover:bg-cyan-500 hover:text-black hover:border-cyan-500"
+                  : "bg-[#111820] border-slate-800 text-gray-500 hover:bg-cyan-500 hover:border-cyan-500/50 hover:text-black"
               }`}
             >
               Yes I'm committed
@@ -233,10 +236,10 @@ const GoalsAmbitions = () => {
                   shouldValidate: true,
                 })
               }
-              className={`py-6 rounded-xl border transition-all ${
+              className={`py-6 rounded-xl border transition-all cursor-pointer ${
                 willingToAdjust === "maintain"
-                  ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
-                  : "bg-[#111820] border-slate-800 text-gray-500"
+                  ? "bg-cyan-500 border-cyan-500/50 text-black hover:bg-cyan-500 hover:text-black hover:border-cyan-500"
+                  : "bg-[#111820] border-slate-800 text-gray-500 hover:bg-cyan-500 hover:border-cyan-500/50 hover:text-black"
               }`}
             >
               Prefer to maintain current routine
@@ -267,10 +270,10 @@ const GoalsAmbitions = () => {
               onClick={() =>
                 setValue("willingToRelocate", "yes", { shouldValidate: true })
               }
-              className={`py-6 rounded-xl border transition-all font-bold ${
+              className={`py-6 rounded-xl border transition-all font-bold cursor-pointer ${
                 willingToRelocate === "yes"
-                  ?"bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
-                  : "bg-[#111820] border-slate-800 text-gray-500"
+                  ? "bg-cyan-500 border-cyan-500/50 hover:bg-cyan-500 hover:text-black hover:border-cyan-500 text-black"
+                  : "bg-[#111820] border-slate-800 text-gray-500 hover:bg-cyan-500 hover:border-cyan-500/50 hover:text-black"
               }`}
             >
               Yes, I'm open to relocating.
@@ -281,10 +284,10 @@ const GoalsAmbitions = () => {
               onClick={() =>
                 setValue("willingToRelocate", "no", { shouldValidate: true })
               }
-              className={`py-6 rounded-xl border transition-all ${
+              className={`py-6 rounded-xl border transition-all cursor-pointer ${
                 willingToRelocate === "no"
-                  ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
-                  : "bg-[#111820] border-slate-800 text-gray-500"
+                  ? "bg-cyan-500 border-cyan-500/50 hover:bg-cyan-500 hover:text-black hover:border-cyan-500 text-black"
+                  : "bg-[#111820] border-slate-800 text-gray-500 hover:bg-cyan-500 hover:border-cyan-500/50 hover:text-black"
               }`}
             >
               Prefer to stay in current location
@@ -320,10 +323,10 @@ const GoalsAmbitions = () => {
                   type="button"
                   variant="outline"
                   onClick={() => toggleArea(area)}
-                  className={`justify-start h-11 px-4 rounded-xl border text-[11px] transition-all ${
+                  className={`justify-start h-11 px-4 rounded-xl border text-[11px] transition-all cursor-pointer ${
                     selectedAreas.includes(area)
-                      ? "bg-cyan-900/20 border-cyan-500/50 text-cyan-400"
-                      : "bg-[#111820] border-slate-800/60 text-gray-400"
+                      ? "bg-cyan-500 border-cyan-500/50 text-black hover:bg-cyan-500 hover:border-cyan-500 hover:text-black"
+                      : "bg-[#111820] border-slate-800/60 text-gray-400 hover:bg-cyan-500 hover:border-cyan-500/50 hover:text-black"
                   }`}
                 >
                   {area}

@@ -45,7 +45,7 @@ const PersonalDetails = () => {
         {/* Info Box */}
         <div className="flex items-center gap-3 bg-[#112429] border border-cyan-900/50 p-4 rounded-lg">
           <Info className="text-cyan-500 shrink-0 mt-0.5" size={18} />
-          <p className="text-cyan-100/80 text-xs leading-relaxed">
+          <p className="text-cyan-100/80 text-base leading-relaxed">
             We collect your personal details to create your unique athlete
             profile and ensure accurate AI-driven career intelligence.
           </p>

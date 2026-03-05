@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/incompatible-library */
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Info, Save, ChevronLeft, ChevronRight } from "lucide-react";
@@ -35,8 +34,6 @@ const CareerHistory = () => {
   const onSubmit = (values: FormValues) => {
     updateStep("careerHistory", values);
 
-
-
     navigate("../physical-development");
   };
 
@@ -55,7 +52,7 @@ const CareerHistory = () => {
         {/* Info Box */}
         <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl items-center">
           <Info className="text-cyan-500 shrink-0" size={20} />
-          <p className="text-cyan-100/70 text-xs leading-relaxed">
+          <p className="text-cyan-100/70 text-base leading-relaxed">
             Your match history helps our AI understand your playing experience
             and performance trends. This data is used for career insights only.
           </p>
@@ -187,35 +184,33 @@ const CareerHistory = () => {
             )}
           </div>
         </div>
-            {/* Navigation Buttons */}
-      <div className="flex justify-between items-center mt-10">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
-        >
-          <ChevronLeft size={18} /> Back
-        </button>
-
-        <div className="flex gap-4">
+        {/* Navigation Buttons */}
+        <div className="flex justify-between items-center mt-10">
           <button
-            type="button"
-            onClick={handleSubmit(onSaveLater)}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium cursor-pointer"
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium"
           >
-            Save & Continue Later <Save size={16} />
+            <ChevronLeft size={18} /> Back
           </button>
 
-          <button
-            type="submit"
-            className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg cursor-pointer"
-          >
-            Continue <ChevronRight size={18} />
-          </button>
+          <div className="flex gap-4">
+            <button
+              type="button"
+              onClick={handleSubmit(onSaveLater)}
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-800 text-gray-300 hover:bg-slate-800 transition-all text-sm font-medium cursor-pointer"
+            >
+              Save & Continue Later <Save size={16} />
+            </button>
+
+            <button
+              type="submit"
+              className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-[#234b52] hover:bg-[#2d5f68] text-cyan-100 transition-all text-sm font-medium shadow-lg cursor-pointer"
+            >
+              Continue <ChevronRight size={18} />
+            </button>
+          </div>
         </div>
-      </div>
       </form>
-
-  
     </div>
   );
 };

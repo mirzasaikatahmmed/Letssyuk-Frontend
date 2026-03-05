@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/incompatible-library */
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Info, Save, ChevronLeft, ChevronRight } from "lucide-react";
@@ -43,9 +42,9 @@ const PhysicalDevelopment = () => {
         className="bg-[#0b1219] border border-slate-800 rounded-2xl p-8 space-y-8 shadow-2xl"
       >
         {/* Info Box */}
-        <div className="flex gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl items-start">
+        <div className="flex items-center gap-3 bg-[#0d1e21] border border-cyan-900/40 p-4 rounded-xl">
           <Info className="text-cyan-500 shrink-0 mt-0.5" size={20} />
-          <p className="text-cyan-100/70 text-xs leading-relaxed">
+          <p className="text-cyan-100/70 text-base leading-relaxed">
             Your physical profile and self-assessment help our AI provide
             personalized development recommendations and match you with suitable
             opportunities.
