@@ -229,7 +229,7 @@ const TechnicalSkillsEngine = () => {
           </h3>
           <div className="text-[11px] font-bold">
             Total Duration:{" "}
-            <span className="bg-[#0D1E21] px-2 py-1 rounded border border-[#00BFAE]/20 ml-2">
+            <span className="text-white">
               60 minutes
             </span>
           </div>
