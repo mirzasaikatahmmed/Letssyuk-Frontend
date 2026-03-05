@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Sliders, Info, ChevronDown, ChevronLeft } from "lucide-react";
+import { Info, ChevronDown, ChevronLeft, Zap } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const TechnicalSkillsEngine = () => {
@@ -63,7 +63,7 @@ const TechnicalSkillsEngine = () => {
         <div className="flex items-center justify-between gap-4 flex-1 bg-[#111111] border border-gray-800 p-4 rounded-xl col-span-8">
           <div className="flex items-center gap-4">
             <div className="p-2 bg-[#001D21] rounded-lg border border-[#00BFAE]/20 hidden md:block">
-              <Sliders className="text-[#00BFAE]" size={24} />
+              <Zap className="text-[#00BFAE]" size={24} />
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">

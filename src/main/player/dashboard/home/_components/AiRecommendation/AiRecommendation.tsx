@@ -10,11 +10,11 @@ import {
   Heart,
   Info,
   Clock4,
-  Sliders,
   BarChart2,
   Brain,
   Battery,
   TrendingUp,
+  Zap,
 } from "lucide-react";
 import { useNavigate } from "react-router";
 
@@ -51,7 +51,7 @@ const AIRecommendations = () => {
     {
       title: "Technical Skills Engine",
       subtitle: "Skills assessment and development plan",
-      icon: <Sliders size={20} />,
+      icon: <Zap size={20} />,
       color: "#00BFAE",
       redirect: "technical-skills-engine",
     },
