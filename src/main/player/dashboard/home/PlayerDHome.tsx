@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import React from 'react';
-// import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, Target, Calendar, Zap } from 'lucide-react';
@@ -81,7 +78,7 @@ const PlayerDHome = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
            <div className="bg-[#0B0E14] p-4 rounded-xl border border-gray-800">
-              <div className="flex justify-between items-start items-end mb-2">
+              <div className="flex justify-between items-end mb-2">
                <div className="flex flex-col ">
                  <span className="text-xs text-gray-400">Progress</span>
                  <span className="text-2xl font-bold">68 <span className="text-sm">%</span></span>

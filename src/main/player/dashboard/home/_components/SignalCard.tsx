@@ -40,7 +40,7 @@ export const SignalCard = ({ label, value, unit, color, status }: any) => {
 
       <div
         style={{ backgroundColor: getRgba(color, 0.3) }}
-        className="flex items-center gap-1.5 p-1.5 px-3 rounded-md inline-flex"
+        className="flex items-center gap-1.5 p-1.5 px-3 rounded-md"
       >
         <span style={{ color: color }} className="text-sm">
           {isWarning ? <MdErrorOutline size={16} /> : <IoIosCheckmarkCircleOutline size={16} />}
