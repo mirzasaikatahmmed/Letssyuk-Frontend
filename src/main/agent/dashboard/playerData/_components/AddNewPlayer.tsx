@@ -93,7 +93,7 @@ const AddNewPlayer = () => {
               className={`flex items-center gap-2 px-5 py-3 text-[11px] font-bold uppercase tracking-widest whitespace-nowrap transition-all relative ${
                 activeTab === tab.name
                   ? "text-cyan-400"
-                  : "text-gray-500 hover:text-gray-300"
+                  : "text-gray-500 hover:text-gray-300 hover:cursor-pointer"
               }`}
             >
               {tab.icon}

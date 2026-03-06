@@ -1,8 +1,36 @@
-import React from "react";
-import { User, Upload, Save, Instagram, Twitter, Layout } from "lucide-react";
+import  { useState } from "react";
+import {
+  User,
+  Upload,
+  Save,
+  Instagram,
+  Twitter,
+  Layout,
+  ChevronDown,
+} from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
 
 const BasicInfoForm = () => {
+  const [selectedPosition, setSelectedPosition] = useState("Select Position");
+  const [isPositionOpen, setIsPositionOpen] = useState(false);
+  const [selectedFoot, setSelectedFoot] = useState("Right");
+  const [isFootOpen, setIsFootOpen] = useState(false);
+
+  const positions = [
+    "Goalkeeper",
+    "Centre Back",
+    "Left Back",
+    "Right Back",
+    "Defensive Midfielder",
+    "Centre Midfielder",
+    "Attacking Midfielder",
+    "Left Winger",
+    "Right Winger",
+    "Striker",
+  ];
+
+  const feet = ["Right", "Left", "Both"];
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Section: Player Photo */}
@@ -74,26 +102,104 @@ const BasicInfoForm = () => {
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
             />
           </div>
-          <div className="flex flex-col gap-2">
+
+          {/* Position Dropdown */}
+          <div className="flex flex-col gap-2 relative">
             <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
               Position *
             </label>
-            <input
-              type="text"
-              placeholder=""
-              className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
-            />
+            <div
+              onClick={() => setIsPositionOpen(!isPositionOpen)}
+              className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white flex items-center justify-between cursor-pointer hover:border-gray-700 transition-all focus-within:border-cyan-500/50"
+            >
+              <span
+                className={
+                  selectedPosition === "Select Position"
+                    ? "text-gray-700"
+                    : "text-white"
+                }
+              >
+                {selectedPosition}
+              </span>
+              <ChevronDown
+                size={16}
+                className={`text-gray-600 transition-transform duration-300 ${isPositionOpen ? "rotate-180" : ""}`}
+              />
+            </div>
+
+            {isPositionOpen && (
+              <div className="absolute top-[calc(100%+8px)] left-0 right-0 bg-[#0B0E14] border border-gray-800/60 rounded-2xl py-2 z-50 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                <div
+                  onClick={() => {
+                    setSelectedPosition("Select Position");
+                    setIsPositionOpen(false);
+                  }}
+                  className={`px-5 py-2.5 text-sm cursor-pointer transition-all ${
+                    selectedPosition === "Select Position"
+                      ? "bg-cyan-500 text-[#0B0E14] font-bold rounded-lg mx-2"
+                      : "text-gray-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  Select Position
+                </div>
+                {positions.map((pos) => (
+                  <div
+                    key={pos}
+                    onClick={() => {
+                      setSelectedPosition(pos);
+                      setIsPositionOpen(false);
+                    }}
+                    className={`px-5 py-2.5 text-sm cursor-pointer transition-all ${
+                      selectedPosition === pos
+                        ? "bg-cyan-400 text-[#0B0E14] font-bold rounded-lg mx-2"
+                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {pos}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="flex flex-col gap-2">
+
+          {/* Dominant Foot Dropdown */}
+          <div className="flex flex-col gap-2 relative">
             <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
               Dominant foot *
             </label>
-            <input
-              type="text"
-              placeholder=""
-              className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
-            />
+            <div
+              onClick={() => setIsFootOpen(!isFootOpen)}
+              className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white flex items-center justify-between cursor-pointer hover:border-gray-700 transition-all focus-within:border-cyan-500/50"
+            >
+              <span className="text-white">{selectedFoot}</span>
+              <ChevronDown
+                size={16}
+                className={`text-gray-600 transition-transform duration-300 ${isFootOpen ? "rotate-180" : ""}`}
+              />
+            </div>
+
+            {isFootOpen && (
+              <div className="absolute top-[calc(100%+8px)] left-0 right-0 bg-[#0B0E14] border border-gray-800/60 rounded-2xl py-2 z-50 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                {feet.map((foot) => (
+                  <div
+                    key={foot}
+                    onClick={() => {
+                      setSelectedFoot(foot);
+                      setIsFootOpen(false);
+                    }}
+                    className={`px-5 py-2.5 text-sm cursor-pointer transition-all ${
+                      selectedFoot === foot
+                        ? "bg-cyan-400 text-[#0B0E14] font-bold rounded-lg mx-2"
+                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {foot}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
           <div className="flex flex-col gap-2 md:col-span-2">
             <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
               Current Club *
