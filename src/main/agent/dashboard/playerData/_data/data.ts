@@ -41,6 +41,49 @@ export interface TimelineEvent {
   theme: "cyan" | "orange" | "gray";
 }
 
+export interface ClubMatch {
+  id: number;
+  name: string;
+  league: string;
+  logo: string;
+  color: string;
+  score: number;
+  matchLabel: string;
+  positionNeed: string;
+  tacticalSystem: string;
+  developmentPath: string;
+  contactStatus: string;
+  whyThisMatch: string;
+}
+
+export interface NegotiationPositioning {
+  currentMarketValue: string;
+  askingPrice: string;
+  realisticPrice: string;
+  leverage: string;
+  assessment: string;
+}
+
+export interface CareerPathwayStep {
+  number: number;
+  title: string;
+  timeframe: string;
+  badge?: string;
+  description: string;
+}
+
+export interface Opportunities {
+  topClubMatches: ClubMatch[];
+  immediateOpportunities: {
+    winterWindow: string;
+    summerWindow: string;
+    loanOption: string;
+    permanentMove: string;
+  };
+  negotiationPositioning: NegotiationPositioning;
+  careerPathway: CareerPathwayStep[];
+}
+
 export interface Scenario {
   title: string;
   financialValue: string;
@@ -81,6 +124,7 @@ export interface ContractDetails {
   timeline: TimelineEvent[];
   marketValueComparison: MarketValueComparison;
   scenarioComparison: ScenarioComparison;
+  opportunities: Opportunities;
 }
 
 export interface Player {
@@ -273,6 +317,95 @@ export const playersData: Player[] = [
           badge: "AI Recommended",
         },
       },
+      opportunities: {
+        topClubMatches: [
+          {
+            id: 1,
+            name: "AC Milan",
+            league: "Serie A • Italy",
+            logo: "ACM",
+            color: "bg-red-600",
+            score: 92,
+            matchLabel: "Best Match",
+            positionNeed: "Creative midfielder",
+            tacticalSystem: "Attacking 4-2-3-1",
+            developmentPath: "Excellent",
+            contactStatus: "Scout present",
+            whyThisMatch:
+              "Perfect tactical fit, strong youth development track record, Champions League football guaranteed.",
+          },
+          {
+            id: 2,
+            name: "Sevilla FC",
+            league: "La Liga • Spain",
+            logo: "SFC",
+            color: "bg-red-500",
+            score: 88,
+            matchLabel: "Strong Fit",
+            positionNeed: "Playmaker replacement",
+            tacticalSystem: "Possession-based",
+            developmentPath: "Good track record",
+            contactStatus: "Agent connections",
+            whyThisMatch:
+              "Immediate starting role available, La Liga exposure, strong European competition history.",
+          },
+          {
+            id: 3,
+            name: "Leicester City",
+            league: "Championship • England",
+            logo: "LCF",
+            color: "bg-blue-600",
+            score: 85,
+            matchLabel: "Good Fit",
+            positionNeed: "Promotion push key player",
+            tacticalSystem: "Counter-attack",
+            developmentPath: "PL pathway",
+            contactStatus: "Direct approach possible",
+            whyThisMatch:
+              "Guaranteed playing time, potential Premier League return, leadership opportunity.",
+          },
+        ],
+        immediateOpportunities: {
+          winterWindow: "2 clubs interested",
+          summerWindow: "5+ clubs monitoring",
+          loanOption: "Top Championship club",
+          permanentMove: "Lower Premier League",
+        },
+        negotiationPositioning: {
+          currentMarketValue: "€5-7M",
+          askingPrice: "€8M",
+          realisticPrice: "€6.5M",
+          leverage: "High",
+          assessment:
+            "Multiple clubs competing creates leverage. Recommend holding firm on asking price through January window.",
+        },
+        careerPathway: [
+          {
+            number: 1,
+            title: "Short-term (6 months)",
+            timeframe: "Current",
+            description: "Secure starting spot in current team",
+          },
+          {
+            number: 2,
+            title: "Medium-term (2 years)",
+            timeframe: "2026-2027",
+            description: "Move to top 5 European league",
+          },
+          {
+            number: 3,
+            title: "Long-term (5 years)",
+            timeframe: "2028-2030",
+            description: "Regular European football (Champions/Europa League)",
+          },
+          {
+            number: 4,
+            title: "Peak (Age 28)",
+            timeframe: "2032",
+            description: "Contend for domestic and European trophies",
+          },
+        ],
+      },
     },
   },
   {
@@ -418,6 +551,75 @@ export const playersData: Player[] = [
           badge: "AI Recommended",
         },
       },
+      opportunities: {
+        topClubMatches: [
+          {
+            id: 1,
+            name: "Paris Saint-Germain",
+            league: "Ligue 1 • France",
+            logo: "PSG",
+            color: "bg-blue-900",
+            score: 95,
+            matchLabel: "Elite Match",
+            positionNeed: "Winger depth",
+            tacticalSystem: "Fluid 4-3-3",
+            developmentPath: "World-class",
+            contactStatus: "Initial enquiry",
+            whyThisMatch:
+              "Project identity change, marketing potential in France, consistent UCL presence.",
+          },
+          {
+            id: 2,
+            name: "Real Madrid",
+            league: "La Liga • Spain",
+            logo: "RMC",
+            color: "bg-gray-200",
+            score: 90,
+            matchLabel: "Dream Move",
+            positionNeed: "Left side rotation",
+            tacticalSystem: "Direct transition",
+            developmentPath: "Legacy platform",
+            contactStatus: "Monitoring",
+            whyThisMatch:
+              "Historical interest, commercial synergy, ultimate career destination.",
+          },
+        ],
+        immediateOpportunities: {
+          winterWindow: "Status Quo",
+          summerWindow: "Extension vs Transfer",
+          loanOption: "Not applicable",
+          permanentMove: "Elite Tier Club Only",
+        },
+        negotiationPositioning: {
+          currentMarketValue: "€60-70M",
+          askingPrice: "€100M+",
+          realisticPrice: "€85M",
+          leverage: "Very High",
+          assessment:
+            "Homegrown status and marketing value drive premium. No pressure to sell.",
+        },
+        careerPathway: [
+          {
+            number: 1,
+            title: "Short-term",
+            timeframe: "2024",
+            description: "Consistency in output and injury avoidance",
+          },
+          {
+            number: 2,
+            title: "Medium-term",
+            timeframe: "2025-2026",
+            description: "Major trophy win (League/UCL)",
+          },
+          {
+            number: 3,
+            title: "Long-term",
+            timeframe: "2028+",
+            description:
+              "Club legend status or transition to international elite",
+          },
+        ],
+      },
     },
   },
   {
@@ -562,6 +764,58 @@ export const playersData: Player[] = [
           careerGrowthImpact: "Legendary",
           badge: "AI Recommended",
         },
+      },
+      opportunities: {
+        topClubMatches: [
+          {
+            id: 1,
+            name: "Real Madrid",
+            league: "La Liga • Spain",
+            logo: "RMC",
+            color: "bg-gray-200",
+            score: 99,
+            matchLabel: "Perfect Match",
+            positionNeed: "Main Striker",
+            tacticalSystem: "Any",
+            developmentPath: "Ballon d'Or Platform",
+            contactStatus: "Daily Contact (Rumor)",
+            whyThisMatch:
+              "The only logical progression for the world's best player.",
+          },
+        ],
+        immediateOpportunities: {
+          winterWindow: "Inactive",
+          summerWindow: "Release Clause Active",
+          loanOption: "None",
+          permanentMove: "Record Breaking Fee",
+        },
+        negotiationPositioning: {
+          currentMarketValue: "€180-200M",
+          askingPrice: "€250M",
+          realisticPrice: "Release Clause",
+          leverage: "Absolute",
+          assessment: "Player holds all the cards due to the release clause.",
+        },
+        careerPathway: [
+          {
+            number: 1,
+            title: "Short-term",
+            timeframe: "2024",
+            description: "UCL / Treble contention",
+          },
+          {
+            number: 2,
+            title: "Medium-term",
+            timeframe: "2025",
+            description: "Ballon d'Or Achievement",
+          },
+          {
+            number: 3,
+            title: "Long-term",
+            timeframe: "2027",
+            description: "Historical goal records target",
+          },
+        ],
       },
     },
   },
