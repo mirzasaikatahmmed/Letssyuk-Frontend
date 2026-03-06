@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { ChevronRight, Eye, EyeOff, Lock } from "lucide-react";
@@ -28,7 +29,7 @@ export const SecuritySettings = () => {
             <div className="relative">
               <input 
                 type={showPass ? "text" : "password"} 
-                value={pass[field] }
+                value={pass[field as keyof typeof pass] }
                 onChange={(e) => setPass(prev => ({...prev, [field]: e.target.value}))}
                 placeholder={`••••••••`}
                 className="w-full bg-[#0A0A0A] border border-gray-800 rounded-lg p-3 text-sm text-gray-300 focus:border-[#30D5C8]/50 outline-none placeholder:text-gray-700" 
@@ -46,7 +47,7 @@ export const SecuritySettings = () => {
 
         <button 
           onClick={handleUpdate}
-          className="w-full md:w-auto px-10 py-3.5 bg-gradient-to-r from-[#30D5C8] to-[#BED1FF] text-[#0B0E14] font-bold rounded-xl text-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          className="w-full md:w-auto px-10 py-3.5 bg-linear-to-r from-[#30D5C8] to-[#BED1FF] text-[#0B0E14] font-bold rounded-xl text-sm hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
         >
           Update Password <ChevronRight size={18} />
         </button>

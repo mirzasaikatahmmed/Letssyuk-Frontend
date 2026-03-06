@@ -30,7 +30,7 @@ export const NotificationItem = ({ icon: Icon, title, description, time, priorit
           <div className="flex items-center gap-2 flex-wrap">
             <h4 className="text-sm font-bold text-white leading-none">{title}</h4>
             {priority && (
-              <span className={`text-[10px] px-2 py-0.5 rounded-full border font-bold uppercase tracking-wider ${priorityColors[priority]}`}>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full border font-bold uppercase tracking-wider ${priorityColors[priority as keyof typeof priorityColors]}`}>
                 {priority}
               </span>
             )}

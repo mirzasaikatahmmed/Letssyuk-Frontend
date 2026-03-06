@@ -1,4 +1,3 @@
-import React from "react";
 import { Card } from "@/components/ui/card";
 import {
   User,
@@ -99,7 +98,7 @@ const PlayerData = () => {
         </div>
         <div className="h-2.5 w-full bg-[#121212]/60 rounded-full overflow-hidden border border-white/5">
           <div
-            className="h-full bg-gradient-to-r from-[#30D5C8] via-[#30D5C8] to-[#BED1FF]"
+            className="h-full bg-linear-to-r from-[#30D5C8] via-[#30D5C8] to-[#BED1FF]"
             style={{ width: "45%" }}
           ></div>
         </div>
@@ -113,7 +112,7 @@ const PlayerData = () => {
             className="group relative bg-[#0B1219] border-gray-800 hover:border-gray-700 transition-all p-7 rounded-xl cursor-pointer overflow-hidden"
           >
             {/* Top Side Border Gradient */}
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#30D5C8] to-[#BED1FF] opacity-30 group-hover:opacity-100 transition-opacity"></div>
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-linear-to-r from-[#30D5C8] to-[#BED1FF] opacity-30 group-hover:opacity-100 transition-opacity"></div>
 
             <div className="flex justify-between items-start ">
               <div className="p-3 bg-[#162129] rounded-lg text-[#53DDF5] border border-white/5">

@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router";
 import { Search, Plus, TrendingUp, TrendingDown, Clock } from "lucide-react";
 
@@ -159,7 +158,7 @@ const AgentPlayerData = () => {
               className="bg-[#11161D] border border-gray-800 rounded-2xl p-6 flex items-center hover:border-[#53DDF5]/40 transition-all cursor-pointer group"
             >
               {/* Player Image */}
-              <div className="h-20 w-20 rounded-2xl overflow-hidden flex-shrink-0 border border-gray-700 mr-6">
+              <div className="h-20 w-20 rounded-2xl overflow-hidden shrink-0 border border-gray-700 mr-6">
                 <img
                   src={player.image}
                   alt={player.name}
@@ -168,7 +167,7 @@ const AgentPlayerData = () => {
               </div>
 
               {/* Basic Info & Club */}
-              <div className="flex-grow min-w-[250px]">
+              <div className="grow min-w-[250px]">
                 <div className="flex items-center gap-2 mb-1">
                   <h4 className="font-black text-xl text-white tracking-tight">
                     {player.name}
