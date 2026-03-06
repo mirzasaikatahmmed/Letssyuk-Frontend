@@ -41,6 +41,29 @@ export interface TimelineEvent {
   theme: "cyan" | "orange" | "gray";
 }
 
+export interface Scenario {
+  title: string;
+  financialValue: string;
+  playingTimeProbability: string;
+  careerGrowthImpact: string;
+  badge?: string;
+}
+
+export interface ScenarioComparison {
+  currentContract: Scenario;
+  alternativeOffer: Scenario;
+}
+
+export interface MarketValueComparison {
+  currentMarketValue: string;
+  contractSalary: string;
+  marketAverage: string;
+  salaryPercentile: number;
+  percentileText: string;
+  status: string;
+  recommendation: string;
+}
+
 export interface ContractDetails {
   duration: string;
   dateRange: string;
@@ -56,6 +79,8 @@ export interface ContractDetails {
   strategicConcessions: string[];
   walkAwayThreshold: string;
   timeline: TimelineEvent[];
+  marketValueComparison: MarketValueComparison;
+  scenarioComparison: ScenarioComparison;
 }
 
 export interface Player {
@@ -222,6 +247,32 @@ export const playersData: Player[] = [
           theme: "gray",
         },
       ],
+      marketValueComparison: {
+        currentMarketValue: "€22M",
+        contractSalary: "£85K/wk",
+        marketAverage: "£95K/wk",
+        salaryPercentile: 78,
+        percentileText: "Below Market (78%)",
+        status: "Under Market",
+        recommendation:
+          "Player is earning 11% below market average for similar profiles. Consider renegotiation in 2026.",
+      },
+      scenarioComparison: {
+        currentContract: {
+          title: "Current Contract",
+          financialValue: "£17.6M (4 years)",
+          playingTimeProbability: "High (85%)",
+          careerGrowthImpact: "Moderate",
+          badge: "Active",
+        },
+        alternativeOffer: {
+          title: "Alternative Offer",
+          financialValue: "£21.2M (4 years)",
+          playingTimeProbability: "High (80%)",
+          careerGrowthImpact: "High",
+          badge: "AI Recommended",
+        },
+      },
     },
   },
   {
@@ -341,6 +392,32 @@ export const playersData: Player[] = [
           theme: "gray",
         },
       ],
+      marketValueComparison: {
+        currentMarketValue: "€60M",
+        contractSalary: "£300K/wk",
+        marketAverage: "£280K/wk",
+        salaryPercentile: 92,
+        percentileText: "Top Tier (92%)",
+        status: "At Market",
+        recommendation:
+          "Salary is aligned with performance and status. Review in 2027.",
+      },
+      scenarioComparison: {
+        currentContract: {
+          title: "Current Contract",
+          financialValue: "£78M (5 years)",
+          playingTimeProbability: "Elite (95%)",
+          careerGrowthImpact: "High",
+          badge: "Active",
+        },
+        alternativeOffer: {
+          title: "Renewed Offer",
+          financialValue: "£95M (5 years)",
+          playingTimeProbability: "Elite (90%)",
+          careerGrowthImpact: "Highest",
+          badge: "AI Recommended",
+        },
+      },
     },
   },
   {
@@ -460,6 +537,32 @@ export const playersData: Player[] = [
           theme: "gray",
         },
       ],
+      marketValueComparison: {
+        currentMarketValue: "€180M",
+        contractSalary: "£375K/wk",
+        marketAverage: "£400K/wk",
+        salaryPercentile: 99,
+        percentileText: "Elite Tier (99%)",
+        status: "Under Market Value",
+        recommendation:
+          "Due to high goals/match ratio, current value has outpaced base salary targets. Consider renegotiation.",
+      },
+      scenarioComparison: {
+        currentContract: {
+          title: "Current Contract",
+          financialValue: "£97.5M (5 years)",
+          playingTimeProbability: "Guaranteed (99%)",
+          careerGrowthImpact: "World Class",
+          badge: "Active",
+        },
+        alternativeOffer: {
+          title: "Elite Extension",
+          financialValue: "£125M (6 years)",
+          playingTimeProbability: "Guaranteed (98%)",
+          careerGrowthImpact: "Legendary",
+          badge: "AI Recommended",
+        },
+      },
     },
   },
 ];

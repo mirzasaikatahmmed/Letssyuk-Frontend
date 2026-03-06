@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FileText,
   ChevronDown,
@@ -19,12 +19,19 @@ interface ContractViewProps {
 
 const ContractView: React.FC<ContractViewProps> = ({ player }) => {
   const { contractDetails } = player;
+  const [isStructureOpen, setIsStructureOpen] = useState(true);
+  const [isRisksOpen, setIsRisksOpen] = useState(true);
+  const [isMarketValueOpen, setIsMarketValueOpen] = useState(false);
+  const [isScenarioOpen, setIsScenarioOpen] = useState(false);
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Contract Structure Analyzer Header */}
-      <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-3xl p-8">
-        <div className="flex items-center justify-between mb-8">
+      <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-3xl p-8 overflow-hidden transition-all duration-300">
+        <div
+          className="flex items-center justify-between cursor-pointer"
+          onClick={() => setIsStructureOpen(!isStructureOpen)}
+        >
           <div className="flex items-center gap-4">
             <div className="p-3 bg-cyan-500/10 rounded-xl text-cyan-400 border border-cyan-500/20">
               <FileText size={24} />
@@ -38,75 +45,91 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
               </p>
             </div>
           </div>
-          <ChevronDown className="text-gray-600" size={20} />
+          <ChevronDown
+            className={`text-gray-600 transition-transform duration-300 ${isStructureOpen ? "" : "-rotate-90"}`}
+            size={20}
+          />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
-            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
-              Contract Duration
-            </p>
-            <p className="text-xl font-bold text-white mb-1">
-              {contractDetails.duration}
-            </p>
-            <p className="text-[10px] text-gray-500 font-medium">
-              {contractDetails.dateRange}
-            </p>
-          </div>
-          <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
-            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
-              Base Salary
-            </p>
-            <p className="text-xl font-bold text-[#53DDF5] mb-1">
-              {contractDetails.baseSalary}
-            </p>
-            <p className="text-[10px] text-gray-500 font-medium">
-              {contractDetails.annualSalary}
-            </p>
-          </div>
-          <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
-            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
-              Performance Bonuses
-            </p>
-            <p className="text-xl font-bold text-white mb-1">
-              {contractDetails.performanceBonuses}
-            </p>
-            <p className="text-[10px] text-gray-500 font-medium">
-              {contractDetails.bonusDetail}
-            </p>
-          </div>
-          <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
-            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
-              Image Rights
-            </p>
-            <p className="text-xl font-bold text-white mb-1">
-              {contractDetails.imageRights}
-            </p>
-            <p className="text-[10px] text-gray-500 font-medium">
-              {contractDetails.imageRightsDetail}
-            </p>
-          </div>
-        </div>
+        <div
+          className={`grid transition-all duration-500 ease-in-out ${
+            isStructureOpen
+              ? "grid-rows-[1fr] opacity-100 mt-8"
+              : "grid-rows-[0fr] opacity-0 mt-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
+                <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
+                  Contract Duration
+                </p>
+                <p className="text-xl font-bold text-white mb-1">
+                  {contractDetails.duration}
+                </p>
+                <p className="text-[10px] text-gray-500 font-medium">
+                  {contractDetails.dateRange}
+                </p>
+              </div>
+              <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
+                <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
+                  Base Salary
+                </p>
+                <p className="text-xl font-bold text-[#53DDF5] mb-1">
+                  {contractDetails.baseSalary}
+                </p>
+                <p className="text-[10px] text-gray-500 font-medium">
+                  {contractDetails.annualSalary}
+                </p>
+              </div>
+              <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
+                <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
+                  Performance Bonuses
+                </p>
+                <p className="text-xl font-bold text-white mb-1">
+                  {contractDetails.performanceBonuses}
+                </p>
+                <p className="text-[10px] text-gray-500 font-medium">
+                  {contractDetails.bonusDetail}
+                </p>
+              </div>
+              <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
+                <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-2">
+                  Image Rights
+                </p>
+                <p className="text-xl font-bold text-white mb-1">
+                  {contractDetails.imageRights}
+                </p>
+                <p className="text-[10px] text-gray-500 font-medium">
+                  {contractDetails.imageRightsDetail}
+                </p>
+              </div>
+            </div>
 
-        {/* AI Summary Alert */}
-        <div className="bg-cyan-500/5 border border-cyan-500/10 p-5 rounded-2xl flex items-start gap-4">
-          <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-500 mt-1">
-            <Info size={16} />
-          </div>
-          <div>
-            <h4 className="text-[12px] font-bold text-cyan-400 mb-1 uppercase tracking-wider">
-              AI Summary
-            </h4>
-            <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
-              {contractDetails.aiSummary}
-            </p>
+            {/* AI Summary Alert */}
+            <div className="bg-cyan-500/5 border border-cyan-500/10 p-5 rounded-2xl flex items-start gap-4">
+              <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-500 mt-1">
+                <Info size={16} />
+              </div>
+              <div>
+                <h4 className="text-[12px] font-bold text-cyan-400 mb-1 uppercase tracking-wider">
+                  AI Summary
+                </h4>
+                <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
+                  {contractDetails.aiSummary}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Risk & Clause Alerts Section */}
-      <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-3xl p-8">
-        <div className="flex items-center justify-between mb-8">
+      <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-3xl p-8 overflow-hidden transition-all duration-300">
+        <div
+          className="flex items-center justify-between cursor-pointer"
+          onClick={() => setIsRisksOpen(!isRisksOpen)}
+        >
           <div className="flex items-center gap-4">
             <div className="p-3 bg-red-500/10 rounded-xl text-red-400 border border-red-500/20">
               <AlertTriangle size={24} />
@@ -120,60 +143,73 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
               </p>
             </div>
           </div>
-          <ChevronDown className="text-gray-600" size={20} />
+          <ChevronDown
+            className={`text-gray-600 transition-transform duration-300 ${isRisksOpen ? "" : "-rotate-90"}`}
+            size={20}
+          />
         </div>
 
-        <div className="space-y-4">
-          {contractDetails.risks.map((risk, index) => (
-            <div
-              key={index}
-              className={`${risk.type === "High Risk" ? "bg-[#1A1112]" : "bg-[#1A1811]"} border ${risk.type === "High Risk" ? "border-red-500/10" : "border-orange-500/10"} p-5 rounded-2xl relative overflow-hidden group`}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <span
-                    className={`${risk.type === "High Risk" ? "bg-red-500" : "bg-orange-500"} text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase tracking-tighter mb-2 inline-block`}
+        <div
+          className={`grid transition-all duration-500 ease-in-out ${
+            isRisksOpen
+              ? "grid-rows-[1fr] opacity-100 mt-8"
+              : "grid-rows-[0fr] opacity-0 mt-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="space-y-4">
+              {contractDetails.risks.map((risk, index) => (
+                <div
+                  key={index}
+                  className={`${risk.type === "High Risk" ? "bg-[#1A1112]" : "bg-[#1A1811]"} border ${risk.type === "High Risk" ? "border-red-500/10" : "border-orange-500/10"} p-5 rounded-2xl relative overflow-hidden group`}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <span
+                        className={`${risk.type === "High Risk" ? "bg-red-500" : "bg-orange-500"} text-white text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase tracking-tighter mb-2 inline-block`}
+                      >
+                        {risk.type}
+                      </span>
+                      <h4 className="text-[13px] font-bold text-white">
+                        {risk.title}
+                      </h4>
+                      <p className="text-[11px] text-gray-500 mt-1">
+                        {risk.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className={`mt-4 pt-4 border-t ${risk.type === "High Risk" ? "border-red-500/5" : "border-orange-500/5"}`}
                   >
-                    {risk.type}
-                  </span>
-                  <h4 className="text-[13px] font-bold text-white">
-                    {risk.title}
+                    <p
+                      className={`text-[9px] ${risk.type === "High Risk" ? "text-red-500" : "text-orange-500"} uppercase font-black tracking-widest mb-1`}
+                    >
+                      AI Recommendation:
+                    </p>
+                    <p className="text-[11px] text-gray-400 font-medium italic">
+                      {risk.recommendation}
+                    </p>
+                  </div>
+                </div>
+              ))}
+
+              {/* Market Standards Item */}
+              <div className="bg-cyan-500/5 border border-cyan-500/10 p-5 rounded-2xl flex items-center gap-4">
+                <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-500">
+                  <CircleCheckBig size={16} />
+                </div>
+                <div>
+                  <h4 className="text-[13px] font-bold text-cyan-400 font-sans">
+                    {contractDetails.risks.length < 2
+                      ? "Clauses are generally within market standards"
+                      : "Most clauses are within market standards"}
                   </h4>
-                  <p className="text-[11px] text-gray-500 mt-1">
-                    {risk.description}
+                  <p className="text-[11px] text-gray-500">
+                    Release clause and loyalty bonuses are competitive and
+                    fairly structured.
                   </p>
                 </div>
               </div>
-              <div
-                className={`mt-4 pt-4 border-t ${risk.type === "High Risk" ? "border-red-500/5" : "border-orange-500/5"}`}
-              >
-                <p
-                  className={`text-[9px] ${risk.type === "High Risk" ? "text-red-500" : "text-orange-500"} uppercase font-black tracking-widest mb-1`}
-                >
-                  AI Recommendation:
-                </p>
-                <p className="text-[11px] text-gray-400 font-medium italic">
-                  {risk.recommendation}
-                </p>
-              </div>
-            </div>
-          ))}
-
-          {/* Market Standards Item */}
-          <div className="bg-cyan-500/5 border border-cyan-500/10 p-5 rounded-2xl flex items-center gap-4">
-            <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-500">
-              <CircleCheckBig size={16} />
-            </div>
-            <div>
-              <h4 className="text-[13px] font-bold text-cyan-400 font-sans">
-                {contractDetails.risks.length < 2
-                  ? "Clauses are generally within market standards"
-                  : "Most clauses are within market standards"}
-              </h4>
-              <p className="text-[11px] text-gray-500">
-                Release clause and loyalty bonuses are competitive and fairly
-                structured.
-              </p>
             </div>
           </div>
         </div>
@@ -181,38 +217,252 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
 
       {/* Accordion List */}
       <div className="space-y-4">
-        <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-2xl p-6 flex justify-between items-center cursor-pointer hover:bg-[#1A232E] transition-all">
-          <div className="flex items-center gap-4">
-            <div className="p-2.5 bg-cyan-500/10 rounded-xl text-cyan-400">
-              <TrendingUp size={20} />
+        {/* Market Value Comparison Section */}
+        <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-3xl overflow-hidden transition-all duration-300">
+          <div
+            className="p-6 flex justify-between items-center cursor-pointer hover:bg-[#1A232E] transition-all"
+            onClick={() => setIsMarketValueOpen(!isMarketValueOpen)}
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-2.5 bg-cyan-500/10 rounded-xl text-cyan-400 border border-cyan-500/20">
+                <TrendingUp size={20} />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">
+                  Market Value Comparison
+                </h4>
+                <p className="text-[10px] text-gray-500">
+                  Contract vs market benchmarks
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">
-                Market Value Comparison
-              </h4>
-              <p className="text-[10px] text-gray-500">
-                Contract vs market benchmarks
-              </p>
+            <ChevronDown
+              className={`text-gray-600 transition-transform duration-300 ${isMarketValueOpen ? "" : "-rotate-180"}`}
+              size={18}
+            />
+          </div>
+
+          <div
+            className={`grid transition-all duration-500 ease-in-out ${
+              isMarketValueOpen
+                ? "grid-rows-[1fr] opacity-100 p-8 pt-2"
+                : "grid-rows-[0fr] opacity-0 p-0"
+            }`}
+          >
+            <div className="overflow-hidden">
+              {/* Three Metric Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-3 text-center">
+                    Current Market Value
+                  </p>
+                  <p className="text-2xl font-bold text-[#00D1FF]">
+                    {contractDetails.marketValueComparison.currentMarketValue}
+                  </p>
+                </div>
+                <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-3 text-center">
+                    Contract Salary
+                  </p>
+                  <p className="text-2xl font-bold text-white">
+                    {contractDetails.marketValueComparison.contractSalary}
+                  </p>
+                </div>
+                <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
+                  <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-3 text-center">
+                    Market Average
+                  </p>
+                  <p className="text-2xl font-bold text-gray-400">
+                    {contractDetails.marketValueComparison.marketAverage}
+                  </p>
+                </div>
+              </div>
+
+              {/* Salary Percentile Progress Bar */}
+              <div className="mb-8">
+                <div className="flex justify-between items-center mb-3">
+                  <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">
+                    Salary Percentile
+                  </p>
+                  <p className="text-[11px] text-orange-400 font-bold">
+                    {contractDetails.marketValueComparison.percentileText}
+                  </p>
+                </div>
+                <div className="h-2 w-full bg-gray-800/50 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.4)] transition-all duration-1000"
+                    style={{
+                      width: `${contractDetails.marketValueComparison.salaryPercentile}%`,
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Status Alert Box */}
+              <div className="p-5 bg-orange-500/5 border border-orange-500/10 rounded-2xl flex gap-4">
+                <div className="p-2 bg-orange-500/10 rounded-lg text-orange-500 h-fit">
+                  <Info size={18} />
+                </div>
+                <div>
+                  <h4 className="text-[13px] font-bold text-orange-400 mb-1">
+                    {contractDetails.marketValueComparison.status}
+                  </h4>
+                  <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
+                    {contractDetails.marketValueComparison.recommendation}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          <ChevronDown className="text-gray-600" size={18} />
         </div>
 
-        <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-2xl p-6 flex justify-between items-center cursor-pointer hover:bg-[#1A232E] transition-all">
-          <div className="flex items-center gap-4">
-            <div className="p-2.5 bg-purple-500/10 rounded-xl text-purple-400">
-              <Target size={20} />
+        {/* Scenario Comparison Section */}
+        <div className="bg-[#11161D]/60 border border-gray-800/60 rounded-3xl overflow-hidden transition-all duration-300">
+          <div
+            className="p-6 flex justify-between items-center cursor-pointer hover:bg-[#1A232E] transition-all"
+            onClick={() => setIsScenarioOpen(!isScenarioOpen)}
+          >
+            <div className="flex items-center gap-4">
+              <div className="p-2.5 bg-purple-500/10 rounded-xl text-purple-400 border border-purple-500/20">
+                <Target size={20} />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">
+                  Scenario Comparison
+                </h4>
+                <p className="text-[10px] text-gray-500">
+                  Compare current vs alternative offers
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">
-                Scenario Comparison
-              </h4>
-              <p className="text-[10px] text-gray-500">
-                Compare current vs alternative offers
-              </p>
+            <ChevronDown
+              className={`text-gray-600 transition-transform duration-300 ${isScenarioOpen ? "" : "-rotate-180"}`}
+              size={18}
+            />
+          </div>
+
+          <div
+            className={`grid transition-all duration-500 ease-in-out ${
+              isScenarioOpen
+                ? "grid-rows-[1fr] opacity-100 p-8 pt-2"
+                : "grid-rows-[0fr] opacity-0 p-0"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Current Contract Card */}
+                <div className="bg-[#0B0E14] border border-gray-800/80 p-7 rounded-2xl relative">
+                  <div className="flex justify-between items-center mb-6">
+                    <h5 className="text-[14px] font-bold text-white">
+                      {contractDetails.scenarioComparison.currentContract.title}
+                    </h5>
+                    {contractDetails.scenarioComparison.currentContract
+                      .badge && (
+                      <span className="bg-gray-800/80 text-gray-500 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">
+                        {
+                          contractDetails.scenarioComparison.currentContract
+                            .badge
+                        }
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-5">
+                    <div>
+                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1.5">
+                        Financial Value
+                      </p>
+                      <p className="text-[16px] font-bold text-white">
+                        {
+                          contractDetails.scenarioComparison.currentContract
+                            .financialValue
+                        }
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1.5">
+                        Playing Time Probability
+                      </p>
+                      <p className="text-[16px] font-bold text-[#00D1FF]">
+                        {
+                          contractDetails.scenarioComparison.currentContract
+                            .playingTimeProbability
+                        }
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1.5">
+                        Career Growth Impact
+                      </p>
+                      <p className="text-[16px] font-bold text-white">
+                        {
+                          contractDetails.scenarioComparison.currentContract
+                            .careerGrowthImpact
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Alternative Offer Card */}
+                <div className="bg-[#0C1218] border border-cyan-500/20 p-7 rounded-2xl relative shadow-[0_0_30px_rgba(6,182,212,0.02)]">
+                  <div className="flex justify-between items-center mb-6">
+                    <h5 className="text-[14px] font-bold text-white">
+                      {
+                        contractDetails.scenarioComparison.alternativeOffer
+                          .title
+                      }
+                    </h5>
+                    {contractDetails.scenarioComparison.alternativeOffer
+                      .badge && (
+                      <span className="bg-cyan-500/10 text-cyan-400 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter border border-cyan-500/20">
+                        {
+                          contractDetails.scenarioComparison.alternativeOffer
+                            .badge
+                        }
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="space-y-5">
+                    <div>
+                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1.5 flex items-center justify-between">
+                        Financial Value
+                      </p>
+                      <p className="text-[16px] font-bold text-[#00D1FF]">
+                        {
+                          contractDetails.scenarioComparison.alternativeOffer
+                            .financialValue
+                        }
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1.5">
+                        Playing Time Probability
+                      </p>
+                      <p className="text-[16px] font-bold text-white">
+                        {
+                          contractDetails.scenarioComparison.alternativeOffer
+                            .playingTimeProbability
+                        }
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1.5">
+                        Career Growth Impact
+                      </p>
+                      <p className="text-[16px] font-bold text-[#00D1FF]">
+                        {
+                          contractDetails.scenarioComparison.alternativeOffer
+                            .careerGrowthImpact
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <ChevronDown className="text-gray-600" size={18} />
         </div>
       </div>
 
