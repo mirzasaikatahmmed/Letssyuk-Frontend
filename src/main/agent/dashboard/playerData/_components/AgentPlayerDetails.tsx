@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import {
   Edit3,
   X,
-  CheckCircle2,
+  CircleCheckBig,
   AlertTriangle,
   TrendingUp,
   Clock,
@@ -48,13 +48,13 @@ const AgentPlayerDetails = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#1A232E] hover:bg-[#252F3C] border border-cyan-900/30 rounded-lg text-cyan-400 text-xs font-bold transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#1A232E] hover:bg-[#252F3C] border border-cyan-900/30 rounded-lg text-cyan-400 text-xs font-bold transition-all cursor-pointer">
             <Edit3 size={14} />
             Edit Player Data
           </button>
           <button
             onClick={() => navigate(-1)}
-            className="p-2 text-gray-500 hover:text-white transition-colors"
+            className="p-2 text-gray-500 hover:text-white transition-colors cursor-pointer"
           >
             <X size={20} />
           </button>
@@ -159,7 +159,7 @@ const AgentPlayerDetails = () => {
           <div className="space-y-3">
             <div className="bg-[#11161D] border border-cyan-500/5 p-4 rounded-xl flex items-center gap-4 border-l-2 border-l-cyan-500/40">
               <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-500">
-                <CheckCircle2 size={16} />
+                <CircleCheckBig size={16} />
               </div>
               <div className="grow">
                 <h4 className="text-[13px] font-bold text-cyan-400">
@@ -353,7 +353,7 @@ const AgentPlayerDetails = () => {
                     className="flex items-center gap-2 text-[10px] text-gray-400"
                   >
                     <div className="p-0.5 bg-orange-500/10 rounded-full text-orange-500 border border-orange-500/20">
-                      <CheckCircle2 size={10} />
+                      <CircleCheckBig size={10} />
                     </div>
                     {prep}
                   </div>
