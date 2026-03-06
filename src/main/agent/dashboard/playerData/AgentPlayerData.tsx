@@ -60,7 +60,7 @@ const AgentPlayerData = () => {
         </div>
         <button
           onClick={() => navigate("/agent/dashboard/add-player")}
-          className="w-full md:w-auto bg-[#00D1FF] hover:bg-[#00B8E0] text-[#0B0E14] px-8 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all"
+          className="w-full md:w-auto bg-[#00D1FF] cursor-pointer hover:bg-[#00B8E0] text-[#0B0E14] px-8 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all"
         >
           <Plus size={18} strokeWidth={3} /> Add Player
         </button>

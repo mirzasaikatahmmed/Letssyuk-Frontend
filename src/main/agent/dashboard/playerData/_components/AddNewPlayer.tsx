@@ -78,7 +78,7 @@ const AddNewPlayer = () => {
           </div>
           <button
             onClick={() => navigate(-1)}
-            className="p-2.5 bg-[#11161D] hover:bg-gray-800 rounded-xl border border-gray-800/60 transition-all group shadow-lg"
+            className="p-2.5 bg-[#11161D] cursor-pointer hover:bg-gray-800 rounded-xl border border-gray-800/60 transition-all group shadow-lg"
           >
             <X size={20} className="text-gray-400 group-hover:text-white" />
           </button>
