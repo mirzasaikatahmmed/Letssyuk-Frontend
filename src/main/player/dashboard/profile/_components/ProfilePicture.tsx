@@ -4,8 +4,8 @@ import { Card } from "@/components/ui/card";
 import { Camera, User, Upload } from 'lucide-react';
 
 export const ProfilePicture = () => {
-  const [imagePreview, setImagePreview] = useState(null);
-  const fileInputRef = useRef(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e : any) => {
     const file = e.target.files[0];
@@ -16,7 +16,7 @@ export const ProfilePicture = () => {
         return;
       }
       const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
+      reader.onloadend = () => setImagePreview(reader.result as string);
       reader.readAsDataURL(file);
     }
   };

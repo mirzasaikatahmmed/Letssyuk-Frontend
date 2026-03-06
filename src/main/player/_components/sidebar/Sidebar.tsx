@@ -1,6 +1,6 @@
 // import React from 'react';
 import { NavLink } from 'react-router'; // Changed to react-router-dom
-import { Home, Database, User, LifeBuoy, Bell, ChevronLeft, LogOut } from 'lucide-react';
+import { Home, Database, User, Handshake, Bell, ChevronLeft, LogOut } from 'lucide-react';
 import logo from "@/assets/logo/logo.png";
 
 const PlayerDSidebar = () => {
@@ -8,7 +8,7 @@ const PlayerDSidebar = () => {
     { icon: Home, label: 'Home', path: '/player/dashboard/overview' },
     { icon: Database, label: 'Data', path: '/player/dashboard/data' },
     { icon: User, label: 'Profile', path: '/player/dashboard/profile' },
-    { icon: LifeBuoy, label: 'Help and Support', path: '/player/dashboard/support' },
+    { icon: Handshake, label: 'Help and Support', path: '/player/dashboard/support' },
     { icon: Bell, label: 'Notifications', path: '/player/dashboard/notifications' },
   ];
 
