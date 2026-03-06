@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router";
 import { Search, Plus, TrendingUp, TrendingDown, Clock } from "lucide-react";
 import PlayerCard from "./_components/PlayerCard";
+import { playersData, type StatItem } from "./_data/data";
 
 const AgentPlayerData = () => {
   const navigate = useNavigate();
 
-  const stats = [
+  const agentStats: StatItem[] = [
     {
       label: "Total Players Managed",
       value: "12",
@@ -29,63 +30,6 @@ const AgentPlayerData = () => {
       value: "3",
       icon: Clock,
       color: "text-[#FFB01F]",
-    },
-  ];
-
-  const players = [
-    {
-      id: 1,
-      name: "James Mitchell",
-      age: 24,
-      nation: "England",
-      position: "Striker",
-      foot: "Right Foot",
-      club: "Manchester United",
-      contract: "Jun 2026",
-      goals: 12,
-      assists: 7,
-      matches: 25,
-      minutes: "1,890",
-      value: "€22M",
-      status: "Rising",
-      image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    },
-    {
-      id: 2,
-      name: "James Mitchell",
-      age: 24,
-      nation: "England",
-      position: "Striker",
-      foot: "Right Foot",
-      club: "Manchester United",
-      contract: "Jun 2026",
-      goals: 12,
-      assists: 7,
-      matches: 25,
-      minutes: "1,890",
-      value: "€22M",
-      status: "Rising",
-      image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
-    },
-    {
-      id: 3,
-      name: "James Mitchell",
-      age: 24,
-      nation: "England",
-      position: "Striker",
-      foot: "Right Foot",
-      club: "Manchester United",
-      contract: "Jun 2026",
-      goals: 12,
-      assists: 7,
-      matches: 25,
-      minutes: "1,890",
-      value: "€22M",
-      status: "Declining",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
     },
   ];
 
@@ -124,7 +68,7 @@ const AgentPlayerData = () => {
 
       {/* Stats Overview Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-        {stats.map((stat, i) => (
+        {agentStats.map((stat, i) => (
           <div
             key={i}
             className="bg-[#11161D]/60 border border-gray-800/80 p-6 rounded-2xl relative overflow-hidden group shadow-sm"
@@ -143,11 +87,11 @@ const AgentPlayerData = () => {
       {/* Players List Section */}
       <div>
         <h3 className="text-xl font-bold mb-8 tracking-tight">
-          All Players ({players.length})
+          All Players ({playersData.length})
         </h3>
 
         <div className="space-y-4">
-          {players.map((player) => (
+          {playersData.map((player) => (
             <PlayerCard key={player.id} player={player} />
           ))}
         </div>

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { Clock, TrendingUp, TrendingDown } from "lucide-react";
 
 interface PlayerCardProps {
@@ -21,6 +22,7 @@ interface PlayerCardProps {
 }
 
 const PlayerCard = ({ player }: PlayerCardProps) => {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-2xl p-8 hover:border-[#53DDF5]/30 transition-all group relative">
       <div className="flex items-center">
@@ -80,7 +82,10 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
               </div>
             </div>
 
-            <button className="border border-white/20 hover:border-[#53DDF5] hover:text-[#53DDF5] text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer">
+            <button
+              onClick={() => navigate(`details/${player.id}`)}
+              className="border border-white/20 hover:border-[#53DDF5] hover:text-[#53DDF5] text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer"
+            >
               View player
             </button>
           </div>
