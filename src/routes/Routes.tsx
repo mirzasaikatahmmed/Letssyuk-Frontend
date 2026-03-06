@@ -35,6 +35,7 @@ import LifestyleNutrition from "@/main/player/onboarding/LifestyleNutrition";
 import GoalsAmbitions from "@/main/player/onboarding/GoalsAmbitions";
 import ConsentDeclarations from "@/main/player/onboarding/ConsentDeclarations";
 // import ClubOnboarding from "@/main/club/onboarding/AgentOnboarding";
+import AgentPlayerDetails from "@/main/agent/dashboard/playerData/_components/AgentPlayerDetails";
 import AgentUserProfile from "@/main/agent/dashboard/profile/AgentUserProfile";
 import AddNewPlayer from "@/main/agent/dashboard/playerData/_components/AddNewPlayer";
 import AgentPlayerData from "@/main/agent/dashboard/playerData/AgentPlayerData";
@@ -183,6 +184,10 @@ export const Routes = createBrowserRouter([
           {
             path: "player-data",
             element: <AgentPlayerData />,
+          },
+          {
+            path: "player-data/details/:id",
+            element: <AgentPlayerDetails />,
           },
           {
             path: "add-player",
