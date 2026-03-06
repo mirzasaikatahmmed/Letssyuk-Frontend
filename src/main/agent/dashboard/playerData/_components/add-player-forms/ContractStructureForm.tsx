@@ -48,7 +48,7 @@ const ContractStructureForm = () => {
 
       {/* Upload Section */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
-        <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-6">
+        <h3 className="text-[12px] font-bold text-gray-400 tracking-widest mb-6">
           Upload Contract Document
         </h3>
         <div className="border-2 border-dashed border-gray-800/60 rounded-3xl p-12 flex flex-col items-center justify-center gap-4 hover:border-cyan-500/30 transition-colors cursor-pointer group bg-[#0B0E14]/30">
@@ -61,7 +61,7 @@ const ContractStructureForm = () => {
             </p>
             <button
               type="button"
-              className="text-cyan-400 text-xs font-bold mt-1 uppercase tracking-wider hover:underline"
+              className="text-cyan-400 text-xs font-bold mt-1  tracking-wider hover:underline"
             >
               Browse Files
             </button>
@@ -74,7 +74,7 @@ const ContractStructureForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Full Width Field */}
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Base Salary
             </label>
             <input
@@ -86,7 +86,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Signing Bonus
             </label>
             <input
@@ -98,7 +98,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Appearance Bonus (per match)
             </label>
             <input
@@ -110,7 +110,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Goal Bonus (per goal)
             </label>
             <input
@@ -122,7 +122,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Assist Bonus (per assist)
             </label>
             <input
@@ -134,7 +134,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Team Performance Bonuses
             </label>
             <textarea
@@ -145,7 +145,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Escalation Clauses
             </label>
             <textarea
@@ -156,7 +156,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Club Option Years
             </label>
             <input
@@ -168,7 +168,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Player Option Years
             </label>
             <input
@@ -180,7 +180,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Release Clause
             </label>
             <input
@@ -192,7 +192,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Image Rights - Player %
             </label>
             <input
@@ -204,7 +204,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Image Rights - Club %
             </label>
             <input
@@ -216,7 +216,7 @@ const ContractStructureForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] font-bold text-gray-500  tracking-widest pl-1">
               Commercial Obligations
             </label>
             <textarea
@@ -232,7 +232,7 @@ const ContractStructureForm = () => {
       <div className="flex justify-end pr-4">
         <button
           type="submit"
-          className="bg-cyan-400 text-[#0B0E14] px-10 py-3 rounded-2xl font-bold text-[13px] uppercase tracking-wide flex items-center gap-3 hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(34,211,238,0.2)] group cursor-pointer"
+          className="bg-cyan-400 text-[#0B0E14] px-10 py-3 rounded-2xl font-bold text-[13px]  tracking-wide flex items-center gap-3 hover:bg-cyan-300 transition-all shadow-[0_0_25px_rgba(34,211,238,0.2)] group cursor-pointer"
         >
           Save{" "}
           <Save
