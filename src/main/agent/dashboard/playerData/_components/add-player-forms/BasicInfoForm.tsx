@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
 import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
 const BasicInfoForm = () => {
   const [isPositionOpen, setIsPositionOpen] = useState(false);
@@ -61,7 +62,7 @@ const BasicInfoForm = () => {
 
   const onSubmit = (data: any) => {
     console.log("Player Data Captured:", data);
-    alert("Check console for form data!");
+    toast.success("Player basic info updated");
   };
 
   return (
@@ -311,7 +312,7 @@ const BasicInfoForm = () => {
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className="bg-cyan-400 text-[#0B0E14] px-8 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wide flex items-center gap-2 hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+            className="bg-cyan-400 text-[#0B0E14] px-8 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wide flex items-center gap-2 hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)] cursor-pointer"
           >
             Save <Save size={14} />
           </button>
