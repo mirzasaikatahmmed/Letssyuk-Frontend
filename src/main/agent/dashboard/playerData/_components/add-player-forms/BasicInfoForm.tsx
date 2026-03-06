@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   User,
@@ -9,12 +10,39 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
+import { useForm, useWatch } from "react-hook-form";
 
 const BasicInfoForm = () => {
-  const [selectedPosition, setSelectedPosition] = useState("Select Position");
   const [isPositionOpen, setIsPositionOpen] = useState(false);
-  const [selectedFoot, setSelectedFoot] = useState("Right");
   const [isFootOpen, setIsFootOpen] = useState(false);
+
+  const { register, handleSubmit, setValue, control } = useForm({
+    defaultValues: {
+      fullName: "",
+      age: "",
+      height: "",
+      nationality: "",
+      position: "Select Position",
+      dominantFoot: "Right",
+      currentClub: "",
+      goals: 0,
+      assists: 0,
+      matches: 0,
+      minutes: 0,
+      contractStart: "",
+      contractEnd: "",
+      marketValue: "",
+      clauses: "",
+      injuryHistory: "",
+      instagram: "",
+      twitter: "",
+      tiktok: "",
+    },
+  });
+
+  // Watch values for custom dropdown highlights
+  const selectedPosition = useWatch({ control, name: "position" });
+  const selectedFoot = useWatch({ control, name: "dominantFoot" });
 
   const positions = [
     "Goalkeeper",
@@ -31,8 +59,16 @@ const BasicInfoForm = () => {
 
   const feet = ["Right", "Left", "Both"];
 
+  const onSubmit = (data: any) => {
+    console.log("Player Data Captured:", data);
+    alert("Check console for form data!");
+  };
+
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700"
+    >
       {/* Section: Player Photo */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
         <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-6">
@@ -43,7 +79,10 @@ const BasicInfoForm = () => {
             <User size={48} className="opacity-20" />
           </div>
           <div className="space-y-3">
-            <button className="bg-[#11161D] border border-gray-800 hover:bg-gray-800 px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm">
+            <button
+              type="button"
+              className="bg-[#11161D] border border-gray-800 hover:bg-gray-800 px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm"
+            >
               <Upload size={14} className="text-cyan-400" />
               Upload Photo
             </button>
@@ -67,6 +106,7 @@ const BasicInfoForm = () => {
               Full Name *
             </label>
             <input
+              {...register("fullName")}
               type="text"
               placeholder="Enter player name"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -77,6 +117,7 @@ const BasicInfoForm = () => {
               Age *
             </label>
             <input
+              {...register("age")}
               type="text"
               placeholder="Age"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -87,6 +128,7 @@ const BasicInfoForm = () => {
               Height
             </label>
             <input
+              {...register("height")}
               type="text"
               placeholder="e.g., 185 cm"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -97,6 +139,7 @@ const BasicInfoForm = () => {
               Nationality *
             </label>
             <input
+              {...register("nationality")}
               type="text"
               placeholder="e.g., England"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -131,7 +174,7 @@ const BasicInfoForm = () => {
               <div className="absolute top-[calc(100%+8px)] left-0 right-0 bg-[#0B0E14] border border-gray-800/60 rounded-2xl py-2 z-50 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                 <div
                   onClick={() => {
-                    setSelectedPosition("Select Position");
+                    setValue("position", "Select Position");
                     setIsPositionOpen(false);
                   }}
                   className={`px-5 py-2.5 text-sm cursor-pointer transition-all ${
@@ -146,7 +189,7 @@ const BasicInfoForm = () => {
                   <div
                     key={pos}
                     onClick={() => {
-                      setSelectedPosition(pos);
+                      setValue("position", pos);
                       setIsPositionOpen(false);
                     }}
                     className={`px-5 py-2.5 text-sm cursor-pointer transition-all ${
@@ -184,7 +227,7 @@ const BasicInfoForm = () => {
                   <div
                     key={foot}
                     onClick={() => {
-                      setSelectedFoot(foot);
+                      setValue("dominantFoot", foot);
                       setIsFootOpen(false);
                     }}
                     className={`px-5 py-2.5 text-sm cursor-pointer transition-all ${
@@ -205,6 +248,7 @@ const BasicInfoForm = () => {
               Current Club *
             </label>
             <input
+              {...register("currentClub")}
               type="text"
               placeholder="Enter current club"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -224,6 +268,7 @@ const BasicInfoForm = () => {
               Goals
             </label>
             <input
+              {...register("goals")}
               type="number"
               placeholder="0"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
@@ -234,6 +279,7 @@ const BasicInfoForm = () => {
               Assists
             </label>
             <input
+              {...register("assists")}
               type="number"
               placeholder="0"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
@@ -244,6 +290,7 @@ const BasicInfoForm = () => {
               Matches
             </label>
             <input
+              {...register("matches")}
               type="number"
               placeholder="0"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
@@ -254,6 +301,7 @@ const BasicInfoForm = () => {
               Minutes
             </label>
             <input
+              {...register("minutes")}
               type="number"
               placeholder="0"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
@@ -261,7 +309,10 @@ const BasicInfoForm = () => {
           </div>
         </div>
         <div className="flex justify-end pt-2">
-          <button className="bg-cyan-400 text-[#0B0E14] px-8 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wide flex items-center gap-2 hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+          <button
+            type="submit"
+            className="bg-cyan-400 text-[#0B0E14] px-8 py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-wide flex items-center gap-2 hover:bg-cyan-300 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+          >
             Save <Save size={14} />
           </button>
         </div>
@@ -278,6 +329,7 @@ const BasicInfoForm = () => {
               Contract Start Date
             </label>
             <input
+              {...register("contractStart")}
               type="text"
               placeholder="dd/mm/yyyy"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
@@ -288,6 +340,7 @@ const BasicInfoForm = () => {
               Contract End Date *
             </label>
             <input
+              {...register("contractEnd")}
               type="text"
               placeholder="dd/mm/yyyy"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
@@ -298,6 +351,7 @@ const BasicInfoForm = () => {
               Market Value Estimate
             </label>
             <input
+              {...register("marketValue")}
               type="text"
               placeholder="e.g., €22M"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -309,6 +363,7 @@ const BasicInfoForm = () => {
             Contract Clauses (Optional)
           </label>
           <textarea
+            {...register("clauses")}
             placeholder="Release clause, performance bonuses, etc."
             className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-4 text-sm text-white focus:border-cyan-500/50 outline-none transition-all min-h-[100px] resize-none placeholder:text-gray-700"
           ></textarea>
@@ -321,6 +376,7 @@ const BasicInfoForm = () => {
           Injury History (Optional)
         </h3>
         <textarea
+          {...register("injuryHistory")}
           placeholder="List any significant injuries and recovery details..."
           className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-4 text-sm text-white focus:border-cyan-500/50 outline-none transition-all min-h-[120px] resize-none placeholder:text-gray-700 w-full"
         ></textarea>
@@ -347,6 +403,7 @@ const BasicInfoForm = () => {
               <Instagram size={12} /> Instagram Profile URL
             </label>
             <input
+              {...register("instagram")}
               type="text"
               placeholder="https://instagram.com/playername"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -357,6 +414,7 @@ const BasicInfoForm = () => {
               <Twitter size={12} /> Twitter/X Profile URL
             </label>
             <input
+              {...register("twitter")}
               type="text"
               placeholder="https://twitter.com/playername"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -367,6 +425,7 @@ const BasicInfoForm = () => {
               <FaTiktok size={11} /> TikTok Profile URL
             </label>
             <input
+              {...register("tiktok")}
               type="text"
               placeholder="https://tiktok.com/@playername"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all placeholder:text-gray-700"
@@ -374,7 +433,7 @@ const BasicInfoForm = () => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
