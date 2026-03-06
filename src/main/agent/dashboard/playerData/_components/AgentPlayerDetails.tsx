@@ -34,7 +34,7 @@ const AgentPlayerDetails = () => {
   return (
     <div className="bg-[#0B0E14] min-h-screen text-white p-6 pb-12 font-sans overflow-x-hidden">
       {/* Top Navigation Header */}
-      <div className="flex items-center justify-between mb-8 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <div className="h-14 w-14 rounded-full border-2 border-cyan-500/30 overflow-hidden shadow-lg shadow-cyan-500/10">
             <img
@@ -72,7 +72,7 @@ const AgentPlayerDetails = () => {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex items-center gap-8 border-b border-gray-800 mb-8 max-w-7xl mx-auto">
+      <div className="flex items-center gap-8 border-b border-gray-800 mb-8">
         <button
           onClick={() => setActiveTab("Overview")}
           className={`pb-4 px-2 border-b-2 text-sm font-bold flex items-center gap-2 transition-all cursor-pointer font-sans ${activeTab === "Overview" ? "border-cyan-500 text-cyan-500" : "border-transparent text-gray-500 hover:text-gray-300"}`}
@@ -93,7 +93,7 @@ const AgentPlayerDetails = () => {
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto">{renderContent()}</div>
+      <div className="">{renderContent()}</div>
     </div>
   );
 };
