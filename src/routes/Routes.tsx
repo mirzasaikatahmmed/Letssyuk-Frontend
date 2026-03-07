@@ -49,6 +49,16 @@ import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
 import ClubUserProfile from "@/main/club/dashboard/profile/ClubUserProfile";
 import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAndSupport";
 import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
+import AdminLayout from "@/layout/AdminLayout";
+import AuthLayout from "@/layout/AuthLayout";
+import AdminDashboard from "@/main/admin/dashboard/AdminDashboard";
+import AdminVerifications from "@/main/admin/verification/AdminVerifications";
+import AdminSupport from "@/main/admin/support/AdminSupport";
+import AdminPayments from "@/main/admin/payments/AdminPayments";
+import AdminUsers from "@/main/admin/users/AdminUsers";
+import SignIn from "@/main/auth/signin/SignIn";
+import SignUp from "@/main/auth/signup/SignUp";
+import ForgotPassword from "@/main/auth/forgotPassword/ForgotPassword";
 // import ClubOnboarding from "@/main/club/onboarding/ClubOnboarding";
 
 export const Routes = createBrowserRouter([
@@ -124,6 +134,32 @@ export const Routes = createBrowserRouter([
         ],
       },
       {
+        path: "admin/dashboard",
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <AdminDashboard />,
+          },
+          {
+            path: "verifications",
+            element: <AdminVerifications />,
+          },
+          {
+            path: "support",
+            element: <AdminSupport />,
+          },
+          {
+            path: "payments",
+            element: <AdminPayments />,
+          },
+          {
+            path: "users",
+            element: <AdminUsers />,
+          }
+        ],
+      },
+      {
         path: "club/dashboard",
         element: <ClubLayout />,
         children: [
@@ -196,6 +232,24 @@ export const Routes = createBrowserRouter([
           {
             path: "profile",
             element: <AgentUserProfile />,
+          },
+        ],
+      },
+      {
+        path: "auth",
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "sign-in",
+            element: <SignIn />,
+          },
+          {
+            path: "sign-up",
+            element: <SignUp />,
+          },
+          {
+            path: "forgot-password",
+            element: <ForgotPassword />,
           },
         ],
       },
