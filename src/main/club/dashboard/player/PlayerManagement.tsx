@@ -155,11 +155,10 @@ const PlayerManagement = () => {
       </div>
 
       {/* Summary Cards - Balanced padding and size */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
           { label: "Total Players", val: "6" },
           { label: "Available", val: "4" },
-          { label: "Avg AI Score", val: "83" },
           { label: "Avg Form", val: "7.5" },
         ].map((item, i) => (
           <div
