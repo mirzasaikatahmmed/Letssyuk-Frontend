@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Search, Plus, Eye, Edit3, Trash2, ArrowUpDown } from "lucide-react";
+import { Search, Plus, Edit3, Trash2, ArrowUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-const INITIAL_PLAYERS = Array(8).fill({
-  id: "OA-ENG-2024-001",
-  name: "Marcus Sterling",
-  country: "England",
-  position: "Forward",
-  age: 24,
-  aiScore: 94,
-  availability: "Available",
-  avatar: "https://github.com/shadcn.png",
-});
+import { players, type Player } from "./_data/data";
 
 const PlayerManagement = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof Player | null;
+    direction: "asc" | "desc";
+  }>({
+    key: null,
+    direction: "asc",
+  });
 
   const handleAction = (type: "view" | "edit", id: string) => {
     const path =
@@ -26,125 +24,168 @@ const PlayerManagement = () => {
     navigate(path);
   };
 
+  const handleSort = (key: keyof Player) => {
+    let direction: "asc" | "desc" = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const filteredPlayers = players.filter(
+    (player) =>
+      player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      player.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      player.playerId.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const sortedPlayers = [...filteredPlayers].sort((a, b) => {
+    if (!sortConfig.key) return 0;
+
+    const aValue = a[sortConfig.key];
+    const bValue = b[sortConfig.key];
+
+    if (aValue < bValue) {
+      return sortConfig.direction === "asc" ? -1 : 1;
+    }
+    if (aValue > bValue) {
+      return sortConfig.direction === "asc" ? 1 : -1;
+    }
+    return 0;
+  });
+
+  const columns = [
+    { label: "Name", key: "playerId", sort: true },
+    { label: "Position", key: null, sort: false },
+    { label: "Age", key: null, sort: false },
+    { label: "ID", key: null, sort: false },
+    { label: "Availability", key: null, sort: false },
+    { label: "Actions", key: null, sort: false },
+  ];
+
   return (
-    <div className="p-7 bg-[#0B0E14] min-h-screen space-y-7">
-      {/* Header - Balanced Scale */}
+    <div className="p-10 bg-[#0B0E14] min-h-screen space-y-8 animate-in fade-in duration-700">
+      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-black text-white tracking-tight">
             Players Management
           </h1>
-          <p className="text-gray-400 text-sm mt-0.5 font-medium">
+          <p className="text-gray-400 text-sm mt-1 font-medium italic opacity-80">
             Manage your squad roster and player data
           </p>
         </div>
-        <button className="bg-[#53DDF5] hover:shadow-[0_0_12px_#53DDF530] text-[#0B0E14] font-extrabold py-2.5 px-6 rounded-lg flex items-center gap-2 transition-all">
+        <button className="bg-cyan-400 hover:bg-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-2.5 px-6 rounded-lg flex items-center gap-2 transition-all cursor-pointer">
           <Plus size={18} strokeWidth={3} />
           <span className="text-sm">Add Player</span>
         </button>
       </div>
 
-      {/* Search Bar - Balanced height */}
+      {/* Search Bar */}
       <div className="relative group">
         <Search
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-[#53DDF5] transition-colors"
-          size={18}
+          className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-cyan-400 transition-colors"
+          size={20}
         />
         <input
-          className="w-full bg-[#0B0E14] border border-gray-800 pl-12 h-13 text-sm text-gray-300 focus:outline-none focus:border-[#30D5C8]/70 rounded-xl transition-all placeholder:text-gray-700"
+          className="w-full bg-[#0B0E14] border border-gray-800/80 pl-14 h-14 text-sm text-gray-300 focus:outline-none focus:border-cyan-500/50 rounded-xl transition-all placeholder:text-gray-700 shadow-inner"
           placeholder="Search by name, position, or ID..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
-      {/* Table Container - Sharp Grid, No Radius */}
-      <div className="w-full overflow-hidden border border-gray-800 bg-[#0B0E14]">
+      {/* Table Container */}
+      <div className="w-full overflow-hidden border border-gray-800/60 bg-[#0B1219]/40 rounded-xl">
         <table className="w-full border-collapse">
           <thead>
             <tr className="border-b border-gray-800">
-              {[
-                { label: "Name", sort: true },
-                { label: "Position", sort: true },
-                { label: "Age", sort: false },
-                { label: "ID", sort: false },
-                { label: "AI Score", sort: true },
-                { label: "Availability", sort: false },
-                { label: "Actions", sort: false },
-              ].map((col, i) => (
+              {columns.map((col) => (
                 <th
-                  key={i}
-                  className="bg-[#235D67]/20 px-5 py-4 text-[12px] font-black text-gray-300 uppercase tracking-widest border-r border-gray-800 last:border-r-0"
+                  key={col.label}
+                  onClick={() => col.key && handleSort(col.key as keyof Player)}
+                  className={`bg-[#235D67]/10 px-6 py-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] border-r border-gray-800/40 last:border-r-0 ${col.key ? "cursor-pointer hover:bg-cyan-400/5 transition-colors" : ""}`}
                 >
-                  <div
-                    className={`flex items-center gap-2 ${i > 1 && i < 6 ? "justify-center" : ""}`}
-                  >
+                  <div className="flex items-center gap-2 justify-center">
                     {col.label}
                     {col.sort && (
-                      <ArrowUpDown size={14} className="opacity-40" />
+                      <ArrowUpDown
+                        size={14}
+                        className={`transition-opacity ${sortConfig.key === col.key ? "opacity-100 text-cyan-400" : "opacity-30"}`}
+                      />
                     )}
                   </div>
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="bg-[#162129]/10">
-            {INITIAL_PLAYERS.map((player, idx) => (
+          <tbody>
+            {sortedPlayers.map((player, idx) => (
               <tr
                 key={idx}
-                className="border-b border-gray-800/60 hover:bg-[#53DDF5]/5 transition-colors group"
+                className="border-b border-gray-800/40 hover:bg-cyan-400/5 transition-colors group"
               >
-                <td className="px-5 py-4 border-r border-gray-800/50">
+                {/* Name & Country */}
+                <td className="px-6 py-4 border-r border-gray-800/40">
                   <div className="flex items-center gap-4">
-                    <Avatar className="h-10 w-10 border border-gray-700 group-hover:border-[#30D5C8]/60 transition-all">
+                    <Avatar className="h-10 w-10 border border-gray-800 group-hover:border-cyan-500/50 transition-colors">
                       <AvatarImage src={player.avatar} />
                       <AvatarFallback>MS</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="text-[15px] font-bold text-white leading-tight">
+                      <p className="text-[14px] font-bold text-white group-hover:text-cyan-400 transition-colors">
                         {player.name}
                       </p>
-                      <p className="text-[11px] text-gray-500 font-bold uppercase tracking-tighter">
-                        England
+                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">
+                        {player.country}
                       </p>
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-4 text-sm font-bold text-gray-300 border-r border-gray-800/50">
-                  {player.position}
-                </td>
-                <td className="px-5 py-4 text-sm font-bold text-gray-300 text-center border-r border-gray-800/50">
-                  {player.age}
-                </td>
-                <td className="px-5 py-4 text-[13px] font-mono font-bold text-[#53DDF5] text-center border-r border-gray-800/50">
-                  <span className="underline underline-offset-4 cursor-pointer hover:text-white">
-                    {player.id}
+
+                {/* Position */}
+                <td className="px-6 py-4 text-center border-r border-gray-800/40">
+                  <span className="text-sm font-bold text-gray-400 group-hover:text-gray-200">
+                    {player.position}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-xl font-black text-[#00A63E] text-center border-r border-gray-800/50">
-                  {player.aiScore}
+
+                {/* Age */}
+                <td className="px-6 py-4 text-[15px] font-bold text-gray-400 text-center border-r border-gray-800/40 group-hover:text-gray-200">
+                  {player.age}
                 </td>
-                <td className="px-5 py-4 text-center border-r border-gray-800/50">
-                  <span className="bg-[#00A63E]/10 text-[#00A63E] border border-[#00A63E]/40 text-[10px] font-black px-3 py-1.5 rounded-md uppercase tracking-wider">
+
+                {/* ID */}
+                <td className="px-6 py-4 text-[13px] font-mono font-bold text-cyan-500 text-center border-r border-gray-800/40">
+                  <span className="hover:text-white transition-colors">
+                    {player.playerId}
+                  </span>
+                </td>
+
+                {/* Availability */}
+                <td className="px-6 py-4 text-center border-r border-gray-800/40">
+                  <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">
                     {player.availability}
                   </span>
                 </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center justify-center gap-3">
+
+                {/* Actions */}
+                <td className="px-6 py-4">
+                  <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => handleAction("view", player.id)}
-                      className="p-2 bg-[#53DDF5]/10 text-[#53DDF5] rounded-lg hover:bg-[#53DDF5] hover:text-[#0B0E14] transition-all"
+                      className="px-4 py-1.5 bg-cyan-500 text-[#0B0E14] text-[11px] font-black rounded-md hover:bg-cyan-400 transition-all cursor-pointer shadow-[0_0_15px_rgba(34,211,238,0.1)]"
                     >
-                      <Eye size={16} strokeWidth={2.5} />
+                      View
                     </button>
                     <button
                       onClick={() => handleAction("edit", player.id)}
-                      className="p-2 bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white transition-all"
+                      className="p-1.5 text-cyan-500/60 hover:text-cyan-400 transition-colors cursor-pointer"
                     >
-                      <Edit3 size={16} strokeWidth={2.5} />
+                      <Edit3 size={16} />
                     </button>
-                    <button className="p-2 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all">
-                      <Trash2 size={16} strokeWidth={2.5} />
+                    <button className="p-1.5 text-red-500/60 hover:text-red-500 transition-colors cursor-pointer">
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 </td>
@@ -154,8 +195,8 @@ const PlayerManagement = () => {
         </table>
       </div>
 
-      {/* Summary Cards - Balanced padding and size */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Summary Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
         {[
           { label: "Total Players", val: "6" },
           { label: "Available", val: "4" },
@@ -163,12 +204,12 @@ const PlayerManagement = () => {
         ].map((item, i) => (
           <div
             key={i}
-            className="bg-[#162129]/30 border border-gray-800 p-6 rounded-2xl"
+            className="bg-[#11161D]/40 border border-gray-800/60 p-8 rounded-[24px] hover:border-cyan-500/30 transition-all duration-500 group shadow-lg"
           >
-            <p className="text-[11px] font-black text-gray-500 uppercase tracking-widest mb-2">
+            <p className="text-[11px] font-black text-gray-500 uppercase tracking-[0.2em] mb-3 group-hover:text-gray-400">
               {item.label}
             </p>
-            <p className="text-3xl font-black text-white leading-none">
+            <p className="text-4xl font-black text-white group-hover:text-cyan-400 transition-colors">
               {item.val}
             </p>
           </div>
