@@ -88,14 +88,14 @@ const AIAnalytics = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar mb-10  p-2">
+        <div className="flex items-center gap-2 overflow-x-auto mb-10 py-5 px-3 custom-scrollbar bg-[#1D1F1F] rounded-md">
           {tabs.map((tab) => (
             <button
               key={tab.name}
               onClick={() => setActiveTab(tab.name)}
               className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all rounded-lg ${
                 activeTab === tab.name
-                  ? "bg-cyan-500/20 text-white"
+                  ? "bg-[#00D3F2] text-black"
                   : "text-gray-400 hover:text-gray-300 hover:bg-gray-800/50"
               }`}
             >
@@ -106,11 +106,9 @@ const AIAnalytics = () => {
         </div>
 
         <div>
-
-        {/* Tab Content */}
-        {renderTabContent()}
+          {/* Tab Content */}
+          {renderTabContent()}
         </div>
-
       </div>
     </div>
   );
