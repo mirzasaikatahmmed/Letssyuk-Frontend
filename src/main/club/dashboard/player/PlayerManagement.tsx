@@ -3,10 +3,16 @@ import { useNavigate } from "react-router";
 import { Search, Plus, Edit3, Trash2, ArrowUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { players, type Player } from "./_data/data";
+import PlayerFormModal from "./_components/PlayerFormModal";
 
 const PlayerManagement = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   const [sortConfig, setSortConfig] = useState<{
     key: keyof Player | null;
@@ -17,11 +23,20 @@ const PlayerManagement = () => {
   });
 
   const handleAction = (type: "view" | "edit", id: string) => {
-    const path =
-      type === "view"
-        ? `/club/dashboard/players/details/${id}`
-        : `/club/dashboard/players/edit/${id}`;
-    navigate(path);
+    if (type === "view") {
+      navigate(`/club/dashboard/players/details/${id}`);
+    } else {
+      const player = players.find((p) => p.id === id);
+      setSelectedPlayer(player || null);
+      setModalMode("edit");
+      setIsModalOpen(true);
+    }
+  };
+
+  const openAddModal = () => {
+    setSelectedPlayer(null);
+    setModalMode("add");
+    setIsModalOpen(true);
   };
 
   const handleSort = (key: keyof Player) => {
@@ -75,7 +90,10 @@ const PlayerManagement = () => {
             Manage your squad roster and player data
           </p>
         </div>
-        <button className="bg-cyan-400 hover:bg-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-2.5 px-6 rounded-lg flex items-center gap-2 transition-all cursor-pointer">
+        <button
+          onClick={openAddModal}
+          className="bg-cyan-400 hover:bg-cyan-300 shadow-[0_0_20px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-2.5 px-6 rounded-lg flex items-center gap-2 transition-all cursor-pointer"
+        >
           <Plus size={18} strokeWidth={3} />
           <span className="text-sm">Add Player</span>
         </button>
@@ -164,7 +182,9 @@ const PlayerManagement = () => {
 
                 {/* Availability */}
                 <td className="px-6 py-4 text-center border-r border-gray-800/40">
-                  <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">
+                  <span
+                    className={`${player.availability === "Available" ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" : player.availability === "Minor Injury" ? "bg-amber-500/10 text-amber-500 border-amber-500/20" : "bg-red-500/10 text-red-500 border-red-500/20"} border text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider`}
+                  >
                     {player.availability}
                   </span>
                 </td>
@@ -198,8 +218,13 @@ const PlayerManagement = () => {
       {/* Summary Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
         {[
-          { label: "Total Players", val: "6" },
-          { label: "Available", val: "4" },
+          { label: "Total Players", val: filteredPlayers.length.toString() },
+          {
+            label: "Available",
+            val: filteredPlayers
+              .filter((p) => p.availability === "Available")
+              .length.toString(),
+          },
           { label: "Avg Form", val: "7.5" },
         ].map((item, i) => (
           <div
@@ -215,6 +240,17 @@ const PlayerManagement = () => {
           </div>
         ))}
       </div>
+
+      {/* Player Form Modal */}
+      {isModalOpen && (
+        <PlayerFormModal
+          key={selectedPlayer?.id || "add-new"}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          mode={modalMode}
+          playerData={selectedPlayer}
+        />
+      )}
     </div>
   );
 };

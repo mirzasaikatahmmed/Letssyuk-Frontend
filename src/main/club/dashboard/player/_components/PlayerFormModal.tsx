@@ -1,27 +1,46 @@
 import { useState, useRef } from "react";
 import { X, Upload, Save } from "lucide-react";
-import { useNavigate } from "react-router";
 import { CustomSelect } from "@/components/share/CustomSelect/CustomSelect";
+import { type Player } from "../_data/data";
 
-const ClubPlayerEdit = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    fullName: "Marcus Sterling",
-    position: "Forward",
-    age: "24",
-    nationality: "England",
-    goals: "18",
-    assists: "7",
-    appearances: "28",
-    contractExpiry: "2024-05-15",
-    availability: "Available",
-    notes: "",
-  });
+interface PlayerFormModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  mode: "add" | "edit";
+  playerData?: Player | null;
+}
+
+const PlayerFormModal = ({
+  isOpen,
+  onClose,
+  mode,
+  playerData,
+}: PlayerFormModalProps) => {
+  const [formData, setFormData] = useState(() => ({
+    fullName: mode === "edit" && playerData ? playerData.name : "",
+    position: mode === "edit" && playerData ? playerData.position : "Forward",
+    age: mode === "edit" && playerData ? playerData.age.toString() : "",
+    nationality: mode === "edit" && playerData ? playerData.country : "",
+    goals: mode === "edit" && playerData ? playerData.stats.goals : "0",
+    assists: mode === "edit" && playerData ? playerData.stats.assists : "0",
+    appearances:
+      mode === "edit" && playerData ? playerData.stats.appearances : "0",
+    contractExpiry:
+      mode === "edit" && playerData ? playerData.contract.expiryDate : "",
+    availability:
+      mode === "edit" && playerData ? playerData.availability : "Available",
+    notes: mode === "edit" && playerData ? playerData.fitness.notes : "",
+  }));
 
   const [profileImage, setProfileImage] = useState<string>(
-    "https://img.freepik.com/free-photo/headshot-diverse-male-executive-with-beard-suit_613910-18471.jpg?semt=ais_hybrid&w=740&q=80",
+    mode === "edit" && playerData
+      ? playerData.avatar
+      : "https://img.freepik.com/free-photo/headshot-diverse-male-executive-with-beard-suit_613910-18471.jpg?semt=ais_hybrid&w=740&q=80",
   );
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  if (!isOpen) return null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -51,8 +70,11 @@ const ClubPlayerEdit = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Updated Player Data:", { ...formData, profileImage });
-    navigate(-1);
+    console.log(`${mode === "add" ? "Adding" : "Updating"} Player Data:`, {
+      ...formData,
+      profileImage,
+    });
+    onClose();
   };
 
   const inputClass =
@@ -62,23 +84,25 @@ const ClubPlayerEdit = () => {
     "text-[14px] font-black text-white mb-6 tracking-wide";
 
   return (
-    <div className="bg-[#0B0E14] min-h-screen p-10 flex justify-center items-start animate-in fade-in duration-1000">
-      <div className="w-full max-w-3xl space-y-6">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300 overflow-y-auto">
+      <div className="w-full max-w-3xl my-auto space-y-6 relative">
         {/* Header */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-start mb-4">
           <div>
             <h1 className="text-3xl font-black text-white tracking-tight">
-              Update Player Data
+              {mode === "add" ? "Add New Player" : "Update Player Data"}
             </h1>
             <p className="text-sm font-bold text-gray-600 mt-1 uppercase tracking-wider">
-              Player ID:{" "}
-              <span className="text-cyan-500/80">OA-ENG-2024-001</span>
+              {mode === "edit" ? `Player ID: ` : "Assigning New ID"}
+              <span className="text-cyan-500/80">
+                {mode === "edit" ? playerData?.playerId : "GEN-2024-XXX"}
+              </span>
             </p>
           </div>
           <button
-            onClick={() => navigate(-1)}
+            onClick={onClose}
             type="button"
-            className="p-2 text-gray-600 hover:text-white transition-colors hover:bg-white/5 rounded-full"
+            className="p-2 text-gray-600 hover:text-white transition-colors hover:bg-white/5 rounded-full cursor-pointer"
           >
             <X size={24} />
           </button>
@@ -86,13 +110,13 @@ const ClubPlayerEdit = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="bg-[#11161D]/40 border border-gray-800/60 p-10 rounded-[32px] shadow-2xl backdrop-blur-sm space-y-12"
+          className="bg-[#11161D] border border-gray-800/60 p-10 rounded-[32px] shadow-2xl space-y-12"
         >
           {/* Profile Picture */}
           <section>
             <h3 className={sectionTitleClass}>Profile Picture</h3>
             <div className="flex items-center gap-8">
-              <div className="h-28 w-28 rounded-full border-2 border-gray-800 overflow-hidden shadow-xl">
+              <div className="h-28 w-28 rounded-full border-2 border-gray-800 overflow-hidden shadow-xl bg-[#0B0E14]">
                 <img
                   src={profileImage}
                   className="h-full w-full object-cover"
@@ -140,9 +164,11 @@ const ClubPlayerEdit = () => {
                 <input
                   name="fullName"
                   type="text"
+                  placeholder="Enter full name"
                   value={formData.fullName}
                   onChange={handleChange}
                   className={inputClass}
+                  required
                 />
               </div>
               <CustomSelect
@@ -156,9 +182,11 @@ const ClubPlayerEdit = () => {
                 <input
                   name="age"
                   type="text"
+                  placeholder="24"
                   value={formData.age}
                   onChange={handleChange}
                   className={inputClass}
+                  required
                 />
               </div>
               <div>
@@ -166,9 +194,11 @@ const ClubPlayerEdit = () => {
                 <input
                   name="nationality"
                   type="text"
+                  placeholder="England"
                   value={formData.nationality}
                   onChange={handleChange}
                   className={inputClass}
+                  required
                 />
               </div>
             </div>
@@ -223,6 +253,7 @@ const ClubPlayerEdit = () => {
                   value={formData.contractExpiry}
                   onChange={handleChange}
                   className={`${inputClass} block scheme-dark`}
+                  required
                 />
               </div>
               <CustomSelect
@@ -253,18 +284,27 @@ const ClubPlayerEdit = () => {
           </section>
 
           {/* Footer Actions */}
-          <div className="flex justify-end pt-6">
-            <button
-              type="submit"
-              className="bg-[#22d3ee] hover:bg-cyan-300 shadow-[0_10px_30px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-3.5 px-8 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group"
-            >
-              Update Player
-              <Save
-                size={20}
-                strokeWidth={3}
-                className="text-[#0B0E14]/70 group-hover:text-[#0B0E14] transition-colors"
-              />
-            </button>
+          <div className="flex justify-end pt-6 border-t border-gray-800/50">
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-8 py-3.5 text-gray-400 font-bold hover:text-white transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-[#22d3ee] hover:bg-cyan-300 shadow-[0_10px_30px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-3.5 px-8 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group"
+              >
+                {mode === "add" ? "Add Player" : "Update Player"}
+                <Save
+                  size={20}
+                  strokeWidth={3}
+                  className="text-[#0B0E14]/70 group-hover:text-[#0B0E14] transition-colors"
+                />
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -272,4 +312,4 @@ const ClubPlayerEdit = () => {
   );
 };
 
-export default ClubPlayerEdit;
+export default PlayerFormModal;
