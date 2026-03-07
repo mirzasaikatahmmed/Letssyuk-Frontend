@@ -6,7 +6,6 @@ import { Routes } from "./routes/Routes";
 import { Toaster } from "./components/ui/sonner";
 import { FormProvider } from "./main/club/onboarding/context/FormContext";
 import { AgentFormProvider } from "./main/agent/onboarding/context/AgentFormContext";
-////
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <FormProvider>
