@@ -49,6 +49,7 @@ import AgentOnboarding from "@/main/agent/onboarding/AgentOnboarding";
 import ClubUserProfile from "@/main/club/dashboard/profile/ClubUserProfile";
 import ClubHelpAndSupport from "@/main/club/dashboard/helpAndSupport/ClubHelpAndSupport";
 import ClubNotification from "@/main/club/dashboard/Notification/ClubNotification";
+import AIAnalytics from "@/main/club/dashboard/aiAnalytics/AIAnalytics";
 import AdminLayout from "@/layout/AdminLayout";
 import AuthLayout from "@/layout/AuthLayout";
 import AdminDashboard from "@/main/admin/dashboard/AdminDashboard";
@@ -183,6 +184,10 @@ export const Routes = createBrowserRouter([
           {
             path: "available-players/:id",
             element: <AvailablePlayerDetails />,
+          },
+          {
+            path: "ai-analytics",
+            element: <AIAnalytics />,
           },
           {
             path: "profile",
