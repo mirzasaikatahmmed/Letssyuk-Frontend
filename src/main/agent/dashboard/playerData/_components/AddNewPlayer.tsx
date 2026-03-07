@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import {
   X,
   Calendar,
@@ -24,7 +23,12 @@ import MonitoringForm from "./add-player-forms/MonitoringForm";
 
 const AddNewPlayer = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("Basic Info");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "Basic Info";
+
+  const setActiveTab = (tabName: string) => {
+    setSearchParams({ tab: tabName });
+  };
 
   const tabs = [
     { name: "Basic Info", icon: <User size={14} /> },

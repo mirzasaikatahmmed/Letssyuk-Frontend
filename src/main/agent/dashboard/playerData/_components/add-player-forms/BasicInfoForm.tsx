@@ -367,7 +367,7 @@ const BasicInfoForm = () => {
             </label>
             <input
               {...register("contractStart")}
-              type="text"
+              type="date"
               placeholder="dd/mm/yyyy"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
             />
@@ -378,7 +378,7 @@ const BasicInfoForm = () => {
             </label>
             <input
               {...register("contractEnd")}
-              type="text"
+              type="date"
               placeholder="dd/mm/yyyy"
               className="bg-[#0B0E14] border border-gray-800/60 rounded-xl px-5 py-3 text-sm text-white focus:border-cyan-500/50 outline-none transition-all"
             />
