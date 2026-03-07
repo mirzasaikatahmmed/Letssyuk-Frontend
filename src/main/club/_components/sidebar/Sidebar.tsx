@@ -1,6 +1,6 @@
 // import React from 'react';
 import { NavLink } from 'react-router'; // Changed to react-router-dom
-import { Home,  User, LifeBuoy, Bell, ChevronLeft, LogOut } from 'lucide-react';
+import { Home,  User, LifeBuoy, Bell, ChevronLeft, LogOut, Brain } from 'lucide-react';
 import logo from "@/assets/logo/logo.png";
 import { FiUsers } from "react-icons/fi";
 import { LuSearch } from "react-icons/lu";
@@ -10,6 +10,7 @@ const ClubDSidebar = () => {
     { icon: Home, label: 'Home', path: '/club/dashboard/overview' },
     { icon: FiUsers, label: 'Players', path: '/club/dashboard/players' },
     { icon: LuSearch , label: 'Available Players', path: '/club/dashboard/available-players' },
+    { icon: Brain, label: 'AI Analytics', path: '/club/dashboard/ai-analytics' },
     { icon: User, label: 'Profile', path: '/club/dashboard/profile' },
     { icon: LifeBuoy, label: 'Help and Support', path: '/club/dashboard/support' },
     { icon: Bell, label: 'Notifications', path: '/club/dashboard/notifications' },
