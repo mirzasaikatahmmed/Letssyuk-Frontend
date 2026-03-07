@@ -16,6 +16,26 @@ import { toast } from "sonner";
 const BasicInfoForm = () => {
   const [isPositionOpen, setIsPositionOpen] = useState(false);
   const [isFootOpen, setIsFootOpen] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+        toast.success("Photo selected");
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileUpload = () => {
+    const input = document.getElementById(
+      "player-photo-upload",
+    ) as HTMLInputElement;
+    if (input) input.click();
+  };
 
   const { register, handleSubmit, setValue, control } = useForm({
     defaultValues: {
@@ -72,17 +92,33 @@ const BasicInfoForm = () => {
     >
       {/* Section: Player Photo */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
-        <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-6">
+        <h3 className="text-lg font-bold text-gray-300 capitalize tracking-widest mb-6">
           Player Photo
         </h3>
         <div className="flex items-center gap-8">
-          <div className="h-32 w-32 bg-[#0B0E14] rounded-[24px] border border-gray-800/60 flex items-center justify-center text-gray-700">
-            <User size={48} className="opacity-20" />
+          <div className="h-32 w-32 bg-[#0B0E14] rounded-[24px] border border-gray-800/60 flex items-center justify-center text-gray-700 overflow-hidden">
+            {photoPreview ? (
+              <img
+                src={photoPreview}
+                alt="Player"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User size={48} className="opacity-20" />
+            )}
           </div>
           <div className="space-y-3">
+            <input
+              type="file"
+              id="player-photo-upload"
+              className="hidden"
+              accept="image/*"
+              onChange={handlePhotoChange}
+            />
             <button
               type="button"
-              className="bg-[#11161D] border border-gray-800 hover:bg-gray-800 px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm"
+              onClick={triggerFileUpload}
+              className="bg-[#11161D] border border-gray-800 hover:bg-gray-800 px-6 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-sm cursor-pointer"
             >
               <Upload size={14} className="text-cyan-400" />
               Upload Photo
@@ -98,12 +134,12 @@ const BasicInfoForm = () => {
 
       {/* Section: Basic Information */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
-        <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-8">
+        <h3 className="text-lg font-bold text-gray-300 capitalize tracking-widest mb-8">
           Basic Information
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Full Name *
             </label>
             <input
@@ -114,7 +150,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Age *
             </label>
             <input
@@ -125,7 +161,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Height
             </label>
             <input
@@ -136,7 +172,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Nationality *
             </label>
             <input
@@ -149,7 +185,7 @@ const BasicInfoForm = () => {
 
           {/* Position Dropdown */}
           <div className="flex flex-col gap-2 relative">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Position *
             </label>
             <div
@@ -208,7 +244,7 @@ const BasicInfoForm = () => {
 
           {/* Dominant Foot Dropdown */}
           <div className="flex flex-col gap-2 relative">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Dominant foot *
             </label>
             <div
@@ -245,7 +281,7 @@ const BasicInfoForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Current Club *
             </label>
             <input
@@ -260,12 +296,12 @@ const BasicInfoForm = () => {
 
       {/* Section: Last Match Performance */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
-        <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-8 text-center">
+        <h3 className="text-lg text-gray-300 font-bold capitalize tracking-widest mb-8 text-center">
           Last Match Performance
         </h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Goals
             </label>
             <input
@@ -276,7 +312,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Assists
             </label>
             <input
@@ -287,7 +323,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Matches
             </label>
             <input
@@ -298,7 +334,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-3">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Minutes
             </label>
             <input
@@ -321,12 +357,12 @@ const BasicInfoForm = () => {
 
       {/* Section: Contract Details */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
-        <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-8">
+        <h3 className="text-lg font-bold text-gray-300 capitalize tracking-widest mb-8">
           Contract Details
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-8">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Contract Start Date
             </label>
             <input
@@ -337,7 +373,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Contract End Date *
             </label>
             <input
@@ -348,7 +384,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
               Market Value Estimate
             </label>
             <input
@@ -360,7 +396,7 @@ const BasicInfoForm = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1">
+          <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1">
             Contract Clauses (Optional)
           </label>
           <textarea
@@ -373,7 +409,7 @@ const BasicInfoForm = () => {
 
       {/* Section: Injury History */}
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
-        <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-widest mb-6">
+        <h3 className="text-lg font-bold text-gray-300 capitalize tracking-widest mb-6">
           Injury History (Optional)
         </h3>
         <textarea
@@ -393,14 +429,14 @@ const BasicInfoForm = () => {
             Social Media Links
           </h3>
         </div>
-        <p className="text-[11px] text-gray-500 font-medium mb-8">
+        <p className="text-[11px] text-white font-medium mb-8">
           AI will analyze social media engagement to estimate market value and
           fan base metrics
         </p>
 
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1 flex items-center gap-2">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1 flex items-center gap-2">
               <Instagram size={12} /> Instagram Profile URL
             </label>
             <input
@@ -411,7 +447,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1 flex items-center gap-2">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1 flex items-center gap-2">
               <Twitter size={12} /> Twitter/X Profile URL
             </label>
             <input
@@ -422,7 +458,7 @@ const BasicInfoForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 uppercase tracking-widest pl-1 flex items-center gap-2">
+            <label className="text-[11px] text-gray-300 capitalize tracking-widest pl-1 flex items-center gap-2">
               <FaTiktok size={11} /> TikTok Profile URL
             </label>
             <input
