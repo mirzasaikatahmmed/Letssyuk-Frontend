@@ -1,65 +1,82 @@
-import  { useState } from 'react';
-import { Check, Trash2, Info, CheckCircle2, AlertCircle, CheckSquare } from 'lucide-react';
+import { useState } from "react";
+import {
+  Check,
+  Trash2,
+  Info,
+  CheckCircle2,
+  AlertCircle,
+  CheckCheck,
+} from "lucide-react";
+import { toast } from "sonner";
 
 const ClubNotification = () => {
   // Functional State for Notifications
   const [notifications, setNotifications] = useState([
     {
       id: 1,
-      type: 'info',
-      title: 'Welcome to OnyxSport AI',
-      message: 'Your club dashboard is ready to use',
-      time: '4m ago',
-      isRead: false
+      type: "info",
+      title: "Welcome to OnyxSport AI",
+      message: "Your club dashboard is ready to use",
+      time: "4m ago",
+      isRead: false,
     },
     {
       id: 2,
-      type: 'success',
-      title: 'Match Data Updated',
-      message: 'Post-match performance data successfully recorded for 6 players against Manchester United.',
-      time: 'Yesterday',
-      isRead: true
+      type: "success",
+      title: "Match Data Updated",
+      message:
+        "Post-match performance data successfully recorded for 6 players against Manchester United.",
+      time: "Yesterday",
+      isRead: true,
     },
     {
       id: 3,
-      type: 'warning',
-      title: 'Contract Expiring Soon',
-      message: "Oliver Thompson's contract expires on Dec 31, 2024. Consider renewal negotiations.",
-      time: '5h ago',
-      isRead: false
+      type: "warning",
+      title: "Contract Expiring Soon",
+      message:
+        "Oliver Thompson's contract expires on Dec 31, 2024. Consider renewal negotiations.",
+      time: "5h ago",
+      isRead: false,
     },
     {
-        id: 4,
-        type: 'success',
-        title: 'Match Data Updated',
-        message: 'Post-match performance data successfully recorded for 6 players against Manchester United.',
-        time: 'Yesterday',
-        isRead: true
+      id: 4,
+      type: "success",
+      title: "Match Data Updated",
+      message:
+        "Post-match performance data successfully recorded for 6 players against Manchester United.",
+      time: "Yesterday",
+      isRead: true,
     },
     {
-        id: 5,
-        type: 'warning',
-        title: 'Contract Expiring Soon',
-        message: "Oliver Thompson's contract expires on Dec 31, 2024. Consider renewal negotiations.",
-        time: '5h ago',
-        isRead: false
-    }
+      id: 5,
+      type: "warning",
+      title: "Contract Expiring Soon",
+      message:
+        "Oliver Thompson's contract expires on Dec 31, 2024. Consider renewal negotiations.",
+      time: "5h ago",
+      isRead: false,
+    },
   ]);
 
   // Actions
   const markAsRead = (id: number) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)),
+    );
+    toast.success("Notification marked as read");
   };
 
   const deleteNotification = (id: number) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+    toast.info("Notification deleted");
   };
 
   const markAllRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+    setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+    toast.success("All notifications marked as read");
   };
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   return (
     <div className=" bg-[#0B0E14] min-h-screen text-white font-sans">
@@ -68,42 +85,57 @@ const ClubNotification = () => {
         <div>
           <h1 className="text-3xl font-black tracking-tight">Notifications</h1>
           <p className="text-gray-500 text-sm mt-1 font-medium">
-            You have <span className="text-[#53DDF5]">{unreadCount}</span> unread notifications
+            You have <span className="text-[#53DDF5]">{unreadCount}</span>{" "}
+            unread notifications
           </p>
         </div>
-        <button 
+        <button
           onClick={markAllRead}
-          className="bg-[#53DDF5] hover:bg-[#42c5db] text-[#0B0E14] px-6 py-2.5 rounded-lg font-black text-sm flex items-center gap-2 transition-all shadow-[0_4px_14px_0_rgba(83,221,245,0.2)]"
+          className="bg-[#53DDF5] hover:bg-[#42c5db] text-[#0B0E14] px-6 py-2.5 rounded-lg font-black text-sm flex items-center gap-2 transition-all shadow-[0_4px_14px_0_rgba(83,221,245,0.2)] cursor-pointer"
         >
-          <CheckSquare size={18} strokeWidth={3} /> Mark all as read
+          <CheckCheck size={18} strokeWidth={3} /> Mark all as read
         </button>
       </div>
 
       {/* Notifications List */}
       <div className="space-y-4">
         {notifications.map((notif) => (
-          <div 
-            key={notif.id} 
+          <div
+            key={notif.id}
             className={`group relative flex items-start gap-5 p-6 rounded-xl border transition-all duration-200 ${
-              notif.type === 'info' ? 'border-[#53DDF5]/20 bg-[#11161D]' :
-              notif.type === 'success' ? 'border-[#05DF72]/20 bg-[#11161D]' :
-              'border-[#FFB01F]/20 bg-[#11161D]'
+              notif.type === "info"
+                ? "border-[#53DDF5]/20 bg-[#11161D]"
+                : notif.type === "success"
+                  ? "border-[#05DF72]/20 bg-[#11161D]"
+                  : "border-[#FFB01F]/20 bg-[#11161D]"
             } hover:bg-[#161d26]`}
           >
             {/* Icon */}
             <div className="mt-1">
-              {notif.type === 'info' && <Info className="text-[#53DDF5]" size={20} />}
-              {notif.type === 'success' && <CheckCircle2 className="text-[#05DF72]" size={20} />}
-              {notif.type === 'warning' && <AlertCircle className="text-[#FFB01F]" size={20} />}
+              {notif.type === "info" && (
+                <Info className="text-[#53DDF5]" size={20} />
+              )}
+              {notif.type === "success" && (
+                <CheckCircle2 className="text-[#05DF72]" size={20} />
+              )}
+              {notif.type === "warning" && (
+                <AlertCircle className="text-[#FFB01F]" size={20} />
+              )}
             </div>
 
             {/* Content */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <h3 className="text-[15px] font-black tracking-wide text-gray-100">{notif.title}</h3>
+                <h3 className="text-[15px] font-black tracking-wide text-gray-100">
+                  {notif.title}
+                </h3>
               </div>
-              <p className="text-sm text-gray-400 font-medium leading-relaxed max-w-4xl">{notif.message}</p>
-              <span className="text-[11px] text-gray-600 font-bold uppercase tracking-wider mt-2 block">{notif.time}</span>
+              <p className="text-sm text-gray-400 font-medium leading-relaxed max-w-4xl">
+                {notif.message}
+              </p>
+              <span className="text-[11px] text-gray-600 font-bold uppercase tracking-wider mt-2 block">
+                {notif.time}
+              </span>
             </div>
 
             {/* Actions Panel */}
@@ -111,20 +143,20 @@ const ClubNotification = () => {
               {!notif.isRead && (
                 <div className="h-2 w-2 rounded-full bg-[#53DDF5] shadow-[0_0_8px_#53DDF5]" />
               )}
-              
+
               <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 {!notif.isRead && (
-                  <button 
+                  <button
                     onClick={() => markAsRead(notif.id)}
-                    className="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-[#05DF72] transition-colors"
+                    className="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-[#05DF72] transition-colors cursor-pointer"
                     title="Mark as read"
                   >
                     <Check size={18} />
                   </button>
                 )}
-                <button 
+                <button
                   onClick={() => deleteNotification(notif.id)}
-                  className="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-red-500 transition-colors"
+                  className="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
                   title="Delete"
                 >
                   <Trash2 size={18} />
@@ -136,7 +168,9 @@ const ClubNotification = () => {
 
         {notifications.length === 0 && (
           <div className="text-center py-20 bg-[#11161D] rounded-2xl border border-dashed border-gray-800">
-            <p className="text-gray-500 font-bold uppercase tracking-widest">No notifications found</p>
+            <p className="text-gray-500 font-bold uppercase tracking-widest">
+              No notifications found
+            </p>
           </div>
         )}
       </div>

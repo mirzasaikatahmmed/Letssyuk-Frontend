@@ -1,4 +1,3 @@
-import React from "react";
 interface PageHeadingProps {
   title: string;
   subTitle: string;

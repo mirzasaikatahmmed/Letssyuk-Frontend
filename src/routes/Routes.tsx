@@ -5,7 +5,7 @@ import MainLayout from "@/layout/MainLayout";
 import PlayerLayout from "@/layout/PlayerLayout";
 import ClubOverview from "@/main/club/dashboard/ClubOverview/ClubOverview";
 import ClubPlayerDetails from "@/main/club/dashboard/player/_components/PlayerDetails";
-import ClubPlayerEdit from "@/main/club/dashboard/player/_components/PlayerEdit";
+
 import PlayerManagement from "@/main/club/dashboard/player/PlayerManagement";
 import MentalHealth from "@/main/player/dashboard/home/_components/AiRecommendation/MentalHealth";
 import NutritionHydrationGuidance from "@/main/player/dashboard/home/_components/AiRecommendation/NutritionHydrationGuidance";
@@ -176,10 +176,7 @@ export const Routes = createBrowserRouter([
             path: "players/details/:id",
             element: <ClubPlayerDetails />,
           },
-          {
-            path: "players/edit/:id",
-            element: <ClubPlayerEdit />,
-          },
+
           {
             path: "available-players",
             element: <AvailablePlayers />,

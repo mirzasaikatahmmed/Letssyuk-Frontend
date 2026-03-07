@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TrendingUp, TrendingDown } from "lucide-react";
 
 type PlayerCard = {
@@ -26,7 +25,7 @@ export const PlayerCard = ({
         <img
           src={`https://img.freepik.com/free-photo/portrait-bearded-black-man-holds-basket-ball_613910-8547.jpg?semt=ais_hybrid&w=740&q=80`}
           alt={name}
-          className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+          className="object-center w-full h-full group-hover:scale-105 transition-transform duration-500"
         />
         {/* Badges */}
         <div className="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white border border-white/10">
