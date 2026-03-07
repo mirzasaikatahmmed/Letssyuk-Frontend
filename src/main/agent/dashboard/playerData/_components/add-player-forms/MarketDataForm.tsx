@@ -42,7 +42,7 @@ const MarketDataForm = () => {
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Current League
             </label>
             <input
@@ -54,7 +54,7 @@ const MarketDataForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Performance Rating
             </label>
             <input
@@ -66,7 +66,7 @@ const MarketDataForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Current Market Value
             </label>
             <input
@@ -78,7 +78,7 @@ const MarketDataForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Historical Market Value
             </label>
             <input
@@ -90,7 +90,7 @@ const MarketDataForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Benchmark Against Leagues
             </label>
             <textarea

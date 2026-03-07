@@ -44,7 +44,7 @@ const MonitoringForm = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Recent Matches
             </label>
             <input
@@ -55,7 +55,7 @@ const MonitoringForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Goals
             </label>
             <input
@@ -66,7 +66,7 @@ const MonitoringForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Assists
             </label>
             <input
@@ -77,7 +77,7 @@ const MonitoringForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Minutes Played
             </label>
             <input
@@ -88,7 +88,7 @@ const MonitoringForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Pass Accuracy %
             </label>
             <input
@@ -99,7 +99,7 @@ const MonitoringForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Average Rating
             </label>
             <input
@@ -114,7 +114,7 @@ const MonitoringForm = () => {
         {/* Progress Text Areas */}
         <div className="space-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Technical Progress
             </label>
             <textarea
@@ -125,7 +125,7 @@ const MonitoringForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Physical Progress
             </label>
             <textarea
@@ -136,7 +136,7 @@ const MonitoringForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Mental Progress
             </label>
             <textarea
@@ -147,7 +147,7 @@ const MonitoringForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Injury History
             </label>
             <textarea
@@ -158,7 +158,7 @@ const MonitoringForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Alerts & Notes
             </label>
             <textarea
