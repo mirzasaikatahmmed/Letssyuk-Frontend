@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { X, Upload, Save } from "lucide-react";
+import { toast } from "sonner";
 import { CustomSelect } from "@/components/share/CustomSelect/CustomSelect";
 import { type Player } from "../_data/data";
 
@@ -10,28 +12,25 @@ interface PlayerFormModalProps {
   playerData?: Player | null;
 }
 
+interface PlayerFormData {
+  fullName: string;
+  position: string;
+  age: string;
+  nationality: string;
+  goals: string;
+  assists: string;
+  appearances: string;
+  contractExpiry: string;
+  availability: string;
+  notes: string;
+}
+
 const PlayerFormModal = ({
   isOpen,
   onClose,
   mode,
   playerData,
 }: PlayerFormModalProps) => {
-  const [formData, setFormData] = useState(() => ({
-    fullName: mode === "edit" && playerData ? playerData.name : "",
-    position: mode === "edit" && playerData ? playerData.position : "Forward",
-    age: mode === "edit" && playerData ? playerData.age.toString() : "",
-    nationality: mode === "edit" && playerData ? playerData.country : "",
-    goals: mode === "edit" && playerData ? playerData.stats.goals : "0",
-    assists: mode === "edit" && playerData ? playerData.stats.assists : "0",
-    appearances:
-      mode === "edit" && playerData ? playerData.stats.appearances : "0",
-    contractExpiry:
-      mode === "edit" && playerData ? playerData.contract.expiryDate : "",
-    availability:
-      mode === "edit" && playerData ? playerData.availability : "Available",
-    notes: mode === "edit" && playerData ? playerData.fitness.notes : "",
-  }));
-
   const [profileImage, setProfileImage] = useState<string>(
     mode === "edit" && playerData
       ? playerData.avatar
@@ -39,6 +38,39 @@ const PlayerFormModal = ({
   );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm<PlayerFormData>({
+    defaultValues: {
+      fullName: mode === "edit" && playerData ? playerData.name : "",
+      position: mode === "edit" && playerData ? playerData.position : "Forward",
+      age: mode === "edit" && playerData ? playerData.age.toString() : "",
+      nationality: mode === "edit" && playerData ? playerData.country : "",
+      goals:
+        mode === "edit" && playerData ? playerData.stats.goals.toString() : "0",
+      assists:
+        mode === "edit" && playerData
+          ? playerData.stats.assists.toString()
+          : "0",
+      appearances:
+        mode === "edit" && playerData
+          ? playerData.stats.appearances.toString()
+          : "0",
+      contractExpiry:
+        mode === "edit" && playerData ? playerData.contract.expiryDate : "",
+      availability:
+        mode === "edit" && playerData ? playerData.availability : "Available",
+      notes: mode === "edit" && playerData ? playerData.fitness.notes : "",
+    },
+  });
+
+  const currentPosition = useWatch({ control, name: "position" });
+  const currentAvailability = useWatch({ control, name: "availability" });
 
   if (!isOpen) return null;
 
@@ -57,28 +89,20 @@ const PlayerFormModal = ({
     fileInputRef.current?.click();
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: PlayerFormData) => {
     console.log(`${mode === "add" ? "Adding" : "Updating"} Player Data:`, {
-      ...formData,
+      ...data,
       profileImage,
     });
+    toast.success(
+      `Player ${mode === "add" ? "added" : "updated"} successfully!`,
+    );
     onClose();
   };
 
   const inputClass =
     "w-full bg-[#11161D] border border-gray-800/80 rounded-xl h-12 px-4 text-sm text-gray-300 font-bold focus:outline-none focus:border-cyan-500/50 transition-all placeholder:text-gray-700";
+  const errorInputClass = "border-red-500/50 focus:border-red-500/50";
   const labelClass = "text-xs font-bold text-gray-500 mb-2 block";
   const sectionTitleClass =
     "text-[14px] font-black text-white mb-6 tracking-wide";
@@ -109,7 +133,7 @@ const PlayerFormModal = ({
         </div>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="bg-[#11161D] border border-gray-800/60 p-10 rounded-[32px] shadow-2xl space-y-12"
         >
           {/* Profile Picture */}
@@ -162,44 +186,54 @@ const PlayerFormModal = ({
               <div>
                 <label className={labelClass}>Full Name *</label>
                 <input
-                  name="fullName"
+                  {...register("fullName", {
+                    required: "Full name is required",
+                  })}
                   type="text"
                   placeholder="Enter full name"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className={inputClass}
-                  required
+                  className={`${inputClass} ${errors.fullName ? errorInputClass : ""}`}
                 />
+                {errors.fullName && (
+                  <span className="text-[10px] text-red-500 font-bold uppercase mt-1">
+                    {errors.fullName.message}
+                  </span>
+                )}
               </div>
               <CustomSelect
                 label="Position *"
-                value={formData.position}
+                value={currentPosition}
                 options={["Forward", "Midfielder", "Defender", "Goalkeeper"]}
-                onChange={(val) => handleSelectChange("position", val)}
+                onChange={(val) => setValue("position", val)}
               />
               <div>
                 <label className={labelClass}>Age *</label>
                 <input
-                  name="age"
+                  {...register("age", { required: "Age is required" })}
                   type="text"
                   placeholder="24"
-                  value={formData.age}
-                  onChange={handleChange}
-                  className={inputClass}
-                  required
+                  className={`${inputClass} ${errors.age ? errorInputClass : ""}`}
                 />
+                {errors.age && (
+                  <span className="text-[10px] text-red-500 font-bold uppercase mt-1">
+                    {errors.age.message}
+                  </span>
+                )}
               </div>
               <div>
                 <label className={labelClass}>Nationality *</label>
                 <input
-                  name="nationality"
+                  {...register("nationality", {
+                    required: "Nationality is required",
+                  })}
                   type="text"
                   placeholder="England"
-                  value={formData.nationality}
-                  onChange={handleChange}
-                  className={inputClass}
-                  required
+                  className={`${inputClass} ${errors.nationality ? errorInputClass : ""}`}
                 />
+                {errors.nationality && (
+                  <span className="text-[10px] text-red-500 font-bold uppercase mt-1">
+                    {errors.nationality.message}
+                  </span>
+                )}
               </div>
             </div>
           </section>
@@ -211,30 +245,24 @@ const PlayerFormModal = ({
               <div>
                 <label className={labelClass}>Goals</label>
                 <input
-                  name="goals"
+                  {...register("goals")}
                   type="text"
-                  value={formData.goals}
-                  onChange={handleChange}
                   className={inputClass}
                 />
               </div>
               <div>
                 <label className={labelClass}>Assists</label>
                 <input
-                  name="assists"
+                  {...register("assists")}
                   type="text"
-                  value={formData.assists}
-                  onChange={handleChange}
                   className={inputClass}
                 />
               </div>
               <div>
                 <label className={labelClass}>Appearances</label>
                 <input
-                  name="appearances"
+                  {...register("appearances")}
                   type="text"
-                  value={formData.appearances}
-                  onChange={handleChange}
                   className={inputClass}
                 />
               </div>
@@ -248,17 +276,21 @@ const PlayerFormModal = ({
               <div>
                 <label className={labelClass}>Contract Expiry Date *</label>
                 <input
-                  name="contractExpiry"
+                  {...register("contractExpiry", {
+                    required: "Expiry date is required",
+                  })}
                   type="date"
-                  value={formData.contractExpiry}
-                  onChange={handleChange}
-                  className={`${inputClass} block scheme-dark`}
-                  required
+                  className={`${inputClass} block scheme-dark ${errors.contractExpiry ? errorInputClass : ""}`}
                 />
+                {errors.contractExpiry && (
+                  <span className="text-[10px] text-red-500 font-bold uppercase mt-1">
+                    {errors.contractExpiry.message}
+                  </span>
+                )}
               </div>
               <CustomSelect
                 label="Availability Status"
-                value={formData.availability}
+                value={currentAvailability}
                 options={[
                   "Available",
                   "Minor Injury",
@@ -266,16 +298,14 @@ const PlayerFormModal = ({
                   "Fatigued",
                   "Suspended",
                 ]}
-                onChange={(val) => handleSelectChange("availability", val)}
+                onChange={(val) => setValue("availability", val)}
               />
               <div className="col-span-2">
                 <label className="text-xs font-bold text-gray-600 mb-2 block uppercase tracking-wide">
                   Injury / Fatigue Notes
                 </label>
                 <textarea
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
+                  {...register("notes")}
                   placeholder="Any injury concerns, recovery status, or fatigue management notes..."
                   className="w-full bg-[#11161D] border border-gray-800/80 rounded-2xl p-6 text-sm text-gray-300 font-bold focus:outline-none focus:border-cyan-500/50 transition-all min-h-[140px] resize-none placeholder:text-gray-800"
                 />
@@ -295,7 +325,7 @@ const PlayerFormModal = ({
               </button>
               <button
                 type="submit"
-                className="bg-[#22d3ee] hover:bg-cyan-300 shadow-[0_10px_30px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-3.5 px-8 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group"
+                className="bg-[#22d3ee] hover:bg-cyan-300 shadow-[0_10px_30px_rgba(34,211,238,0.2)] text-[#0B0E14] font-black py-3.5 px-8 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group cursor-pointer"
               >
                 {mode === "add" ? "Add Player" : "Update Player"}
                 <Save
