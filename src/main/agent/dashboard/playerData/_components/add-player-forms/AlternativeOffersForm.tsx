@@ -48,7 +48,7 @@ const AlternativeOffersForm = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Club Name
             </label>
             <input
@@ -59,7 +59,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Base Salary
             </label>
             <input
@@ -70,7 +70,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Total Bonuses (Est.)
             </label>
             <input
@@ -81,7 +81,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Contract Term
             </label>
             <input
@@ -92,7 +92,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Expected Playing Time
             </label>
             <input
@@ -112,7 +112,7 @@ const AlternativeOffersForm = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Club Name
             </label>
             <input
@@ -123,7 +123,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Base Salary
             </label>
             <input
@@ -134,7 +134,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Total Bonuses (Est.)
             </label>
             <input
@@ -145,7 +145,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Contract Term
             </label>
             <input
@@ -156,7 +156,7 @@ const AlternativeOffersForm = () => {
             />
           </div>
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Expected Playing Time
             </label>
             <input

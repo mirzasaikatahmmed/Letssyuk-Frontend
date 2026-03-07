@@ -37,7 +37,7 @@ const OpportunitiesForm = () => {
 
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8 space-y-6">
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Preferred Leagues
           </label>
           <textarea
@@ -48,7 +48,7 @@ const OpportunitiesForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Preferred Countries
           </label>
           <input
@@ -60,7 +60,7 @@ const OpportunitiesForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Target Clubs (If Any)
           </label>
           <textarea
@@ -71,7 +71,7 @@ const OpportunitiesForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Scouting Insights
           </label>
           <textarea
@@ -82,7 +82,7 @@ const OpportunitiesForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Player Preferences
           </label>
           <textarea

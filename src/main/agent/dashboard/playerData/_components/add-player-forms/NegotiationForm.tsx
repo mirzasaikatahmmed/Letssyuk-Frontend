@@ -43,7 +43,7 @@ const NegotiationForm = () => {
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Priority: Salary (1-10)
             </label>
             <input
@@ -55,7 +55,7 @@ const NegotiationForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Priority: Bonuses (1-10)
             </label>
             <input
@@ -67,7 +67,7 @@ const NegotiationForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Priority: Image Rights (1-10)
             </label>
             <input
@@ -79,7 +79,7 @@ const NegotiationForm = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Priority: Option Years (1-10)
             </label>
             <input
@@ -91,7 +91,7 @@ const NegotiationForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Willing to Concede
             </label>
             <textarea
@@ -102,7 +102,7 @@ const NegotiationForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Not Willing to Concede
             </label>
             <textarea
@@ -113,7 +113,7 @@ const NegotiationForm = () => {
           </div>
 
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+            <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
               Key Talking Points
             </label>
             <textarea

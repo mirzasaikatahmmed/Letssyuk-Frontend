@@ -36,7 +36,7 @@ const CareerTimelineForm = () => {
 
       <div className="bg-[#11161D]/40 border border-gray-800/60 rounded-[32px] p-8 space-y-6">
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Career Milestones
           </label>
           <textarea
@@ -47,7 +47,7 @@ const CareerTimelineForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Transfer History
           </label>
           <textarea
@@ -58,7 +58,7 @@ const CareerTimelineForm = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-[11px] font-bold text-gray-500 tracking-widest pl-1">
+          <label className="text-xs text-gray-300 capitalize tracking-widest pl-1">
             Career Goals
           </label>
           <textarea
