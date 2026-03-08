@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import DashboardTab from "./_components/tabs/DashboardTab";
 import PlayerScoutingTab from "./_components/tabs/PlayerScoutingTab/PlayerScoutingTab";
-import TacticalAnalysisTab from "./_components/tabs/TacticalAnalysisTab";
+import TacticalAnalysisTab from "./_components/tabs/TacticalAnalysisTab/TacticalAnalysisTab";
 import OppositionTab from "./_components/tabs/OppositionTab";
 import AcademyTab from "./_components/tabs/AcademyTab";
 import SquadIntelligenceTab from "./_components/tabs/SquadIntelligenceTab";
