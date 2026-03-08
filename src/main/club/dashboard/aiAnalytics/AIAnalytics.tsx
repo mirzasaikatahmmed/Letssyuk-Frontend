@@ -11,7 +11,7 @@ import {
   Archive,
   Clipboard,
 } from "lucide-react";
-import DashboardTab from "./_components/tabs/DashboardTab";
+import DashboardTab from "./_components/tabs/DashboardTab/DashboardTab";
 import PlayerScoutingTab from "./_components/tabs/PlayerScoutingTab/PlayerScoutingTab";
 import TacticalAnalysisTab from "./_components/tabs/TacticalAnalysisTab/TacticalAnalysisTab";
 import OppositionTab from "./_components/tabs/OppositionTab/OppositionTab";
@@ -20,7 +20,7 @@ import SquadIntelligenceTab from "./_components/tabs/SquadIntelligenceTab/SquadI
 import RecruitmentTab from "./_components/tabs/RecruitmentTab/RecruitmentTab";
 import TransferPlanningTab from "./_components/tabs/TransferPlanningTab/TransferPlanningTab";
 import MatchArchiveTab from "./_components/tabs/MatchArchiveTab/MatchArchiveTab";
-import StaffBriefingTab from "./_components/tabs/StaffBriefingTab";
+import StaffBriefingTab from "./_components/tabs/StaffBriefingTab/StaffBriefingTab";
 
 const AIAnalytics = () => {
   const [searchParams, setSearchParams] = useSearchParams();
