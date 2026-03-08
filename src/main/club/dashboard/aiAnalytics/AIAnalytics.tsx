@@ -17,7 +17,7 @@ import TacticalAnalysisTab from "./_components/tabs/TacticalAnalysisTab/Tactical
 import OppositionTab from "./_components/tabs/OppositionTab/OppositionTab";
 import AcademyTab from "./_components/tabs/AcademyTab/AcademyTab";
 import SquadIntelligenceTab from "./_components/tabs/SquadIntelligenceTab/SquadIntelligenceTab";
-import RecruitmentTab from "./_components/tabs/RecruitmentTab";
+import RecruitmentTab from "./_components/tabs/RecruitmentTab/RecruitmentTab";
 import TransferPlanningTab from "./_components/tabs/TransferPlanningTab";
 import MatchArchiveTab from "./_components/tabs/MatchArchiveTab";
 import StaffBriefingTab from "./_components/tabs/StaffBriefingTab";
