@@ -12,7 +12,7 @@ import {
   Clipboard,
 } from "lucide-react";
 import DashboardTab from "./_components/tabs/DashboardTab";
-import PlayerScoutingTab from "./_components/tabs/PlayerScoutingTab";
+import PlayerScoutingTab from "./_components/tabs/PlayerScoutingTab/PlayerScoutingTab";
 import TacticalAnalysisTab from "./_components/tabs/TacticalAnalysisTab";
 import OppositionTab from "./_components/tabs/OppositionTab";
 import AcademyTab from "./_components/tabs/AcademyTab";
@@ -72,7 +72,7 @@ const AIAnalytics = () => {
 
   return (
     <div className="bg-[#0B0E14] min-h-screen text-white font-sans selection:bg-cyan-500/30 pb-10">
-      <div className="px-2 pt-10">
+      <div className="px-2">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center">
@@ -88,7 +88,7 @@ const AIAnalytics = () => {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto mb-10 py-5 px-3 custom-scrollbar bg-[#1D1F1F] rounded-md">
+        <div className="flex items-center gap-2 overflow-x-auto mb-10 custom-scrollbar bg-[#1D1F1F] rounded-md">
           {tabs.map((tab) => (
             <button
               key={tab.name}
