@@ -39,7 +39,7 @@ const AdminLayout = () => {
           <span className="text-white font-semibold text-sm">Admin Panel</span>
         </header>
 
-        <main className="flex-1 overflow-y-auto scrollbar-hide p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 overflow-y-auto scrollbar-hide custom-scrollbar p-4 sm:p-6 lg:p-8">
           <Outlet />
         </main>
       </div>
@@ -48,4 +48,3 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
-
