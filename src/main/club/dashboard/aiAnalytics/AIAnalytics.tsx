@@ -19,7 +19,7 @@ import AcademyTab from "./_components/tabs/AcademyTab/AcademyTab";
 import SquadIntelligenceTab from "./_components/tabs/SquadIntelligenceTab/SquadIntelligenceTab";
 import RecruitmentTab from "./_components/tabs/RecruitmentTab/RecruitmentTab";
 import TransferPlanningTab from "./_components/tabs/TransferPlanningTab/TransferPlanningTab";
-import MatchArchiveTab from "./_components/tabs/MatchArchiveTab";
+import MatchArchiveTab from "./_components/tabs/MatchArchiveTab/MatchArchiveTab";
 import StaffBriefingTab from "./_components/tabs/StaffBriefingTab";
 
 const AIAnalytics = () => {
