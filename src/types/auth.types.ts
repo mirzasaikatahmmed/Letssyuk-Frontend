@@ -1,14 +1,27 @@
+export type UserRole = "ATHLETE" | "CLUB" | "AGENT" | "ADMIN" | "USER";
+
+export const ROLE_DASHBOARDS: Record<UserRole, string> = {
+  ATHLETE: "/player/dashboard/overview",
+  CLUB: "/club/dashboard/overview",
+  AGENT: "/agent/dashboard/overview",
+  ADMIN: "/admin/dashboard",
+  USER: "/"
+};
+
 export interface User {
   id: string;
   fullName: string;
   email: string;
   phone?: string;
-  role: "PLAYER" | "CLUB" | "AGENT" | "ADMIN" | "USER";
+  role: UserRole;
   profilePicture?: string;
   isVerified: boolean;
   isBlocked: boolean;
   isDeleted: boolean;
   isProfileUpdated: boolean;
+  affiliateId?: string;
+  iat?: number;
+  exp?: number;
 }
 
 export interface AuthState {
@@ -19,9 +32,9 @@ export interface AuthState {
 }
 
 export interface LoginResponse {
-  user: User;
-  accessToken: string;
-  refreshToken: string;
+  success: boolean;
+  message: string;
+  data: string; // This is the JWT token
 }
 
 export interface LoginCredentials {

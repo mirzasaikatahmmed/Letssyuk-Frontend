@@ -57,6 +57,8 @@ import AdminUsers from "@/main/admin/users/AdminUsers";
 import SignIn from "@/main/auth/signin/SignIn";
 import SignUp from "@/main/auth/signup/SignUp";
 import ForgotPassword from "@/main/auth/forgotPassword/ForgotPassword";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import PublicRoute from "@/components/auth/PublicRoute";
 
 export const Routes = createBrowserRouter([
   {
@@ -65,189 +67,214 @@ export const Routes = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "player/dashboard",
-        element: <PlayerLayout />,
+        element: <ProtectedRoute allowedRoles={["ATHLETE"]} />,
         children: [
           {
-            path: "overview",
-            element: <PlayerDHome />,
-          },
-          {
-            path: "overview/suggested-weekly-structure",
-            element: <SuggestedWeeklyStructure />,
-          },
-          {
-            path: "overview/priority-focus-areas",
-            element: <PriorityFocusAreas />,
-          },
-          {
-            path: "overview/nutrition-hydration-guidance",
-            element: <NutritionHydrationGuidance />,
-          },
-          {
-            path: "overview/mental-health",
-            element: <MentalHealth />,
-          },
-          {
-            path: "overview/match-preparation-system",
-            element: <MatchPreparationSystem />,
-          },
-          {
-            path: "overview/technical-skills-engine",
-            element: <TechnicalSkillsEngine />,
-          },
-          {
-            path: "overview/physical-performance-dashboard",
-            element: <PhysicalPerformanceDashboard />,
-          },
-          {
-            path: "overview/tactical-awareness-assistant",
-            element: <TacticalAwarenessAssistant />,
-          },
-          {
-            path: "overview/player-development-pathway",
-            element: <PlayerDevelopmentPathway />,
-          },
-          {
-            path: "overview/recovery-load-management",
-            element: <RecoveryLoadManagement />,
-          },
-          {
-            path: "data",
-            element: <PlayerData />,
-          },
-          {
-            path: "profile",
-            element: <PlayerProfile />,
-          },
-          {
-            path: "notifications",
-            element: <PlayerNotifications />,
-          },
-          {
-            path: "support",
-            element: <PlayerHelpAndSupport />,
+            path: "player/dashboard",
+            element: <PlayerLayout />,
+            children: [
+              {
+                path: "overview",
+                element: <PlayerDHome />,
+              },
+              {
+                path: "overview/suggested-weekly-structure",
+                element: <SuggestedWeeklyStructure />,
+              },
+              {
+                path: "overview/priority-focus-areas",
+                element: <PriorityFocusAreas />,
+              },
+              {
+                path: "overview/nutrition-hydration-guidance",
+                element: <NutritionHydrationGuidance />,
+              },
+              {
+                path: "overview/mental-health",
+                element: <MentalHealth />,
+              },
+              {
+                path: "overview/match-preparation-system",
+                element: <MatchPreparationSystem />,
+              },
+              {
+                path: "overview/technical-skills-engine",
+                element: <TechnicalSkillsEngine />,
+              },
+              {
+                path: "overview/physical-performance-dashboard",
+                element: <PhysicalPerformanceDashboard />,
+              },
+              {
+                path: "overview/tactical-awareness-assistant",
+                element: <TacticalAwarenessAssistant />,
+              },
+              {
+                path: "overview/player-development-pathway",
+                element: <PlayerDevelopmentPathway />,
+              },
+              {
+                path: "overview/recovery-load-management",
+                element: <RecoveryLoadManagement />,
+              },
+              {
+                path: "data",
+                element: <PlayerData />,
+              },
+              {
+                path: "profile",
+                element: <PlayerProfile />,
+              },
+              {
+                path: "notifications",
+                element: <PlayerNotifications />,
+              },
+              {
+                path: "support",
+                element: <PlayerHelpAndSupport />,
+              },
+            ],
           },
         ],
       },
       {
-        path: "admin/dashboard",
-        element: <AdminLayout />,
+        element: <ProtectedRoute allowedRoles={["ADMIN"]} />,
         children: [
           {
-            index: true,
-            element: <AdminDashboard />,
-          },
-          {
-            path: "verifications",
-            element: <AdminVerifications />,
-          },
-          {
-            path: "support",
-            element: <AdminSupport />,
-          },
-          {
-            path: "payments",
-            element: <AdminPayments />,
-          },
-          {
-            path: "users",
-            element: <AdminUsers />,
+            path: "admin/dashboard",
+            element: <AdminLayout />,
+            children: [
+              {
+                index: true,
+                element: <AdminDashboard />,
+              },
+              {
+                path: "verifications",
+                element: <AdminVerifications />,
+              },
+              {
+                path: "support",
+                element: <AdminSupport />,
+              },
+              {
+                path: "payments",
+                element: <AdminPayments />,
+              },
+              {
+                path: "users",
+                element: <AdminUsers />,
+              },
+            ],
           },
         ],
       },
       {
-        path: "club/dashboard",
-        element: <ClubLayout />,
+        element: <ProtectedRoute allowedRoles={["CLUB"]} />,
         children: [
           {
-            path: "overview",
-            element: <ClubOverview />,
-          },
-          {
-            path: "players",
-            element: <PlayerManagement />,
-          },
-          {
-            path: "players/details/:id",
-            element: <ClubPlayerDetails />,
-          },
+            path: "club/dashboard",
+            element: <ClubLayout />,
+            children: [
+              {
+                path: "overview",
+                element: <ClubOverview />,
+              },
+              {
+                path: "players",
+                element: <PlayerManagement />,
+              },
+              {
+                path: "players/details/:id",
+                element: <ClubPlayerDetails />,
+              },
 
-          {
-            path: "available-players",
-            element: <AvailablePlayers />,
-          },
-          {
-            path: "available-players/:id",
-            element: <AvailablePlayerDetails />,
-          },
-          {
-            path: "ai-analytics",
-            element: <AIAnalytics />,
-          },
-          {
-            path: "profile",
-            element: <ClubUserProfile />,
-          },
-          {
-            path: "support",
-            element: <ClubHelpAndSupport />,
-          },
-          {
-            path: "notifications",
-            element: <ClubNotification />,
-          },
-        ],
-      },
-      {
-        path: "agent/dashboard",
-        element: <AgentLayout />,
-        children: [
-          {
-            path: "overview",
-            element: <AgentOverview />,
-          },
-          {
-            path: "support",
-            element: <AgentHelpAndSupport />,
-          },
-          {
-            path: "notifications",
-            element: <AgentNotification />,
-          },
-          {
-            path: "player-data",
-            element: <AgentPlayerData />,
-          },
-          {
-            path: "player-data/details/:id",
-            element: <AgentPlayerDetails />,
-          },
-          {
-            path: "add-player",
-            element: <AddNewPlayer />,
-          },
-          {
-            path: "profile",
-            element: <AgentUserProfile />,
+              {
+                path: "available-players",
+                element: <AvailablePlayers />,
+              },
+              {
+                path: "available-players/:id",
+                element: <AvailablePlayerDetails />,
+              },
+              {
+                path: "ai-analytics",
+                element: <AIAnalytics />,
+              },
+              {
+                path: "profile",
+                element: <ClubUserProfile />,
+              },
+              {
+                path: "support",
+                element: <ClubHelpAndSupport />,
+              },
+              {
+                path: "notifications",
+                element: <ClubNotification />,
+              },
+            ],
           },
         ],
       },
       {
-        path: "auth",
-        element: <AuthLayout />,
+        element: <ProtectedRoute allowedRoles={["AGENT"]} />,
         children: [
           {
-            path: "sign-in",
-            element: <SignIn />,
+            path: "agent/dashboard",
+            element: <AgentLayout />,
+            children: [
+              {
+                path: "overview",
+                element: <AgentOverview />,
+              },
+              {
+                path: "support",
+                element: <AgentHelpAndSupport />,
+              },
+              {
+                path: "notifications",
+                element: <AgentNotification />,
+              },
+              {
+                path: "player-data",
+                element: <AgentPlayerData />,
+              },
+              {
+                path: "player-data/details/:id",
+                element: <AgentPlayerDetails />,
+              },
+              {
+                path: "add-player",
+                element: <AddNewPlayer />,
+              },
+              {
+                path: "profile",
+                element: <AgentUserProfile />,
+              },
+            ],
           },
+        ],
+      },
+      {
+        element: <PublicRoute />,
+        children: [
           {
-            path: "sign-up",
-            element: <SignUp />,
-          },
-          {
-            path: "forgot-password",
-            element: <ForgotPassword />,
+            path: "auth",
+            element: <AuthLayout />,
+            children: [
+              {
+                path: "sign-in",
+                element: <SignIn />,
+              },
+              {
+                path: "sign-up",
+                element: <SignUp />,
+              },
+              {
+                path: "forgot-password",
+                element: <ForgotPassword />,
+              },
+            ],
           },
         ],
       },

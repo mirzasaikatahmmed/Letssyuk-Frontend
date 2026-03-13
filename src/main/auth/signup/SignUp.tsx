@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { Eye, EyeOff } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -24,8 +24,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSignupMutation } from "@/redux/features/auth/authApi";
+import type { SignupCredentials, SignupRole } from "@/types/auth.types";
 
-const defaultValues = {
+interface SignUpFormValues {
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  confirmPassword: string;
+  role: SignupRole;
+  isUnder18: boolean;
+}
+
+const defaultValues: SignUpFormValues = {
   fullName: "",
   email: "",
   phone: "",
@@ -38,22 +49,28 @@ const defaultValues = {
 const inputClassName = 
   "h-12 rounded-xl w-full border-[#1B314B] bg-[#0F172A]/60 text-base text-white placeholder:text-[#6A798F] focus-visible:ring-1 focus-visible:ring-[#00E5FF] focus-visible:border-[#00E5FF] transition-all duration-200";
 
+interface ApiError {
+  data?: {
+    message?: string;
+  };
+}
+
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signup, { isLoading }] = useSignupMutation();
 
-  const form = useForm({
+  const form = useForm<SignUpFormValues>({
     defaultValues,
   });
 
-  const onSubmit = async (values: any) => {
+  const onSubmit: SubmitHandler<SignUpFormValues> = async (values) => {
     if (values.password !== values.confirmPassword) {
       form.setError("confirmPassword", { message: "Passwords do not match" });
       return;
     }
 
-    const payload = {
+    const payload: SignupCredentials = {
       fullName: values.fullName.trim(),
       email: values.email.trim(),
       phone: values.phone.trim(),
@@ -63,11 +80,11 @@ const SignUp = () => {
 
     try {
       const response = await signup(payload).unwrap();
-      // Handling the specific response structure: { success, message, data }
       const successMessage = response.data || response.message || "Account created successfully";
       toast.success(successMessage);
       form.reset(defaultValues);
-    } catch (error: any) {
+    } catch (err: unknown) {
+      const error = err as ApiError;
       toast.error(error?.data?.message || "Signup failed. Please try again.");
     }
   };
