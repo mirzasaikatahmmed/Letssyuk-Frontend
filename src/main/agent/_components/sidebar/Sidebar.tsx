@@ -2,8 +2,18 @@
 import { NavLink } from 'react-router'; // Changed to react-router-dom
 import { Home, Database, User, LifeBuoy, Bell, ChevronLeft, LogOut } from 'lucide-react';
 import logo from "@/assets/logo/logo.png";
+import { useDispatch } from 'react-redux';
+import { logout } from '@/redux/features/auth/authSlice';
+import { toast } from 'sonner';
 
 const AgentDSidebar = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Successfully logged out");
+  };
+
   const menuItems = [
     { icon: Home, label: 'Home', path: '/agent/dashboard/overview' },
     { icon: Database, label: 'Player Data', path: '/agent/dashboard/player-data' },
@@ -51,7 +61,10 @@ const AgentDSidebar = () => {
           <ChevronLeft size={20} />
           <span className="text-sm">Collapse</span>
         </button>
-        <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-900 rounded-xl cursor-pointer transition-colors text-red-400/80 hover:text-red-400">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 hover:bg-gray-900 rounded-xl cursor-pointer transition-colors text-red-400/80 hover:text-red-400"
+        >
           <LogOut size={20} />
           <span className="text-sm">Sign Out</span>
         </button>

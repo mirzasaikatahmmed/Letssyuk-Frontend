@@ -10,12 +10,22 @@ import {
   X,
 } from "lucide-react";
 import logo from "@/assets/logo/logo.png";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 interface AdminSidebarProps {
   onClose?: () => void;
 }
 
 const AdminSidebar = ({ onClose }: AdminSidebarProps) => {
+  const dispatch = useDispatch();
+  
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Successfully logged out");
+  };
+
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard",                   path: "/admin/dashboard" },
     { icon: ShieldCheck,     label: "Verifications (Under 18)",    path: "/admin/dashboard/verifications" },
@@ -74,7 +84,10 @@ const AdminSidebar = ({ onClose }: AdminSidebarProps) => {
           <ChevronLeft size={20} className="shrink-0" />
           <span className="text-sm">Collapse</span>
         </button>
-        <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-900 rounded-xl cursor-pointer transition-colors text-red-400/80 hover:text-red-400">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 hover:bg-gray-900 rounded-xl cursor-pointer transition-colors text-red-400/80 hover:text-red-400"
+        >
           <LogOut size={20} className="shrink-0" />
           <span className="text-sm">Sign Out</span>
         </button>
