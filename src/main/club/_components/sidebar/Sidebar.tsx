@@ -2,10 +2,20 @@
 import { NavLink } from 'react-router'; // Changed to react-router-dom
 import { Home,  User, LifeBuoy, Bell, ChevronLeft, LogOut, Brain } from 'lucide-react';
 import logo from "@/assets/logo/logo.png";
+import { useDispatch } from 'react-redux';
+import { logout } from '@/redux/features/auth/authSlice';
+import { toast } from 'sonner';
 import { FiUsers } from "react-icons/fi";
 import { LuSearch } from "react-icons/lu";
 
 const ClubDSidebar = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Successfully logged out");
+  };
+
   const menuItems = [
     { icon: Home, label: 'Home', path: '/club/dashboard/overview' },
     { icon: FiUsers, label: 'Players', path: '/club/dashboard/players' },
@@ -55,7 +65,10 @@ const ClubDSidebar = () => {
           <ChevronLeft size={20} />
           <span className="text-sm">Collapse</span>
         </button>
-        <button className="w-full flex items-center gap-3 p-3 hover:bg-gray-900 rounded-xl cursor-pointer transition-colors text-red-400/80 hover:text-red-400">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 p-3 hover:bg-gray-900 rounded-xl cursor-pointer transition-colors text-red-400/80 hover:text-red-400"
+        >
           <LogOut size={20} />
           <span className="text-sm">Sign Out</span>
         </button>
