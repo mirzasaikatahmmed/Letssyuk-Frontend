@@ -1,9 +1,24 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { AuthState, LoginResponse } from "@/types/auth.types";
+import type { AuthState, LoginResponse, User } from "@/types/auth.types";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+
+// Helper function to decode user from token in cookies
+const getInitialUser = (): User | null => {
+  const token = Cookies.get("accessToken");
+  if (token) {
+    try {
+      return jwtDecode<User>(token);
+    } catch (error) {
+      console.error("Token decoding error on init:", error);
+      return null;
+    }
+  }
+  return null;
+};
 
 const initialState: AuthState = {
-  user: null,
+  user: getInitialUser(),
   accessToken: Cookies.get("accessToken") || null,
   refreshToken: Cookies.get("refreshToken") || null,
   isAuthenticated: !!Cookies.get("accessToken"),
@@ -14,15 +29,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<LoginResponse>) => {
-      const { user, accessToken, refreshToken } = action.payload;
-      state.user = user;
-      state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
+      const token = action.payload.data;
+      const decoded = jwtDecode<User>(token);
+      // console.log(decoded, 'decoded token.......');
+      
+      state.user = decoded;
+      state.accessToken = token;
+      state.refreshToken = null;
       state.isAuthenticated = true;
 
-      // Set cookies with reasonable security defaults
-      Cookies.set("accessToken", accessToken, { expires: 1 }); // 1 day
-      Cookies.set("refreshToken", refreshToken, { expires: 30 }); // 30 days
+      // Set cookies
+      Cookies.set("accessToken", token, { expires: 1 });
     },
     logout: (state) => {
       state.user = null;
