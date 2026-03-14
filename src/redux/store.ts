@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/baseApi";
+import { aiBaseApi } from "./api/aiBaseApi";
 
 import authReducer from "./features/auth/authSlice";
 import playerReducer from "./features/player/playerSlice";
@@ -9,13 +10,14 @@ import agentReducer from "./features/agent/agentSlice";
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
+    [aiBaseApi.reducerPath]: aiBaseApi.reducer,
     auth: authReducer,
     player: playerReducer,
     club: clubReducer,
     agent: agentReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware, aiBaseApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
