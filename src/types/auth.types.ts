@@ -20,6 +20,27 @@ export interface User {
   isDeleted: boolean;
   isProfileUpdated: boolean;
   affiliateId?: string;
+  playerOwned?: {
+    id: string;
+    userId: string;
+    visibility: string;
+    displayName: string | null;
+    profilePhotoUrl: string | null;
+  };
+  clubOwned?: {
+    id: string;
+    userId: string;
+    visibility: string;
+    displayName: string | null;
+    profilePhotoUrl: string | null;
+  };
+  agentOwned?: {
+    id: string;
+    userId: string;
+    visibility: string;
+    displayName: string | null;
+    profilePhotoUrl: string | null;
+  };
   iat?: number;
   exp?: number;
 }
@@ -35,6 +56,12 @@ export interface LoginResponse {
   success: boolean;
   message: string;
   data: string; // This is the JWT token
+}
+
+export interface GetMeResponse {
+  success: boolean;
+  message: string;
+  data: User;
 }
 
 export interface LoginCredentials {
