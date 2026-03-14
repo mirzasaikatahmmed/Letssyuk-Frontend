@@ -15,6 +15,6 @@ const baseQuery = fetchBaseQuery({
 export const aiBaseApi = createApi({
   reducerPath: "aiApi",
   baseQuery,
-  tagTypes: ["AIRecommendation"],
+  tagTypes: ["AIRecommendation", "MatchPreparation"],
   endpoints: () => ({}),
 });

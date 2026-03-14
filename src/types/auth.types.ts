@@ -55,14 +55,10 @@ export interface AuthState {
 export interface LoginResponse {
   success: boolean;
   message: string;
-  data: string; // This is the JWT token
+  data: string; 
 }
 
-export interface GetMeResponse {
-  success: boolean;
-  message: string;
-  data: User;
-}
+export type GetMeResponse = User;
 
 export interface LoginCredentials {
   email: string;
