@@ -99,6 +99,49 @@ export interface VerifyOtpCredentials {
 export interface VerifyOtpResponse {
   success: boolean;
   message: string;
+  data: string;
+}
+
+
+
+export interface ForgotPasswordCredentials {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    userId: string;
+    codeHash: string;
+    type: string;
+    expiresAt: string;
+    used: boolean;
+    attempts: number;
+    createdAt: string;
+  };
+}
+
+export interface ResetPasswordCredentials {
+  token: string;
+  password?: string;
+}
+
+export interface ResetPasswordResponse {
+  success: boolean;
+  message: string;
+  data: User;
+}
+
+export interface GenerateOtpCredentials {
+  email: string;
+  type: OtpType;
+}
+
+export interface GenerateOtpResponse {
+  success: boolean;
+  message: string;
   data: {
     id: string;
     userId: string;
@@ -110,3 +153,6 @@ export interface VerifyOtpResponse {
     createdAt: string;
   };
 }
+
+
+
