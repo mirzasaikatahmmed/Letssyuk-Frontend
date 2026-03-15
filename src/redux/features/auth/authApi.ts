@@ -5,6 +5,8 @@ import type {
   SignupResponse,
   VerifyOtpCredentials,
   VerifyOtpResponse,
+  ForgotPasswordCredentials,
+  ForgotPasswordResponse,
 } from "@/types/auth.types";
 import { baseApi } from "../../api/baseApi";
 
@@ -35,7 +37,20 @@ export const authApi = baseApi.injectEndpoints({
       query: () => "/auth/get-me",
       providesTags: ["User"],
     }),
+    forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordCredentials>({
+      query: (credentials) => ({
+        url: "/auth/forget-password",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation, useVerifyOtpMutation, useGetMeQuery } = authApi;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useVerifyOtpMutation,
+  useGetMeQuery,
+  useForgotPasswordMutation,
+} = authApi;

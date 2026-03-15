@@ -110,3 +110,23 @@ export interface VerifyOtpResponse {
     createdAt: string;
   };
 }
+
+export interface ForgotPasswordCredentials {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    userId: string;
+    codeHash: string;
+    type: string;
+    expiresAt: string;
+    used: boolean;
+    attempts: number;
+    createdAt: string;
+  };
+}
+

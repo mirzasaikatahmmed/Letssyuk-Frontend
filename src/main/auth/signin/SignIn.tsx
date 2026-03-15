@@ -68,13 +68,13 @@ const SignIn = () => {
   };
 
   return (
-    <div className="w-full max-w-[500px] rounded-3xl border border-white/10 bg-[#070B14]/90 p-8 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl md:p-10">
-      <div className="flex flex-col items-center mb-8">
-        <div className="flex items-center justify-center size-16 rounded-2xl bg-[#0F172A] border border-[#1B314B] mb-6 shadow-[0_0_20px_rgba(0,229,255,0.1)]">
-          <LogIn className="size-8 text-[#00E5FF]" />
+    <div className="w-full max-w-[500px] rounded-2xl md:rounded-3xl border border-white/10 bg-[#070B14]/90 p-6 sm:p-8 md:p-10 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+      <div className="flex flex-col items-center mb-6 md:mb-8">
+        <div className="flex items-center justify-center size-14 md:size-16 rounded-2xl bg-[#0F172A] border border-[#1B314B] mb-4 md:mb-6 shadow-[0_0_20px_rgba(0,229,255,0.1)]">
+          <LogIn className="size-7 md:size-8 text-[#00E5FF]" />
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white mb-2 text-center">Welcome Back</h1>
-        <p className="text-[#B7BFCD] text-lg text-center">Sign in to your sports analytics account</p>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2 text-center">Welcome Back</h1>
+        <p className="text-[#B7BFCD] text-base md:text-lg text-center">Sign in to your sports analytics account</p>
       </div>
 
       <Form {...form}>
