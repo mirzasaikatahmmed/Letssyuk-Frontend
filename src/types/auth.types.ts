@@ -73,6 +73,8 @@ export interface SignupCredentials {
   phone: string;
   password: string;
   role: SignupRole;
+  belowEighteen: boolean;
+  image?: File;
 }
 
 export interface SignupResponse {
@@ -80,4 +82,27 @@ export interface SignupResponse {
   message: string;
   data: string;
   user?: User;
+}
+
+export type OtpType = "RESET_PASSWORD" | "EMAIL_VERIFY" | "LOGIN";
+
+export interface VerifyOtpCredentials {
+  email: string;
+  code: string;
+  type: OtpType;
+}
+
+export interface VerifyOtpResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    userId: string;
+    codeHash: string;
+    type: OtpType;
+    expiresAt: string;
+    used: boolean;
+    attempts: number;
+    createdAt: string;
+  };
 }
