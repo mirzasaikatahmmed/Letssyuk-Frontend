@@ -1,4 +1,3 @@
-import ErrorPage from "@/components/error/ErrorPage";
 import AgentLayout from "@/layout/AgentLayout";
 import ClubLayout from "@/layout/ClubLayout";
 import MainLayout from "@/layout/MainLayout";
@@ -64,7 +63,6 @@ export const Routes = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <ErrorPage />,
     children: [
       {
         element: <ProtectedRoute allowedRoles={["ATHLETE"]} />,
