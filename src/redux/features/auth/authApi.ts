@@ -2,8 +2,9 @@ import type {
   GetMeResponse,
   LoginCredentials,
   LoginResponse,
-  SignupCredentials,
   SignupResponse,
+  VerifyOtpCredentials,
+  VerifyOtpResponse,
 } from "@/types/auth.types";
 import { baseApi } from "../../api/baseApi";
 
@@ -16,11 +17,18 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
-    signup: builder.mutation<SignupResponse, SignupCredentials>({
-      query: (credentials) => ({
+    signup: builder.mutation<SignupResponse, FormData>({
+      query: (formData) => ({
         url: "/auth/signup",
         method: "POST",
-        body: credentials,
+        body: formData,
+      }),
+    }),
+    verifyOtp: builder.mutation<VerifyOtpResponse, VerifyOtpCredentials>({
+      query: (values) => ({
+        url: "/auth/verify-otp",
+        method: "POST",
+        body: values,
       }),
     }),
     getMe: builder.query<GetMeResponse, void>({
@@ -30,4 +38,4 @@ export const authApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useSignupMutation, useGetMeQuery } = authApi;
+export const { useLoginMutation, useSignupMutation, useVerifyOtpMutation, useGetMeQuery } = authApi;

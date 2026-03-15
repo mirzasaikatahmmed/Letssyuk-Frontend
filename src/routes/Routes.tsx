@@ -56,6 +56,7 @@ import AdminUsers from "@/main/admin/users/AdminUsers";
 import SignIn from "@/main/auth/signin/SignIn";
 import SignUp from "@/main/auth/signup/SignUp";
 import ForgotPassword from "@/main/auth/forgotPassword/ForgotPassword";
+import VerifyOtp from "@/main/auth/verify-otp/VerifyOtp";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import PublicRoute from "@/components/auth/PublicRoute";
 
@@ -271,6 +272,10 @@ export const Routes = createBrowserRouter([
               {
                 path: "forgot-password",
                 element: <ForgotPassword />,
+              },
+              {
+                path: "verify-otp",
+                element: <VerifyOtp />,
               },
             ],
           },
