@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { Link } from "react-router";
-import { Eye, EyeOff } from "lucide-react";
+import { Link, useNavigate } from "react-router";
+import { Eye, EyeOff, Upload } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -16,15 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useSignupMutation } from "@/redux/features/auth/authApi";
-import type { SignupCredentials, SignupRole } from "@/types/auth.types";
 
 interface SignUpFormValues {
   fullName: string;
@@ -32,8 +24,8 @@ interface SignUpFormValues {
   phone: string;
   password: string;
   confirmPassword: string;
-  role: SignupRole;
-  isUnder18: boolean;
+  belowEighteen: boolean;
+  image: File | null;
 }
 
 const defaultValues: SignUpFormValues = {
@@ -42,12 +34,13 @@ const defaultValues: SignUpFormValues = {
   phone: "",
   password: "",
   confirmPassword: "",
-  role: "AGENT",
-  isUnder18: false,
+  belowEighteen: false,
+  image: null,
 };
 
 const inputClassName = 
   "h-12 rounded-xl w-full border-[#1B314B] bg-[#0F172A]/60 text-base text-white placeholder:text-[#6A798F] focus-visible:ring-1 focus-visible:ring-[#00E5FF] focus-visible:border-[#00E5FF] transition-all duration-200";
+
 
 interface ApiError {
   data?: {
@@ -59,6 +52,7 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signup, { isLoading }] = useSignupMutation();
+  const navigate = useNavigate();
 
   const form = useForm<SignUpFormValues>({
     defaultValues,
@@ -70,22 +64,37 @@ const SignUp = () => {
       return;
     }
 
-    const payload: SignupCredentials = {
-      fullName: values.fullName.trim(),
-      email: values.email.trim(),
-      phone: values.phone.trim(),
-      password: values.password,
-      role: values.role,
-    };
+    if (!values.image) {
+      toast.error("Please upload an ID document");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("fullName", values.fullName);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone);
+    formData.append("password", values.password);
+    formData.append("role", "AGENT"); // As per example curl
+    formData.append("belowEighteen", String(values.belowEighteen));
+    formData.append("image", values.image);
 
     try {
-      const response = await signup(payload).unwrap();
-      const successMessage = response.data || response.message || "Account created successfully";
-      toast.success(successMessage);
-      form.reset(defaultValues);
+      const response = await signup(formData).unwrap();
+      if (response.success) {
+        toast.success(response.data || "Email sent successfully, please verify your email");
+        // Pass email to OTP verify route via state or locally
+        navigate("/auth/verify-otp", { state: { email: values.email } });
+      }
     } catch (err: unknown) {
       const error = err as ApiError;
       toast.error(error?.data?.message || "Signup failed. Please try again.");
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: any) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      field.onChange(file);
     }
   };
 
@@ -118,75 +127,49 @@ const SignUp = () => {
             )}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Email Address */}
-            <FormField
-              control={form.control}
-              name="email"
-              rules={{ 
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address"
-                }
-              }}
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel className="text-[#E7EAF0] text-base font-normal">Email Address</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="your.email@example.com"
-                      className={inputClassName}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400 text-sm" />
-                </FormItem>
-              )}
-            />
-
-            {/* Phone Number */}
-            <FormField
-              control={form.control}
-              name="phone"
-              rules={{ required: "Phone number is required" }}
-              render={({ field }) => (
-                <FormItem className="space-y-2">
-                  <FormLabel className="text-[#E7EAF0] text-base font-normal">Phone Number</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="01700000000"
-                      className={inputClassName}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-400 text-sm" />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          {/* Role Selection */}
+          {/* Email Address */}
           <FormField
             control={form.control}
-            name="role"
+            name="email"
+            rules={{ 
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address"
+              }
+            }}
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">I am joining as a</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <FormControl>
-                    <SelectTrigger className={inputClassName}>
-                      <SelectValue placeholder="Select your role" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-[#0F172A] border-white/10 text-white">
-                    <SelectItem value="AGENT">Agent</SelectItem>
-                    <SelectItem value="PLAYER">Player</SelectItem>
-                    <SelectItem value="CLUB">Club</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">Email Address</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="your.email@example.com"
+                    className={inputClassName}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400 text-sm" />
+              </FormItem>
+            )}
+          />
+
+          {/* Phone Number */}
+          <FormField
+            control={form.control}
+            name="phone"
+            rules={{ required: "Phone number is required" }}
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">Phone Number</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your phone number"
+                    className={inputClassName}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-red-400 text-sm" />
               </FormItem>
             )}
           />
@@ -257,7 +240,7 @@ const SignUp = () => {
           {/* Age Checkbox */}
           <FormField
             control={form.control}
-            name="isUnder18"
+            name="belowEighteen"
             render={({ field }) => (
               <FormItem className="flex flex-row items-center space-x-3 space-y-0 pt-2">
                 <FormControl>
@@ -268,8 +251,42 @@ const SignUp = () => {
                   />
                 </FormControl>
                 <FormLabel className="text-[#D8DEE9] text-base font-normal cursor-pointer">
-                  I am below 18 years old
+                  I am below 18 years old Player
                 </FormLabel>
+              </FormItem>
+            )}
+          />
+
+          {/* Image Upload Box */}
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <div 
+                  className="border border-[#1B314B] bg-[#0F172A]/40 rounded-2xl p-6"
+                >
+                  <p className="text-[#E7EAF0] text-base font-medium mb-1">
+                    Upload ID document (Passport / School ID)
+                  </p>
+                  <p className="text-[#6A798F] text-sm mb-4">
+                    Required for age verification
+                  </p>
+                  
+                  <label 
+                    className="flex items-center justify-center gap-2 w-full h-12 rounded-xl border border-[#00E5FF] bg-transparent text-[#00E5FF] font-semibold cursor-pointer hover:bg-[#00E5FF]/10 transition-colors"
+                  >
+                    <Upload className="size-5" />
+                    {field.value ? field.value.name : "Click to upload document"}
+                    <input 
+                      type="file" 
+                      className="hidden" 
+                      accept="image/*"
+                      onChange={(e) => handleFileChange(e, field)}
+                    />
+                  </label>
+                </div>
+                <FormMessage className="text-red-400 text-sm" />
               </FormItem>
             )}
           />
@@ -280,7 +297,7 @@ const SignUp = () => {
             disabled={isLoading}
             className="w-full h-14 mt-4 bg-[#00E5FF] text-[#001A1F] hover:bg-[#00B8CC] rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_8px_20px_rgba(0,229,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Creating Account..." : "Send me Email"}
+            {isLoading ? "Processing..." : "Verify E-mail"}
           </Button>
 
           {/* Sign In Link */}

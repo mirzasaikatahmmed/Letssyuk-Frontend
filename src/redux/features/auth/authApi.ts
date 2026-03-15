@@ -2,7 +2,6 @@ import type {
   GetMeResponse,
   LoginCredentials,
   LoginResponse,
-  SignupCredentials,
   SignupResponse,
   VerifyOtpCredentials,
   VerifyOtpResponse,
