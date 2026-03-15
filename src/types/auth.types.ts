@@ -65,7 +65,11 @@ export interface LoginCredentials {
   password: string;
 }
 
-export type SignupRole = "AGENT" | "PLAYER" | "CLUB";
+export type SignupRole = UserRole;
+
+export const SIGNUP_ROLES: SignupRole[] = ["ATHLETE", "CLUB", "AGENT", "USER", "ADMIN"];
+
+
 
 export interface SignupCredentials {
   fullName: string;

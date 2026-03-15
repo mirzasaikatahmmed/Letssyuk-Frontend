@@ -82,7 +82,7 @@ const VerifyOtp = () => {
           <FormField
             control={form.control}
             name="code"
-            rules={{ 
+            rules={{
               required: "Verification code is required",
               minLength: { value: 6, message: "Code must be 6 digits" }
             }}
@@ -90,8 +90,8 @@ const VerifyOtp = () => {
               <FormItem>
                 <FormLabel className="sr-only">Verification Code</FormLabel>
                 <FormControl>
-                  <InputOTP 
-                    maxLength={6} 
+                  <InputOTP
+                    maxLength={6}
                     {...field}
                     className="gap-2"
                   >
@@ -121,7 +121,7 @@ const VerifyOtp = () => {
           <div className="pt-2 text-center">
             <p className="text-[#B7BFCD] text-base font-normal">
               Didn't receive the code?{" "}
-              <button 
+              <button
                 type="button"
                 className="text-[#00E5FF] font-semibold hover:underline decoration-2 underline-offset-4 ml-1"
                 onClick={() => toast.info("Resend functionality not implemented yet")}
@@ -131,8 +131,8 @@ const VerifyOtp = () => {
             </p>
           </div>
 
-          <Link 
-            to="/auth/sign-up" 
+          <Link
+            to="/auth/sign-up"
             className="text-[#95A4BA] hover:text-white transition-colors text-base"
           >
             ← Back to Sign Up

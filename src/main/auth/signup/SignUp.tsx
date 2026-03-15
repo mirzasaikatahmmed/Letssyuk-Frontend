@@ -16,12 +16,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useSignupMutation } from "@/redux/features/auth/authApi";
+import type { SignupRole } from "@/types/auth.types";
+import { SIGNUP_ROLES } from "@/types/auth.types";
 
 interface SignUpFormValues {
   fullName: string;
   email: string;
   phone: string;
+  role: SignupRole;
   password: string;
   confirmPassword: string;
   belowEighteen: boolean;
@@ -32,13 +42,14 @@ const defaultValues: SignUpFormValues = {
   fullName: "",
   email: "",
   phone: "",
+  role: "AGENT",
   password: "",
   confirmPassword: "",
   belowEighteen: false,
   image: null,
 };
 
-const inputClassName = 
+const inputClassName =
   "h-12 rounded-xl w-full border-[#1B314B] bg-[#0F172A]/60 text-base text-white placeholder:text-[#6A798F] focus-visible:ring-1 focus-visible:ring-[#00E5FF] focus-visible:border-[#00E5FF] transition-all duration-200";
 
 
@@ -74,7 +85,7 @@ const SignUp = () => {
     formData.append("email", values.email);
     formData.append("phone", values.phone);
     formData.append("password", values.password);
-    formData.append("role", "AGENT"); // As per example curl
+    formData.append("role", values.role);
     formData.append("belowEighteen", String(values.belowEighteen));
     formData.append("image", values.image);
 
@@ -82,7 +93,6 @@ const SignUp = () => {
       const response = await signup(formData).unwrap();
       if (response.success) {
         toast.success(response.data || "Email sent successfully, please verify your email");
-        // Pass email to OTP verify route via state or locally
         navigate("/auth/verify-otp", { state: { email: values.email } });
       }
     } catch (err: unknown) {
@@ -131,7 +141,7 @@ const SignUp = () => {
           <FormField
             control={form.control}
             name="email"
-            rules={{ 
+            rules={{
               required: "Email is required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -174,11 +184,37 @@ const SignUp = () => {
             )}
           />
 
+          {/* Role Selection */}
+          <FormField
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+              <FormItem className="space-y-2">
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">I am joining as a</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className={inputClassName}>
+                      <SelectValue placeholder="Select your role" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-[#0F172A] border-white/10 text-white">
+                    {SIGNUP_ROLES.map((role) => (
+                      <SelectItem key={role} value={role}>
+                        {role}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage className="text-red-400 text-sm" />
+              </FormItem>
+            )}
+          />
+
           {/* Password */}
           <FormField
             control={form.control}
             name="password"
-            rules={{ 
+            rules={{
               required: "Password is required",
               minLength: { value: 6, message: "Minimum 6 characters required" }
             }}
@@ -263,7 +299,7 @@ const SignUp = () => {
             name="image"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <div 
+                <div
                   className="border border-[#1B314B] bg-[#0F172A]/40 rounded-2xl p-6"
                 >
                   <p className="text-[#E7EAF0] text-base font-medium mb-1">
@@ -272,15 +308,15 @@ const SignUp = () => {
                   <p className="text-[#6A798F] text-sm mb-4">
                     Required for age verification
                   </p>
-                  
-                  <label 
+
+                  <label
                     className="flex items-center justify-center gap-2 w-full h-12 rounded-xl border border-[#00E5FF] bg-transparent text-[#00E5FF] font-semibold cursor-pointer hover:bg-[#00E5FF]/10 transition-colors"
                   >
                     <Upload className="size-5" />
                     {field.value ? field.value.name : "Click to upload document"}
-                    <input 
-                      type="file" 
-                      className="hidden" 
+                    <input
+                      type="file"
+                      className="hidden"
                       accept="image/*"
                       onChange={(e) => handleFileChange(e, field)}
                     />
