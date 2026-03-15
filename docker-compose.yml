@@ -1,0 +1,19 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: siam54186/letssyuk-frontend:latest
+    container_name: letssyuk-frontend
+    ports:
+      - 5173:5173
+    env_file:
+      - .env
+    platform: linux/amd64
+    restart: unless-stopped
+    networks:
+      - DockerNetwork_letssyuk
+
+networks:
+  DockerNetwork_letssyuk:
+    driver: bridge
