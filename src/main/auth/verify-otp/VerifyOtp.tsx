@@ -58,11 +58,13 @@ const VerifyOtp = () => {
 
       if (response.success) {
         toast.success(response.message || "Verification successful");
-        // If it was a password reset, we might want to go to a reset password page, 
-        // but for now let's go to login as requested or common flow. 
-        // Usually RESET_PASSWORD leads to /auth/reset-password.
         if (type === "RESET_PASSWORD") {
-          navigate("/auth/reset-password", { state: { email, code: values.code } });
+          navigate("/auth/reset-password", { 
+            state: { 
+              email, 
+              token: response.data
+            } 
+          });
         } else {
           navigate("/auth/sign-in");
         }
