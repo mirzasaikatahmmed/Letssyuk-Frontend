@@ -2,8 +2,15 @@ import type {
   GetMeResponse,
   LoginCredentials,
   LoginResponse,
-  SignupCredentials,
   SignupResponse,
+  VerifyOtpCredentials,
+  VerifyOtpResponse,
+  ForgotPasswordCredentials,
+  ForgotPasswordResponse,
+  ResetPasswordCredentials,
+  ResetPasswordResponse,
+  GenerateOtpCredentials,
+  GenerateOtpResponse,
 } from "@/types/auth.types";
 import { baseApi } from "../../api/baseApi";
 
@@ -16,18 +23,54 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
-    signup: builder.mutation<SignupResponse, SignupCredentials>({
-      query: (credentials) => ({
+    signup: builder.mutation<SignupResponse, FormData>({
+      query: (formData) => ({
         url: "/auth/signup",
         method: "POST",
-        body: credentials,
+        body: formData,
+      }),
+    }),
+    verifyOtp: builder.mutation<VerifyOtpResponse, VerifyOtpCredentials>({
+      query: (values) => ({
+        url: "/auth/verify-otp",
+        method: "POST",
+        body: values,
       }),
     }),
     getMe: builder.query<GetMeResponse, void>({
       query: () => "/auth/get-me",
       providesTags: ["User"],
     }),
+    forgotPassword: builder.mutation<ForgotPasswordResponse, ForgotPasswordCredentials>({
+      query: (credentials) => ({
+        url: "/auth/forget-password",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    resetPassword: builder.mutation<ResetPasswordResponse, ResetPasswordCredentials>({
+      query: (credentials) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    generateOtp: builder.mutation<GenerateOtpResponse, GenerateOtpCredentials>({
+      query: (credentials) => ({
+        url: "/auth/generate-otp",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation, useGetMeQuery } = authApi;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useVerifyOtpMutation,
+  useGetMeQuery,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useGenerateOtpMutation,
+} = authApi;
