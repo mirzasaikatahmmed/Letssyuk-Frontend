@@ -9,6 +9,8 @@ import type {
   ForgotPasswordResponse,
   ResetPasswordCredentials,
   ResetPasswordResponse,
+  GenerateOtpCredentials,
+  GenerateOtpResponse,
 } from "@/types/auth.types";
 import { baseApi } from "../../api/baseApi";
 
@@ -53,6 +55,13 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
+    generateOtp: builder.mutation<GenerateOtpResponse, GenerateOtpCredentials>({
+      query: (credentials) => ({
+        url: "/auth/generate-otp",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
@@ -63,4 +72,5 @@ export const {
   useGetMeQuery,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useGenerateOtpMutation,
 } = authApi;

@@ -18,7 +18,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useVerifyOtpMutation } from "@/redux/features/auth/authApi";
+import { useVerifyOtpMutation, useGenerateOtpMutation } from "@/redux/features/auth/authApi";
 
 interface VerifyOtpFormValues {
   code: string;
@@ -32,6 +32,7 @@ interface ApiError {
 
 const VerifyOtp = () => {
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+  const [generateOtp, { isLoading: isResending }] = useGenerateOtpMutation();
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email || "";
@@ -134,10 +135,21 @@ const VerifyOtp = () => {
               Didn't receive the code?{" "}
               <button
                 type="button"
-                className="text-[#00E5FF] font-semibold hover:underline decoration-2 underline-offset-4 ml-1"
-                onClick={() => toast.info("Resend functionality not implemented yet")}
+                disabled={isResending}
+                className="text-[#00E5FF] font-semibold hover:underline decoration-2 underline-offset-4 ml-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={async () => {
+                  try {
+                    const response = await generateOtp({ email, type }).unwrap();
+                    if (response.success) {
+                      toast.success(response.message || "OTP sent successfully");
+                    }
+                  } catch (err: unknown) {
+                    const error = err as ApiError;
+                    toast.error(error?.data?.message || "Failed to resend OTP. Please try again.");
+                  }
+                }}
               >
-                Resend Code
+                {isResending ? "Sending..." : "Resend Code"}
               </button>
             </p>
           </div>

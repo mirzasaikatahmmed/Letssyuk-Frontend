@@ -134,4 +134,25 @@ export interface ResetPasswordResponse {
   data: User;
 }
 
+export interface GenerateOtpCredentials {
+  email: string;
+  type: OtpType;
+}
+
+export interface GenerateOtpResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    userId: string;
+    codeHash: string;
+    type: OtpType;
+    expiresAt: string;
+    used: boolean;
+    attempts: number;
+    createdAt: string;
+  };
+}
+
+
 
