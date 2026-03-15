@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 
-import { Button } from "@/components/ui/button";
+import AuthButton from "@/components/share/AuthButton";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -158,13 +158,14 @@ const SignIn = () => {
           </div>
 
           {/* Submit Button */}
-          <Button
+          <AuthButton
             type="submit"
-            disabled={isLoading}
-            className="w-full h-14 mt-4 bg-[#00E5FF] text-[#001A1F] hover:bg-[#00B8CC] rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_8px_20px_rgba(0,229,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </Button>
+            isLoading={isLoading}
+            label="Sign In"
+            loadingLabel="Signing in..."
+            icon={LogIn}
+            className="mt-4"
+          />
 
           {/* Sign Up Link */}
           <div className="pt-2 text-center">

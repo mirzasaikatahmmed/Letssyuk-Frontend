@@ -5,7 +5,7 @@ import { Eye, EyeOff, Upload } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
+import AuthButton from "@/components/share/AuthButton";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -328,13 +328,13 @@ const SignUp = () => {
           />
 
           {/* Submit Button */}
-          <Button
+          <AuthButton
             type="submit"
-            disabled={isLoading}
-            className="w-full h-14 mt-4 bg-[#00E5FF] text-[#001A1F] hover:bg-[#00B8CC] rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_8px_20px_rgba(0,229,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Processing..." : "Verify E-mail"}
-          </Button>
+            isLoading={isLoading}
+            label="Verify E-mail"
+            loadingLabel="Processing..."
+            className="mt-4"
+          />
 
           {/* Sign In Link */}
           <div className="pt-4 text-center">

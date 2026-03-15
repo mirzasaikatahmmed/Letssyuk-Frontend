@@ -4,7 +4,7 @@ import { ShieldCheck } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
+import AuthButton from "@/components/share/AuthButton";
 import {
   Form,
   FormControl,
@@ -110,13 +110,13 @@ const VerifyOtp = () => {
             )}
           />
 
-          <Button
+          <AuthButton
             type="submit"
-            disabled={isLoading}
-            className="w-full h-14 bg-[#00E5FF] text-[#001A1F] hover:bg-[#00B8CC] rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_8px_20px_rgba(0,229,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Verifying..." : "Verify OTP"}
-          </Button>
+            isLoading={isLoading}
+            label="Verify OTP"
+            loadingLabel="Verifying..."
+            icon={ShieldCheck}
+          />
 
           <div className="pt-2 text-center">
             <p className="text-[#B7BFCD] text-base font-normal">
