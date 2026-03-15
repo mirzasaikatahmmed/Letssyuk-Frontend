@@ -55,7 +55,7 @@ export interface AuthState {
 export interface LoginResponse {
   success: boolean;
   message: string;
-  data: string; 
+  data: string;
 }
 
 export type GetMeResponse = User;
