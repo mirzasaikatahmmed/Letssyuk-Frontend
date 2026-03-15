@@ -278,7 +278,7 @@ const SignUp = () => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-14 mt-4 bg-[#00E5FF] text-[#001A1F] hover:bg-[#00B8CC] rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_8px_20px_rgba(0,229,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full h-14 mt-4 bg-[#00E5FF] text-[#001A1F] hover:bg-[#00B8CC] rounded-xl text-lg font-bold transition-all duration-300 shadow-[0_8px_20px_rgba(0,229,255,0.2)] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {isLoading ? "Creating Account..." : "Send me Email"}
           </Button>
