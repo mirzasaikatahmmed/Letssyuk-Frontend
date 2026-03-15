@@ -1,6 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+import { useAppSelector } from "@/redux/hooks";
 import type { UserRole } from "@/types/auth.types";
 
 interface ProtectedRouteProps {
@@ -8,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ allowedRoles }: ProtectedRouteProps) => {
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const location = useLocation();
 
   if (!isAuthenticated) {

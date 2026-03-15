@@ -119,12 +119,11 @@ const AIRecommendations = () => {
               className="group flex items-center justify-between p-4 rounded-xl border border-gray-800 bg-[#0D161E] hover:bg-[#121D26] transition-all cursor-pointer"
             >
               <div className="flex items-center gap-4">
-                {/* Icon Container with 10% Opacity BG */}
                 <div
                   className="p-3 rounded-lg flex items-center justify-center border"
                   style={{
                     backgroundColor: getBgColor(item.color),
-                    borderColor: `${item.color}33`, // 20% opacity border
+                    borderColor: `${item.color}33`, 
                     color: item.color,
                   }}
                 >

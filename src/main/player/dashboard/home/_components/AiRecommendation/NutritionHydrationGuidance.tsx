@@ -7,7 +7,7 @@ import {
   ChevronLeft,
   ChevronDown,
 } from "lucide-react";
-import { FaCircle } from "react-icons/fa"; // For the bullet points
+import { FaCircle } from "react-icons/fa";
 
 const NutritionHydrationGuidance = () => {
   const navigate = useNavigate();

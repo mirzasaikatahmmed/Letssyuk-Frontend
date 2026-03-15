@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from "react-router";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+import { useAppSelector } from "@/redux/hooks";
 import { ROLE_DASHBOARDS } from "@/types/auth.types";
 
 const PublicRoute = () => {
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   if (isAuthenticated && user) {
     // If already logged in, redirect to their dashboard

@@ -1,4 +1,5 @@
 import type {
+  GetMeResponse,
   LoginCredentials,
   LoginResponse,
   SignupCredentials,
@@ -22,7 +23,11 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
+    getMe: builder.query<GetMeResponse, void>({
+      query: () => "/auth/get-me",
+      providesTags: ["User"],
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authApi;
+export const { useLoginMutation, useSignupMutation, useGetMeQuery } = authApi;

@@ -8,38 +8,58 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetMatchPreparationQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
 const MatchPreparationSystem = () => {
   const navigate = useNavigate();
+
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetMatchPreparationQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isError || !aiResponse || isLoading) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: analysis } = aiResponse.analysis;
 
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
       {/* Top Header Card with Back Button */}
       <div className="grid grid-cols-12 items-center gap-4">
-       <div className="col-span-4">
-         <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-cyan-900/50 text-gray-300 hover:border-cyan-500/50 transition-all text-sm font-medium bg-[#0B0E14] group shrink-0 cursor-pointer"
-        >
-          <ChevronLeft
-            size={18}
-            className="group-hover:-translate-x-0.5 transition-transform"
-          />
-          Back
-        </button>
-       </div>
+        <div className="col-span-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-cyan-900/50 text-gray-300 hover:border-cyan-500/50 transition-all text-sm font-medium bg-[#0B0E14] group shrink-0 cursor-pointer"
+          >
+            <ChevronLeft
+              size={18}
+              className="group-hover:-translate-x-0.5 transition-transform"
+            />
+            Back
+          </button>
+        </div>
 
-        <div className="flex items-center justify-between  gap-4 flex-1 bg-[#111111] border border-gray-800 p-4 rounded-xl col-span-8">
+        <div className="flex items-center justify-between gap-4 flex-1 bg-[#111111] border border-gray-800 p-4 rounded-xl col-span-8">
           <div className="flex items-center gap-4">
             <div className="p-2 bg-[#1A1610] rounded-lg border border-[#FF6600]/20 hidden md:block">
               <Clock4 className="text-[#FF6600]" size={24} />
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Match Preparation System
+                {analysis.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Comprehensive match readiness plan
+                {analysis.subtitle}
               </p>
             </div>
           </div>
@@ -51,7 +71,7 @@ const MatchPreparationSystem = () => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-[#FF6600] text-xs font-bold uppercase tracking-wider">
           <Calendar size={16} />
-          <span>Pre-Match (48-24 hours before)</span>
+          <span>{`Pre-Match (${analysis.pre_match.window})`}</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -59,18 +79,15 @@ const MatchPreparationSystem = () => {
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-4">Tactical Preparation</h4>
             <ul className="space-y-3">
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Study opponent's right-back weaknesses
-              </li>
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Practice cut-inside shots from left wing
-              </li>
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Rehearse set-piece routines
-              </li>
+              {analysis.pre_match.tactical_preparation.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="text-[12px] text-gray-400 flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </Card>
 
@@ -78,18 +95,15 @@ const MatchPreparationSystem = () => {
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-4">Physical Preparation</h4>
             <ul className="space-y-3">
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Light jogging: 20 minutes
-              </li>
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Dynamic stretching: 15 minutes
-              </li>
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Mobility drills: 10 minutes
-              </li>
+              {analysis.pre_match.physical_preparation.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="text-[12px] text-gray-400 flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </Card>
 
@@ -97,18 +111,15 @@ const MatchPreparationSystem = () => {
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-4">Nutrition Plan</h4>
             <ul className="space-y-3">
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Carb loading: Start 48h before
-              </li>
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Hydration: 500ml every 2 hours
-              </li>
-              <li className="text-[12px] text-gray-400 flex items-start gap-2">
-                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
-                Last meal: 3 hours before kickoff
-              </li>
+              {analysis.pre_match.nutrition_plan.map((item, idx) => (
+                <li
+                  key={idx}
+                  className="text-[12px] text-gray-400 flex items-start gap-2"
+                >
+                  <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </Card>
         </div>
@@ -123,15 +134,16 @@ const MatchPreparationSystem = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-baseline">
               <span className="text-gray-500 text-xs">Duration</span>
-              <span className="text-lg font-bold">45 minutes</span>
+              <span className="text-lg font-bold">
+                {analysis.match_day_warmup.duration}
+              </span>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 max-w-md">
               <span className="text-white text-xs font-bold block">
                 Sequence:
               </span>
               <p className="text-[12px] text-gray-400 leading-relaxed">
-                Light jog &rarr; Dynamic stretch &rarr; Position drills &rarr;
-                Team drills
+                {analysis.match_day_warmup.sequence.join(" \u2192 ")}
               </p>
             </div>
           </div>
@@ -140,12 +152,11 @@ const MatchPreparationSystem = () => {
               Key Focus:
             </span>
             <ul className="space-y-2">
-              <li className="text-[12px] text-gray-400">
-                First touch precision
-              </li>
-              <li className="text-[12px] text-gray-400">
-                Maintain mental calmness and visualize success
-              </li>
+              {analysis.match_day_warmup.key_focus.map((item, idx) => (
+                <li key={idx} className="text-[12px] text-gray-400">
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -159,14 +170,14 @@ const MatchPreparationSystem = () => {
         <div className="space-y-6">
           <div className="space-y-2">
             <h4 className="text-white text-xs font-bold">Immediate (0-2h):</h4>
-            <p className="text-[12px] text-gray-400  font-light">
-              Hydrate + Protein shake + Light stretch
+            <p className="text-[12px] text-gray-400 font-light">
+              {analysis.post_match_recovery.immediate_0_2h.join(" + ")}
             </p>
           </div>
           <div className="space-y-2">
             <h4 className="text-white text-xs font-bold">24-hour plan:</h4>
-            <p className="text-[12px] text-gray-400  font-light">
-              Active recovery walk + Compression gear + Nutrition refuel
+            <p className="text-[12px] text-gray-400 font-light">
+              {analysis.post_match_recovery.plan_24h.join(" + ")}
             </p>
           </div>
         </div>
@@ -188,7 +199,7 @@ const MatchPreparationSystem = () => {
               Visualization:
             </span>
             <span className="text-[11px] text-gray-500">
-              Imagine successful dribbles past defender
+              {analysis.psychological_components.visualization}
             </span>
           </div>
           <div className="space-y-1">
@@ -196,7 +207,7 @@ const MatchPreparationSystem = () => {
               Focus exercise:
             </span>
             <span className="text-[11px] text-gray-500">
-              5-minute breathing routine
+              {analysis.psychological_components.focus_exercise}
             </span>
           </div>
           <div className="space-y-1">
@@ -204,7 +215,7 @@ const MatchPreparationSystem = () => {
               Stress management:
             </span>
             <span className="text-[11px] text-gray-500">
-              Positive self-talk script
+              {analysis.psychological_components.stress_management}
             </span>
           </div>
         </div>
@@ -214,8 +225,7 @@ const MatchPreparationSystem = () => {
       <div className="bg-[#0D1117] border border-gray-800 p-3 rounded-lg flex items-center gap-3">
         <Info size={16} className="text-gray-600 shrink-0" />
         <p className="text-gray-500 text-[10px] leading-relaxed">
-          Match preparation guidance only. Always consult with your coach and
-          medical team for personalized plans.
+          {analysis.disclaimer}
         </p>
       </div>
     </div>
