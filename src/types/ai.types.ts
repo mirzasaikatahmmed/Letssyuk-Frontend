@@ -384,3 +384,38 @@ export interface RecoveryLoadResponse {
     data: RecoveryLoadData;
   };
 }
+
+export interface Helpline {
+  name: string;
+  description: string;
+  phone: string;
+  secondary_contact: string;
+  availability: string;
+}
+
+export interface DailyMentalWellnessPractices {
+  mindfulness_breathing: string[];
+  stress_management: string[];
+  performance_anxiety: string[];
+  work_life_balance: string[];
+}
+
+export interface MentalHealthSupportData {
+  title: string;
+  subtitle: string;
+  daily_mental_wellness_practices: DailyMentalWellnessPractices;
+  professional_support_helplines_uk: Helpline[];
+  when_to_seek_professional_help: string[];
+}
+
+export interface MentalHealthSupportResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: MentalHealthSupportData;
+  };
+}

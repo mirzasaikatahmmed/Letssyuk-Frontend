@@ -8,42 +8,46 @@ import {
   ChevronLeft,
   MessageSquare,
 } from "lucide-react";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetMentalHealthSupportQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
 const MentalHealth = () => {
   const navigate = useNavigate();
 
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetMentalHealthSupportQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: mentalData } = aiResponse.analysis;
+
   const wellnessPractices = [
     {
       title: "Mindfulness & Breathing",
-      items: [
-        "5-10 min daily meditation or breathing exercises",
-        "Pre-match visualization and positive affirmations",
-        "Focus on controllables, let go of outcomes",
-      ],
+      items: mentalData.daily_mental_wellness_practices.mindfulness_breathing || [],
     },
     {
       title: "Stress Management",
-      items: [
-        "Regular sleep schedule (7-9 hours nightly)",
-        "Talk to trusted friends, family, or teammates",
-        "Journal your thoughts and feelings daily",
-      ],
+      items: mentalData.daily_mental_wellness_practices.stress_management || [],
     },
     {
       title: "Performance Anxiety",
-      items: [
-        "Break goals into smaller, achievable steps",
-        "Focus on process, not just results",
-        "Celebrate small wins and progress",
-      ],
+      items: mentalData.daily_mental_wellness_practices.performance_anxiety || [],
     },
     {
       title: "Work-Life Balance",
-      items: [
-        "Schedule downtime and hobbies outside football",
-        "Maintain social connections beyond the sport",
-        "Plan for life beyond your playing career",
-      ],
+      items: mentalData.daily_mental_wellness_practices.work_life_balance || [],
     },
   ];
 
@@ -65,10 +69,10 @@ const MentalHealth = () => {
         <Heart className="text-[#F6339A] shrink-0 mt-1" size={20} />
         <div className="text-[12px] leading-relaxed text-gray-300">
           <span className="font-bold text-white mb-2 text-sm inline">
-            Your mental wellbeing matters.
+            {mentalData.title}
           </span>
           <span className="opacity-80 ml-1">
-            Football careers involve unique pressures—performance anxiety,
+            {mentalData.subtitle}. Football careers involve unique pressures—performance anxiety,
             contract uncertainty, injuries, and competition. It's completely
             normal to need support. These resources are here to help you
             maintain balance, resilience, and mental strength throughout your
@@ -114,53 +118,37 @@ const MentalHealth = () => {
         </h3>
 
         <div className="space-y-2">
-          {/* Samaritans */}
-          <Card className="bg-[#000000] border border-green-900/30 p-5 rounded-xl relative shadow-md">
-            <div className="absolute top-4 right-4 text-green-500 text-[11px] font-bold">
-              24/7
-            </div>
-            <h4 className="font-bold text-white text-sm leading-none">
-              Samaritans
-            </h4>
-            <p className="text-[11px] text-gray-500">
-              24/7 confidential emotional support
-            </p>
-            <div className="flex gap-6 text-[12px] font-medium items-center">
-              <a
-                href="tel:116123"
-                className="flex items-center gap-2 text-green-500 hover:opacity-80"
-              >
-                <Phone size={14} /> 116123
-              </a>
-              <a
-                href="mailto:jo@samaritans.org"
-                className="flex items-center gap-2 text-green-500 hover:opacity-80"
-              >
-                <MessageSquare size={14} /> jo@samaritans.org
-              </a>
-            </div>
-          </Card>
-
-          {/* Mind */}
-          <Card className="bg-[#000000] border border-blue-900/30 p-5 rounded-xl relative shadow-md">
-            <div className="absolute top-4 right-4 text-blue-500 text-[11px] font-bold">
-              Mon-Fri 9am-6pm
-            </div>
-            <h4 className="font-bold text-white text-sm leading-none">
-              Mind
-            </h4>
-            <p className="text-[11px] text-gray-500">
-              Mental health information and support
-            </p>
-            <div className="flex gap-6 text-[12px] font-medium items-center">
-              <span className="flex items-center gap-2 text-blue-500">
-                <Phone size={14} /> 0300 123 3393
-              </span>
-              <span className="flex items-center gap-2 text-blue-500">
-                <MessageSquare size={14} /> Text: 86463
-              </span>
-            </div>
-          </Card>
+          {mentalData.professional_support_helplines_uk.map((helpline, idx) => (
+            <Card key={idx} className={`bg-[#000000] border ${idx % 2 === 0 ? "border-green-900/30" : "border-blue-900/30"} p-5 rounded-xl relative shadow-md`}>
+              <div className={`absolute top-4 right-4 ${idx % 2 === 0 ? "text-green-500" : "text-blue-500"} text-[11px] font-bold`}>
+                {helpline.availability}
+              </div>
+              <h4 className="font-bold text-white text-sm leading-none">
+                {helpline.name}
+              </h4>
+              <p className="text-[11px] text-gray-500">
+                {helpline.description}
+              </p>
+              <div className="flex flex-wrap gap-6 text-[12px] font-medium items-center mt-2">
+                {helpline.phone && (
+                  <a
+                    href={`tel:${helpline.phone}`}
+                    className={`flex items-center gap-2 ${idx % 2 === 0 ? "text-green-500" : "text-blue-500"} hover:opacity-80`}
+                  >
+                    <Phone size={14} /> {helpline.phone}
+                  </a>
+                )}
+                {helpline.secondary_contact && (
+                  <a
+                    href={helpline.secondary_contact.includes("@") ? `mailto:${helpline.secondary_contact}` : "#"}
+                    className={`flex items-center gap-2 ${idx % 2 === 0 ? "text-green-500" : "text-blue-500"} hover:opacity-80`}
+                  >
+                    <MessageSquare size={14} /> {helpline.secondary_contact}
+                  </a>
+                )}
+              </div>
+            </Card>
+          ))}
         </div>
 
         {/* When to Seek Professional Help Card */}
@@ -172,13 +160,7 @@ const MentalHealth = () => {
             </h4>
           </div>
           <ul className="space-y-2">
-            {[
-              "Persistent feelings of sadness, anxiety, or hopelessness lasting more than 2 weeks",
-              "Changes in sleep, appetite, or energy levels affecting daily life",
-              "Difficulty concentrating or making decisions",
-              "Loss of interest in football or activities you usually enjoy",
-              "Thoughts of self-harm or suicide - seek immediate help via 999 or go to A&E",
-            ].map((text, i) => (
+            {mentalData.when_to_seek_professional_help.map((text, i) => (
               <li
                 key={i}
                 className="text-[12px] text-gray-400 flex items-start gap-2 opacity-80 leading-relaxed"
