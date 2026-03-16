@@ -332,7 +332,7 @@ const SignUp = () => {
           <AuthButton
             type="submit"
             isLoading={isLoading}
-            label="Verify E-mail"
+            label="Sign Up"
             loadingLabel="Processing..."
             className="mt-4"
           />
