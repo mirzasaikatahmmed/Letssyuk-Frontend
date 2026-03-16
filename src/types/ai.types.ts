@@ -221,3 +221,54 @@ export interface PhysicalPerformanceResponse {
     data: PhysicalPerformanceData;
   };
 }
+
+export interface MovementPattern {
+  title: string;
+  description: string;
+}
+
+export interface DecisionMakingCue {
+  label: string;
+  guidance: string;
+}
+
+export interface PositionTactics {
+  position: string;
+  responsibilities: string;
+  key_actions: string;
+  success_indicators: string;
+}
+
+export interface OpponentReading {
+  pattern_recognition: string;
+  anticipation: string;
+  weakness_exploitation: string;
+}
+
+export interface SystemAdaptation {
+  formation_adjustments: string;
+  game_plan: string;
+}
+
+export interface TacticalAwarenessData {
+  title: string;
+  subtitle: string;
+  position_tactics: PositionTactics;
+  movement_patterns: MovementPattern[];
+  decision_making_cues: DecisionMakingCue[];
+  opponent_reading: OpponentReading;
+  system_adaptation: SystemAdaptation;
+  disclaimer: string;
+}
+
+export interface TacticalAwarenessResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: TacticalAwarenessData;
+  };
+}

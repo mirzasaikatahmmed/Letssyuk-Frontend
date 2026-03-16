@@ -6,6 +6,7 @@ import type {
   WeeklyStructureResponse,
   TechnicalSkillsResponse,
   PhysicalPerformanceResponse,
+  TacticalAwarenessResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -40,6 +41,11 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
         `/athlete/analysis/${playerId}/physical-performance-dashboard`,
       providesTags: ["AIRecommendation"],
     }),
+    getTacticalAwareness: builder.query<TacticalAwarenessResponse, string>({
+      query: (playerId) =>
+        `/athlete/analysis/${playerId}/tactical-awareness-assistant`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
@@ -50,4 +56,5 @@ export const {
   useGetWeeklyStructureQuery,
   useGetTechnicalSkillsEngineQuery,
   useGetPhysicalPerformanceQuery,
+  useGetTacticalAwarenessQuery,
 } = athleteAiApi;
