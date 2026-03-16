@@ -2,6 +2,7 @@ import type {
   AiAnalysisResponse,
   MatchPreparationData,
   PriorityFocusResponse,
+  NutritionEnergyResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -19,8 +20,15 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
       query: (playerId) => `/athlete/analysis/${playerId}/priority-focus`,
       providesTags: ["AIRecommendation"],
     }),
+    getNutritionEnergy: builder.query<NutritionEnergyResponse, string>({
+      query: (playerId) => `/athlete/analysis/${playerId}/nutrition-energy-plan`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
-export const { useGetMatchPreparationQuery, useGetPriorityFocusQuery } =
-  athleteAiApi;
+export const {
+  useGetMatchPreparationQuery,
+  useGetPriorityFocusQuery,
+  useGetNutritionEnergyQuery,
+} = athleteAiApi;

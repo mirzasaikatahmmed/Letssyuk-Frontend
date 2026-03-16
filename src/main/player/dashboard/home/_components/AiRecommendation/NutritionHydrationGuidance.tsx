@@ -8,84 +8,41 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { FaCircle } from "react-icons/fa";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetNutritionEnergyQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
+const getPriorityColor = (priority: string) => {
+  switch (priority.toLowerCase()) {
+    case "essential":
+      return "#00A63E";
+    case "important":
+      return "#E17100";
+    case "optional":
+      return "#155DFC";
+    default:
+      return "#94a3b8";
+  }
+};
 const NutritionHydrationGuidance = () => {
   const navigate = useNavigate();
-  const mealSchedule = [
-    {
-      type: "Breakfast",
-      time: "7:00 AM - 8:00 AM",
-      portion: "500-600 kcal",
-      status: "Essential",
-      statusColor: "#00A63E",
-      items: [
-        "Oats (60-80g) with berries + honey",
-        "2-3 eggs (scrambled/boiled) with whole grain toast",
-        "Greek yogurt (150g) with granola and banana",
-      ],
-    },
-    {
-      type: "Mid-Morning Snack",
-      time: "10:00 AM - 10:30 AM",
-      portion: "150-200 kcal",
-      status: "Optional",
-      statusColor: "#155DFC",
-      items: [
-        "Apple or banana with almond butter (15g)",
-        "Protein smoothie (200ml) with mixed berries",
-        "Handful of nuts (30g) with dried fruit",
-      ],
-    },
-    {
-      type: "Lunch",
-      time: "12:30 PM - 1:30 PM",
-      portion: "600-800 kcal",
-      status: "Essential",
-      statusColor: "#00A63E",
-      items: [
-        "Grilled chicken/fish (150g) + brown rice/quinoa (100g) + vegetables",
-        "Pasta (100g dry) with lean meat sauce + side salad",
-        "Turkey wrap with avocado, hummus + sweet potato (200g)",
-      ],
-    },
-    {
-      type: "Pre-Training Snack",
-      time: "2-3 hours before training",
-      portion: "200-300 kcal",
-      status: "Important",
-      statusColor: "#E17100",
-      items: [
-        "Rice cakes (2-3) with peanut butter and banana",
-        "Energy bar (whole grain) + piece of fruit",
-        "Toast with honey and sliced banana",
-      ],
-    },
-    {
-      type: "Dinner",
-      time: "6:30 PM - 7:30 PM",
-      portion: "600-800 kcal",
-      status: "Essential",
-      statusColor: "#00A63E",
-      items: [
-        "Salmon/lean beef (150g) + roasted vegetables + quinoa (80g)",
-        "Chicken stir-fry with mixed vegetables + brown rice",
-        "Turkey meatballs with whole wheat pasta + tomato sauce",
-      ],
-    },
-    {
-      type: "Evening Snack (Optional)",
-      time: "9:00 PM - 10:00 PM",
-      portion: "100-150 kcal",
-      status: "Optional",
-      statusColor: "#155DFC",
-      items: [
-        "Cottage cheese (100g) with berries",
-        "Casein protein shake for muscle recovery",
-        "Small handful of almonds (15-20)",
-      ],
-    },
-  ];
 
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetNutritionEnergyQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: nutritionData } = aiResponse.analysis;
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
       {/* Top Header with Back Button */}
@@ -110,10 +67,10 @@ const NutritionHydrationGuidance = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Nutrition & Hydration Guidance
+                {nutritionData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Personalized meal timing and hydration strategy
+                {nutritionData.subtitle}
               </p>
             </div>
           </div>
@@ -130,61 +87,68 @@ const NutritionHydrationGuidance = () => {
 
       {/* Meal Cards */}
       <div className="space-y-4">
-        {mealSchedule.map((meal, index) => (
-          <Card
-            key={index}
-            className="bg-[#0B1219] border-gray-800 p-6 rounded-xl border-t-[0.5px] shadow-sm"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div className="space-y-1">
-                <h3 className="text-md font-bold text-white uppercase tracking-tight">
-                  {meal.type}
-                </h3>
-                <p className="text-[10px] text-gray-500 font-bold uppercase">
-                  {meal.time}
-                </p>
+        {nutritionData.daily_meal_schedule.map((meal, index) => {
+          const statusColor = getPriorityColor(meal.priority_label);
+          return (
+            <Card
+              key={index}
+              className="bg-[#0B1219] border-gray-800 p-6 rounded-xl border-t-[0.5px] shadow-sm"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="space-y-1">
+                  <h3 className="text-md font-bold text-white uppercase tracking-tight">
+                    {meal.title}
+                  </h3>
+                  <p className="text-[10px] text-gray-500 font-bold uppercase">
+                    {meal.time}
+                  </p>
+                </div>
+                <div
+                  className="px-3 py-1 rounded-md text-[10px] font-bold border"
+                  style={{
+                    color: statusColor,
+                    borderColor: `${statusColor}33`,
+                    backgroundColor: `${statusColor}11`,
+                  }}
+                >
+                  {meal.priority_label}
+                </div>
               </div>
-              <div
-                className="px-3 py-1 rounded-md text-[10px] font-bold border"
-                style={{
-                  color: meal.statusColor,
-                  borderColor: `${meal.statusColor}33`,
-                  backgroundColor: `${meal.statusColor}11`,
-                }}
-              >
-                {meal.status}
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <span className="text-[10px] text-gray-500 font-bold uppercase block opacity-70">
-                  Recommended:
-                </span>
-                <ul className="space-y-2">
-                  {meal.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="text-[12px] text-gray-300 flex items-start gap-2 leading-snug"
-                    >
-                      <FaCircle
-                        size={6}
-                        className="text-[#00A63E] mt-1.5 shrink-0"
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <span className="text-[10px] text-gray-500 font-bold uppercase block opacity-70">
+                    Recommended:
+                  </span>
+                  <ul className="space-y-2">
+                    {meal.what_to_eat.map((item, i) => (
+                      <li
+                        key={i}
+                        className="text-[12px] text-gray-300 flex items-start gap-2 leading-snug"
+                      >
+                        <FaCircle
+                          size={6}
+                          className="text-[#00A63E] mt-1.5 shrink-0"
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="md:text-right flex md:flex-col justify-between md:justify-end items-center md:items-end bg-black/20 p-3 rounded-lg border border-gray-800/50">
+                  <div className="flex flex-col md:items-end gap-1">
+                    <p className="text-[10px] text-gray-500 font-bold uppercase">
+                      Portion Size: {meal.portion_size}
+                    </p>
+                    <p className="text-sm font-bold text-white">
+                      {meal.calories_range}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="md:text-right flex md:flex-col justify-between md:justify-end items-center md:items-end bg-black/20 p-3 rounded-lg border border-gray-800/50">
-                <p className="text-[10px] text-gray-500 font-bold uppercase">
-                  Portion Size
-                </p>
-                <p className="text-sm font-bold text-white">{meal.portion}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
+            </Card>
+          );
+        })}
       </div>
 
       {/* Hydration Strategy */}
@@ -201,7 +165,9 @@ const NutritionHydrationGuidance = () => {
             <span className="text-[10px] text-gray-500 font-bold uppercase">
               Daily Target
             </span>
-            <span className="text-xl font-bold text-blue-400">2.5-3L</span>
+            <span className="text-xl font-bold text-blue-400">
+              {nutritionData.hydration_strategy.daily_target_liters}
+            </span>
           </div>
           <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
             <div
@@ -211,12 +177,7 @@ const NutritionHydrationGuidance = () => {
           </div>
 
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {[
-              "500ml water 2h before training",
-              "200-300ml every 15-20 min during training",
-              "Monitor urine color - aim for pale yellow",
-              "Electrolyte drink during intense sessions",
-            ].map((text, i) => (
+            {nutritionData.hydration_strategy.guidance.map((text, i) => (
               <li
                 key={i}
                 className="text-[12px] text-gray-300 flex items-center gap-2"

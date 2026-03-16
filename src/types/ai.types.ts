@@ -54,3 +54,34 @@ export interface PriorityFocusResponse {
   success: boolean;
   data: PriorityFocusData;
 }
+
+export interface MealScheduleItem {
+  title: string;
+  time: string;
+  portion_size: string;
+  what_to_eat: string[];
+  priority_label: string;
+  calories_range: string;
+}
+
+export interface NutritionEnergyData {
+  title: string;
+  subtitle: string;
+  daily_meal_schedule: MealScheduleItem[];
+  hydration_strategy: {
+    daily_target_liters: string;
+    guidance: string[];
+  };
+}
+
+export interface NutritionEnergyResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: NutritionEnergyData;
+  };
+}
