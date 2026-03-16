@@ -85,3 +85,27 @@ export interface NutritionEnergyResponse {
     data: NutritionEnergyData;
   };
 }
+
+export interface WeeklyStructureItem {
+  day: string;
+  focus: string;
+  session_detail: string;
+}
+
+export interface WeeklyStructureData {
+  title: string;
+  subtitle: string;
+  weekly_structure: WeeklyStructureItem[];
+}
+
+export interface WeeklyStructureResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: WeeklyStructureData;
+  };
+}
