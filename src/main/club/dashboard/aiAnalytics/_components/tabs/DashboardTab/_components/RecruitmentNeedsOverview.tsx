@@ -30,8 +30,8 @@ const RecruitmentNeedsOverview = ({ data }: RecruitmentNeedsOverviewProps) => {
   ];
 
   return (
-    <div className="bg-[#12141B] p-6 rounded-2xl border border-white/5">
-      <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+    <div className="bg-[#12141B] p-4 md:p-6 rounded-2xl border border-white/5">
+      <h2 className="text-md md:text-lg font-semibold text-white mb-6 flex items-center gap-2">
         <Users className="text-cyan-400" size={20} />
         Recruitment Needs Overview
       </h2>
@@ -52,7 +52,7 @@ const RecruitmentNeedsOverview = ({ data }: RecruitmentNeedsOverviewProps) => {
       </div>
 
       {/* Bottom row: 5 small Stat cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 md:gap-4">
         {stats.map((item, idx) => (
           <div key={idx} className="bg-[#1A1D24] p-4 rounded-xl border border-white/5 h-20 flex flex-col justify-center">
             <p className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1 font-medium">{item.label}</p>
