@@ -1,6 +1,3 @@
-// No icons needed based on design image
-
-
 interface TacticalWeaknessesProps {
   data?: string[];
 }
