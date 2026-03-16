@@ -31,18 +31,50 @@ export interface DevelopmentPotentialData {
   description: string;
 }
 
-export interface PlayerScoutingData {
-  executiveSummary: ScoutingStat[];
-  positionCriteria: ScoutingCriteria[];
-  tacticalFit: TacticalFitData;
-  developmentPotential: DevelopmentPotentialData;
-  comparativeAnalysis: {
-    players: Array<{
-      name: string;
+export interface PlayerScoutingReportData {
+  status: string;
+  analysis_type: string;
+  timestamp: string;
+  model: string;
+  data: {
+    title: string;
+    subtitle: string;
+    position_specific_criteria: {
+      position_name: string;
+      technical_requirements: Array<{
+        label: string;
+        target: string;
+      }>;
+      physical_characteristics: Array<{
+        label: string;
+        target: string;
+      }>;
+      tactical_understanding: string[];
+      psychological_attributes: string[];
+    };
+    tactical_fit_scoring: Array<{
+      label: string;
       score: number;
-      value: string;
-      age: number;
     }>;
+    development_potential_rating: {
+      technical_growth: number;
+      tactical_development: number;
+      physical_development: number;
+      mental_development: number;
+      overall_potential: number;
+    };
+    comparative_analysis: {
+      title: string;
+      player_a: string[];
+      player_b: string[];
+    };
+    executive_summary: {
+      top_recommendation: string;
+      fit_score: string;
+      estimated_value: string;
+      development_time: string;
+      risk_level: string;
+    };
   };
 }
 

@@ -1,6 +1,6 @@
 import type {
   ClubAIAnalysisResponse,
-  PlayerScoutingData,
+  PlayerScoutingReportData,
   TacticalAnalysisData,
   OppositionAnalysisData,
   AcademyDevelopmentData,
@@ -15,7 +15,7 @@ import { aiBaseApi } from "../../api/aiBaseApi";
 
 export const clubsApi = aiBaseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getClubScoutingReport: builder.query<ClubAIAnalysisResponse<PlayerScoutingData>, string>({
+    getClubScoutingReport: builder.query<ClubAIAnalysisResponse<PlayerScoutingReportData>, string>({
       query: (clubId) => `/club/analysis/${clubId}/player-scouting-report`,
       providesTags: ["ClubPlayerScouting"],
     }),

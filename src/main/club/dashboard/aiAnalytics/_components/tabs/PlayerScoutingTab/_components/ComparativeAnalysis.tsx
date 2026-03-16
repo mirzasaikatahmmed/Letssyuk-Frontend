@@ -1,54 +1,55 @@
 import { Users, Check } from "lucide-react";
 
-const playerAPoints = [
-  "Better technical skills",
-  "Higher ceiling",
-  "Adapts better to system",
-];
+interface ComparativeAnalysisProps {
+  data?: {
+    title: string;
+    player_a: string[];
+    player_b: string[];
+  };
+}
 
-const playerBPoints = [
-  "More physically developed",
-  "Ready now",
-  "Better immediate ROI",
-];
+const ComparativeAnalysis = ({ data }: ComparativeAnalysisProps) => {
+  if (!data) return null;
 
-const ComparativeAnalysis = () => {
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
+    <div className="bg-[#12141B] p-6 rounded-2xl border border-white/5">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-7 h-7 bg-cyan-500/10 rounded-lg flex items-center justify-center">
-          <Users size={15} className="text-cyan-400" />
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-10 h-10 bg-cyan-500/10 rounded-xl flex items-center justify-center">
+          <Users className="text-cyan-400" size={20} />
         </div>
-        <h2 className="text-base font-semibold text-white">
-          Comparative Analysis:{" "}
-          <span className="text-gray-400">Player A vs Player B</span>
-        </h2>
+        <div>
+          <h2 className="text-lg font-semibold text-cyan-400">{data.title}</h2>
+        </div>
       </div>
 
       {/* Player Comparison Grid */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         {/* Player A */}
-        <div className="bg-[#27272A] rounded-xl border border-gray-800 p-4">
-          <p className="text-sm font-semibold text-white mb-3">Player A</p>
-          <ul className="space-y-2">
-            {playerAPoints.map((point, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <Check size={13} className="text-cyan-400 mt-0.5 shrink-0" />
-                <span className="text-xs text-gray-300">{point}</span>
+        <div className="bg-[#1A1D24] rounded-xl border border-white/5 p-5 relative overflow-hidden group">
+          <p className="text-base font-bold text-white mb-4 flex items-center gap-2">
+            Player A
+          </p>
+          <ul className="space-y-3 relative z-10">
+            {data.player_a.map((point, i) => (
+              <li key={i} className="flex items-start gap-3 text-xs text-zinc-300 leading-relaxed font-medium">
+                <Check size={14} className="text-green-400 mt-0.5 shrink-0" />
+                {point}
               </li>
             ))}
           </ul>
         </div>
 
         {/* Player B */}
-        <div className="bg-[#27272A] rounded-xl border border-gray-800 p-4">
-          <p className="text-sm font-semibold text-white mb-3">Player B</p>
-          <ul className="space-y-2">
-            {playerBPoints.map((point, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <Check size={13} className="text-cyan-400 mt-0.5 shrink-0" />
-                <span className="text-xs text-gray-300">{point}</span>
+        <div className="bg-[#1A1D24] rounded-xl border border-white/5 p-5 relative overflow-hidden group">
+          <p className="text-base font-bold text-white mb-4 flex items-center gap-2">
+            Player B
+          </p>
+          <ul className="space-y-3 relative z-10">
+            {data.player_b.map((point, i) => (
+              <li key={i} className="flex items-start gap-3 text-xs text-zinc-400 leading-relaxed font-medium">
+                <Check size={14} className="text-green-400 mt-0.5 shrink-0" />
+                {point}
               </li>
             ))}
           </ul>

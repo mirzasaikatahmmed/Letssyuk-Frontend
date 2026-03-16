@@ -1,4 +1,4 @@
-import { BarChart3 } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 interface RecentMatchReportsProps {
   data?: {
@@ -42,7 +42,7 @@ const RecentMatchReports = ({ data }: RecentMatchReportsProps) => {
   return (
     <div className="bg-[#12141B] p-6 rounded-2xl border border-white/5 h-full">
       <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-        <BarChart3 className="text-cyan-400" size={20} />
+        <TrendingUp className="text-cyan-400" size={20} />
         Recent Match Reports
       </h2>
 
