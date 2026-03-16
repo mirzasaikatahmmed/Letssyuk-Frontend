@@ -37,7 +37,7 @@ const RecruitmentNeedsOverview = ({ data }: RecruitmentNeedsOverviewProps) => {
       </h2>
 
       {/* Top row: 4 large Position cards */}
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mb-4">
         {data.positions.map((item, idx) => (
           <div key={idx} className="bg-[#1A1D24] p-5 rounded-xl border border-white/5 h-32 flex flex-col justify-between">
             <div>
@@ -52,7 +52,7 @@ const RecruitmentNeedsOverview = ({ data }: RecruitmentNeedsOverviewProps) => {
       </div>
 
       {/* Bottom row: 5 small Stat cards */}
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.map((item, idx) => (
           <div key={idx} className="bg-[#1A1D24] p-4 rounded-xl border border-white/5 h-20 flex flex-col justify-center">
             <p className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1 font-medium">{item.label}</p>
