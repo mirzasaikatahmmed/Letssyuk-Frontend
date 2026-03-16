@@ -8,6 +8,7 @@ import type {
   PhysicalPerformanceResponse,
   TacticalAwarenessResponse,
   PlayerDevelopmentResponse,
+  RecoveryLoadResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -57,6 +58,11 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
         `/athlete/analysis/${playerId}/player-development-pathway`,
       providesTags: ["AIRecommendation"],
     }),
+    getRecoveryLoadManagement: builder.query<RecoveryLoadResponse, string>({
+      query: (playerId) =>
+        `/athlete/analysis/${playerId}/recovery-load-management`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
@@ -69,4 +75,5 @@ export const {
   useGetPhysicalPerformanceQuery,
   useGetTacticalAwarenessQuery,
   useGetPlayerDevelopmentPathwayQuery,
+  useGetRecoveryLoadManagementQuery,
 } = athleteAiApi;

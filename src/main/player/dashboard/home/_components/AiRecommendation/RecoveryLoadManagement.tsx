@@ -9,9 +9,29 @@ import {
   Gauge,
 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetRecoveryLoadManagementQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
 const RecoveryLoadManagement = () => {
   const navigate = useNavigate();
+
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetRecoveryLoadManagementQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: recoveryData } = aiResponse.analysis;
 
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
@@ -37,10 +57,10 @@ const RecoveryLoadManagement = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Recovery & Load Management
+                {recoveryData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Optimize recovery and prevent overtraining
+                {recoveryData.subtitle}
               </p>
             </div>
           </div>
@@ -62,14 +82,16 @@ const RecoveryLoadManagement = () => {
               <span className="text-white text-[11px] font-bold block uppercase opacity-70">
                 Duration:
               </span>
-              <p className="text-[12px] text-gray-400">8-9 hours/night</p>
+              <p className="text-[12px] text-gray-400">
+                {recoveryData.sleep_optimization.duration}
+              </p>
             </div>
             <div className="space-y-1">
               <span className="text-white text-[11px] font-bold block uppercase opacity-70">
                 Pre-sleep Routine:
               </span>
               <p className="text-[12px] text-gray-400">
-                Light stretch, reading, mindfulness
+                {recoveryData.sleep_optimization.pre_sleep_routine}
               </p>
             </div>
           </div>
@@ -79,7 +101,7 @@ const RecoveryLoadManagement = () => {
                 Quality Improvement:
               </span>
               <p className="text-[12px] text-gray-400">
-                Dark room, cool temperature, no screens 1h before
+                {recoveryData.sleep_optimization.quality_improvement}
               </p>
             </div>
             <div className="space-y-1">
@@ -87,7 +109,7 @@ const RecoveryLoadManagement = () => {
                 Recovery Strategies:
               </span>
               <p className="text-[12px] text-gray-400">
-                Nap after intense training
+                {recoveryData.sleep_optimization.recovery_strategies}
               </p>
             </div>
           </div>
@@ -103,25 +125,25 @@ const RecoveryLoadManagement = () => {
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-2">Daily Routine</h4>
             <p className="text-[12px] text-gray-400">
-              15-minute full body stretch
+              {recoveryData.stretching_mobility.daily_routine}
             </p>
           </Card>
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-2">Pre-training</h4>
             <p className="text-[12px] text-gray-400">
-              Dynamic stretches (leg swings, hip circles)
+              {recoveryData.stretching_mobility.pre_training}
             </p>
           </Card>
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-2">Post-training</h4>
             <p className="text-[12px] text-gray-400">
-              Static holds (hamstring, quad, calf)
+              {recoveryData.stretching_mobility.post_training}
             </p>
           </Card>
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
             <h4 className="font-bold text-sm mb-2">Mobility</h4>
             <p className="text-[12px] text-gray-400">
-              Hip openers, shoulder mobility
+              {recoveryData.stretching_mobility.mobility}
             </p>
           </Card>
         </div>
@@ -139,7 +161,7 @@ const RecoveryLoadManagement = () => {
                 Activities:
               </span>
               <p className="text-[12px] text-gray-400">
-                Swimming, cycling, walking
+                {recoveryData.active_recovery.activities}
               </p>
             </div>
             <div className="space-y-1">
@@ -147,7 +169,7 @@ const RecoveryLoadManagement = () => {
                 Session:
               </span>
               <p className="text-[12px] text-gray-400">
-                30-45 minutes at low intensity
+                {recoveryData.active_recovery.session}
               </p>
             </div>
           </div>
@@ -157,7 +179,7 @@ const RecoveryLoadManagement = () => {
                 Schedule:
               </span>
               <p className="text-[12px] text-gray-400">
-                Day after match/intense training
+                {recoveryData.active_recovery.schedule}
               </p>
             </div>
             <div className="space-y-1">
@@ -165,7 +187,7 @@ const RecoveryLoadManagement = () => {
                 Regeneration:
               </span>
               <p className="text-[12px] text-gray-400">
-                Foam rolling, massage, compression
+                {recoveryData.active_recovery.regeneration}
               </p>
             </div>
           </div>
@@ -187,7 +209,7 @@ const RecoveryLoadManagement = () => {
                 Daily Hydration:
               </span>
               <p className="text-[12px] text-gray-400">
-                3-4 liters (more on training days)
+                {recoveryData.hydration_nutrition.daily_hydration}
               </p>
             </div>
             <div className="space-y-1">
@@ -195,7 +217,7 @@ const RecoveryLoadManagement = () => {
                 Post-training:
               </span>
               <p className="text-[12px] text-gray-400">
-                Protein within 30 minutes
+                {recoveryData.hydration_nutrition.post_training}
               </p>
             </div>
           </div>
@@ -205,7 +227,7 @@ const RecoveryLoadManagement = () => {
                 Pre-training:
               </span>
               <p className="text-[12px] text-gray-400">
-                Carb + protein 2h before
+                {recoveryData.hydration_nutrition.pre_training}
               </p>
             </div>
             <div className="space-y-1">
@@ -213,7 +235,7 @@ const RecoveryLoadManagement = () => {
                 Recovery Meals:
               </span>
               <p className="text-[12px] text-gray-400">
-                Chicken+rice, salmon+sweet potato
+                {recoveryData.hydration_nutrition.recovery_meals}
               </p>
             </div>
           </div>
@@ -234,21 +256,23 @@ const RecoveryLoadManagement = () => {
               Load Monitoring:
             </span>
             <p className="text-[12px] text-gray-400">
-              Rate of Perceived Exertion (RPE) scale
+              {recoveryData.load_rest_balance.load_monitoring}
             </p>
           </div>
           <div className="space-y-1">
             <span className="text-white text-[11px] font-bold block uppercase opacity-70">
               Rest Days:
             </span>
-            <p className="text-[12px] text-gray-400">1-2 full rest days/week</p>
+            <p className="text-[12px] text-gray-400">
+              {recoveryData.load_rest_balance.rest_days}
+            </p>
           </div>
           <div className="space-y-1">
             <span className="text-white text-[11px] font-bold block uppercase opacity-70">
               Overtraining Prevention:
             </span>
             <p className="text-[12px] text-gray-400">
-              Listen to body, adjust intensity
+              {recoveryData.load_rest_balance.overtraining_prevention}
             </p>
           </div>
           <div className="space-y-1">
@@ -256,7 +280,7 @@ const RecoveryLoadManagement = () => {
               Recovery Tracking:
             </span>
             <p className="text-[12px] text-gray-400">
-              Sleep quality, muscle soreness
+              {recoveryData.load_rest_balance.recovery_tracking}
             </p>
           </div>
         </div>

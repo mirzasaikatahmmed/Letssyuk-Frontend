@@ -327,3 +327,60 @@ export interface PlayerDevelopmentResponse {
     data: PlayerDevelopmentData;
   };
 }
+
+export interface SleepOptimization {
+  duration: string;
+  pre_sleep_routine: string;
+  quality_improvement: string;
+  recovery_strategies: string;
+}
+
+export interface StretchingMobility {
+  daily_routine: string;
+  pre_training: string;
+  post_training: string;
+  mobility: string;
+}
+
+export interface ActiveRecovery {
+  activities: string;
+  schedule: string;
+  session: string;
+  regeneration: string;
+}
+
+export interface HydrationNutrition {
+  daily_hydration: string;
+  pre_training: string;
+  post_training: string;
+  recovery_meals: string;
+}
+
+export interface LoadRestBalance {
+  load_monitoring: string;
+  rest_days: string;
+  overtraining_prevention: string;
+  recovery_tracking: string;
+}
+
+export interface RecoveryLoadData {
+  title: string;
+  subtitle: string;
+  sleep_optimization: SleepOptimization;
+  stretching_mobility: StretchingMobility;
+  active_recovery: ActiveRecovery;
+  hydration_nutrition: HydrationNutrition;
+  load_rest_balance: LoadRestBalance;
+}
+
+export interface RecoveryLoadResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: RecoveryLoadData;
+  };
+}
