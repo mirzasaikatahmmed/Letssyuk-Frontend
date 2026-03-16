@@ -1,28 +1,43 @@
 import { useNavigate } from "react-router";
 import { ChevronLeft, Target, Info } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetPriorityFocusQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
+const getPriorityColor = (priority: string) => {
+  switch (priority.toLowerCase()) {
+    case "critical":
+      return "#ef4444";
+    case "high":
+      return "#f97316";
+    case "medium":
+      return "#facc15";
+    case "low":
+      return "#22c55e";
+    default:
+      return "#94a3b8";
+  }
+};
 const PriorityFocusAreas = () => {
   const navigate = useNavigate();
-  const priorities = [
-    {
-      title: "Match Exposure",
-      stats: "8 matches this season → Target: 12-15 matches",
-      action:
-        "Seek additional friendly fixtures or cup competitions to increase match minutes",
-      status: "Critical",
-      statusColor: "#ef4444", // Red for critical
-    },
-    {
-      title: "Training Balance",
-      stats: "Current: 4h technical, 3h physical/week",
-      action:
-        "Add 2x 30-min technical sessions focused on passing accuracy and first touch",
-      status: "Medium",
-      statusColor: "#facc15", // Yellow for medium
-    },
-  ];
 
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetPriorityFocusQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const focusData = aiResponse.data;
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
       {/* Top Header with Back Button */}
@@ -47,10 +62,10 @@ const PriorityFocusAreas = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Priority Focus Areas
+                {focusData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Key areas needing immediate attention
+                Generated on {new Date(focusData.generatedAt).toLocaleDateString()}
               </p>
             </div>
           </div>
@@ -64,35 +79,38 @@ const PriorityFocusAreas = () => {
         </h3>
         <Card className="bg-[#0B1219] border-gray-800 p-6 rounded-2xl shadow-xl">
           <div className="space-y-4">
-            {priorities.map((item, index) => (
-              <div
-                key={index}
-                className="bg-[#235D67]/10 border border-gray-800 rounded-xl p-6 relative overflow-hidden group hover:border-[#0DA9A2]/30 transition-all shadow-sm"
-              >
-                {/* Status Badge */}
+            {focusData.segments.map((item, index) => {
+              const statusColor = getPriorityColor(item.priority);
+              return (
                 <div
-                  className="absolute top-4 right-4 px-3 py-1 rounded-md text-[10px] font-bold border"
-                  style={{
-                    color: item.statusColor,
-                    borderColor: `${item.statusColor}44`,
-                    backgroundColor: `${item.statusColor}11`,
-                  }}
+                  key={index}
+                  className="bg-[#235D67]/10 border border-gray-800 rounded-xl p-6 relative overflow-hidden group hover:border-[#0DA9A2]/30 transition-all shadow-sm"
                 >
-                  {item.status}
-                </div>
+                  {/* Status Badge */}
+                  <div
+                    className="absolute top-4 right-4 px-3 py-1 rounded-md text-[10px] font-bold border"
+                    style={{
+                      color: statusColor,
+                      borderColor: `${statusColor}44`,
+                      backgroundColor: `${statusColor}11`,
+                    }}
+                  >
+                    {item.priority}
+                  </div>
 
-                <h4 className="text-white font-bold text-base mb-1 group-hover:text-[#0DA9A2] transition-colors">
-                  {item.title}
-                </h4>
-                <p className="text-gray-400 text-xs mb-4">{item.stats}</p>
-                <div className="flex items-start gap-2 bg-black/20 p-3 rounded-lg border border-gray-800/50">
-                  <Info size={14} className="text-[#0DA9A2] mt-0.5 shrink-0" />
-                  <p className="text-[#0DA9A2] text-xs font-medium leading-relaxed">
-                    {item.action}
-                  </p>
+                  <h4 className="text-white font-bold text-base mb-1 group-hover:text-[#0DA9A2] transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="text-gray-400 text-xs mb-4">{item.current}</p>
+                  <div className="flex items-start gap-2 bg-black/20 p-3 rounded-lg border border-gray-800/50">
+                    <Info size={14} className="text-[#0DA9A2] mt-0.5 shrink-0" />
+                    <p className="text-[#0DA9A2] text-xs font-medium leading-relaxed">
+                      {item.recommendation}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
       </div>

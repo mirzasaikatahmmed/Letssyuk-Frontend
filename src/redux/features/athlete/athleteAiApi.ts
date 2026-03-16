@@ -1,6 +1,7 @@
 import type {
   AiAnalysisResponse,
   MatchPreparationData,
+  PriorityFocusResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -14,7 +15,12 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
         `/athlete/analysis/${playerId}/match-preparation-system`,
       providesTags: ["MatchPreparation"],
     }),
+    getPriorityFocus: builder.query<PriorityFocusResponse, string>({
+      query: (playerId) => `/athlete/analysis/${playerId}/priority-focus`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
-export const { useGetMatchPreparationQuery } = athleteAiApi;
+export const { useGetMatchPreparationQuery, useGetPriorityFocusQuery } =
+  athleteAiApi;

@@ -35,3 +35,22 @@ export interface MatchPreparationData {
   };
   disclaimer: string;
 }
+
+export interface PriorityFocusSegment {
+  title: string;
+  current: string;
+  recommendation: string;
+  priority: string;
+}
+
+export interface PriorityFocusData {
+  playerId: string;
+  generatedAt: string;
+  title: string;
+  segments: PriorityFocusSegment[];
+}
+
+export interface PriorityFocusResponse {
+  success: boolean;
+  data: PriorityFocusData;
+}
