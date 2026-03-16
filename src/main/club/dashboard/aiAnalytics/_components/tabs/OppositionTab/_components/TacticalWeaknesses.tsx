@@ -1,29 +1,26 @@
-import { AlertTriangle } from "lucide-react";
+// No icons needed based on design image
 
-const weaknesses = [
-  "High defensive line vulnerability",
-  "Right-back position exposed",
-  "Late-game concentration",
-  "Aerial duels in midfield",
-];
 
-const TacticalWeaknesses = () => {
+interface TacticalWeaknessesProps {
+  data?: string[];
+}
+
+const TacticalWeaknesses = ({ data }: TacticalWeaknessesProps) => {
+  if (!data) return null;
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5 h-full">
-      <div className="flex items-center gap-2 mb-5">
-        <AlertTriangle size={16} className="text-red-400" />
-        <h2 className="text-base font-semibold text-red-400">
-          Tactical Weaknesses
-        </h2>
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5 h-full">
+      <div className="flex items-center gap-2 mb-6">
+        <h2 className="text-base font-bold text-red-500 capitalize tracking-tight">Tactical Weaknesses</h2>
       </div>
 
       <div className="space-y-3">
-        {weaknesses.map((item, i) => (
+        {data.map((item, i) => (
           <div
             key={i}
-            className="bg-[#27272A] border-l-4 border-red-500 rounded-r-xl p-4"
+            className="bg-[#1A1D24] border-l-4 border-red-500 rounded-lg p-3"
           >
-            <p className="text-sm text-gray-200">{item}</p>
+            <p className="text-[11px] font-medium text-zinc-300">{item}</p>
           </div>
         ))}
       </div>

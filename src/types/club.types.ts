@@ -135,11 +135,43 @@ export interface TacticalAnalysisData {
 
 // Opposition Analysis
 export interface OppositionAnalysisData {
-  opponentName: string;
-  threatLevel: "High" | "Medium" | "Low";
-  keyPlayers: string[];
-  vulnerabilities: string[];
-  recommendedTactics: string;
+  opposition_tactical_profile: {
+    team_name: string;
+    formation: string;
+    playing_style: string;
+    philosophy: string;
+    game_management: string;
+  };
+  primary_threats: Array<{
+    player_name: string;
+    position: string;
+    threat_score: number;
+    weakness: string;
+    strategy: string;
+  }>;
+  opposition_strengths: Array<{
+    label: string;
+    score: number;
+  }>;
+  tactical_weaknesses: string[];
+  set_piece_tendencies: {
+    attacking_corners: {
+      near_post_percent: number;
+      far_post_percent: number;
+      short_corner_percent: number;
+      other_percent: number;
+    };
+    key_target: {
+      name: string;
+      height: string;
+      note: string;
+    };
+  };
+  suggested_tactical_adjustments: {
+    formation_changes: string[];
+    pressing_triggers: string[];
+    defensive_organization: string[];
+  };
 }
 
 // Academy Tracker
