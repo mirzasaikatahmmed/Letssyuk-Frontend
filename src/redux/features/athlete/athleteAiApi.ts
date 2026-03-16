@@ -7,6 +7,7 @@ import type {
   TechnicalSkillsResponse,
   PhysicalPerformanceResponse,
   TacticalAwarenessResponse,
+  PlayerDevelopmentResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -29,11 +30,13 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
       providesTags: ["AIRecommendation"],
     }),
     getWeeklyStructure: builder.query<WeeklyStructureResponse, string>({
-      query: (playerId) => `/athlete/analysis/${playerId}/weekly-performance-planner`,
+      query: (playerId) =>
+        `/athlete/analysis/${playerId}/weekly-performance-planner`,
       providesTags: ["AIRecommendation"],
     }),
     getTechnicalSkillsEngine: builder.query<TechnicalSkillsResponse, string>({
-      query: (playerId) => `/athlete/analysis/${playerId}/technical-skills-engine`,
+      query: (playerId) =>
+        `/athlete/analysis/${playerId}/technical-skills-engine`,
       providesTags: ["AIRecommendation"],
     }),
     getPhysicalPerformance: builder.query<PhysicalPerformanceResponse, string>({
@@ -44,6 +47,14 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
     getTacticalAwareness: builder.query<TacticalAwarenessResponse, string>({
       query: (playerId) =>
         `/athlete/analysis/${playerId}/tactical-awareness-assistant`,
+      providesTags: ["AIRecommendation"],
+    }),
+    getPlayerDevelopmentPathway: builder.query<
+      PlayerDevelopmentResponse,
+      string
+    >({
+      query: (playerId) =>
+        `/athlete/analysis/${playerId}/player-development-pathway`,
       providesTags: ["AIRecommendation"],
     }),
   }),
@@ -57,4 +68,5 @@ export const {
   useGetTechnicalSkillsEngineQuery,
   useGetPhysicalPerformanceQuery,
   useGetTacticalAwarenessQuery,
+  useGetPlayerDevelopmentPathwayQuery,
 } = athleteAiApi;

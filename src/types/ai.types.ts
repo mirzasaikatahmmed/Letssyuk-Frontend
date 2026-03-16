@@ -272,3 +272,58 @@ export interface TacticalAwarenessResponse {
     data: TacticalAwarenessData;
   };
 }
+
+export interface ThreeMonthPlan {
+  skill_priorities: string;
+  performance_benchmarks: string;
+  training_focus: string;
+  success_indicators: string;
+}
+
+export interface SixMonthPlan {
+  milestones: string;
+  skill_targets: string;
+  physical_goals: string;
+  tactical_targets: string;
+}
+
+export interface TwelveMonthPlan {
+  season_objectives: string;
+  performance_benchmarks: string;
+  career_steps: string;
+  level_advancement: string;
+}
+
+export interface LongTermPathway {
+  career_phases: string;
+  development_trajectory: string;
+  next_steps: string;
+}
+
+export interface TrackingMonitoring {
+  progress_metrics: string;
+  review_points: string;
+  adjustment_protocols: string;
+}
+
+export interface PlayerDevelopmentData {
+  title: string;
+  subtitle: string;
+  three_month_plan: ThreeMonthPlan;
+  six_month_plan: SixMonthPlan;
+  twelve_month_plan: TwelveMonthPlan;
+  long_term_pathway: LongTermPathway;
+  tracking_monitoring: TrackingMonitoring;
+}
+
+export interface PlayerDevelopmentResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: PlayerDevelopmentData;
+  };
+}
