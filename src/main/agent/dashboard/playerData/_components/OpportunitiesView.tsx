@@ -1,13 +1,27 @@
-import React from "react";
 import { Layout, TrendingUp, DollarSign, Calendar, Info } from "lucide-react";
 import type { Player } from "../_data/data";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetOpportunityMatchingQuery } from "@/redux/features/agent/agentsApi";
+import Loading from "@/components/share/Loading/Loading";
 
 interface OpportunitiesViewProps {
   player: Player;
 }
 
 const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
-  const { opportunities } = player.contractDetails;
+  const { data: userData } = useGetMeQuery();
+  const agentId = userData?.agentOwned?.id;
+
+  const { data: aiResponse, isLoading } = useGetOpportunityMatchingQuery(
+    agentId as string,
+    { skip: !agentId },
+  );
+
+  if (isLoading) {
+    return <Loading count={3} className="p-8" />;
+  }
+
+  const opportunities = aiResponse?.analysis || player.contractDetails.opportunities;
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
@@ -28,7 +42,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
         </div>
 
         <div className="space-y-6">
-          {opportunities.topClubMatches.map((club) => (
+          {opportunities?.topClubMatches?.map((club) => (
             <div
               key={club.id}
               className="bg-[#0B0E14] border border-gray-800/80 rounded-[28px] overflow-hidden"
@@ -141,7 +155,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
                 Winter Transfer Window
               </p>
               <p className="text-[14px] font-bold text-white">
-                {opportunities.immediateOpportunities.winterWindow}
+                {opportunities?.immediateOpportunities?.winterWindow}
               </p>
             </div>
             <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
@@ -149,7 +163,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
                 Summer 2026
               </p>
               <p className="text-[14px] font-bold text-cyan-400">
-                {opportunities.immediateOpportunities.summerWindow}
+                {opportunities?.immediateOpportunities?.summerWindow}
               </p>
             </div>
             <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
@@ -157,7 +171,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
                 Loan Option
               </p>
               <p className="text-[14px] font-bold text-white">
-                {opportunities.immediateOpportunities.loanOption}
+                {opportunities?.immediateOpportunities?.loanOption}
               </p>
             </div>
             <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
@@ -165,7 +179,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
                 Permanent Move
               </p>
               <p className="text-[14px] font-bold text-white">
-                {opportunities.immediateOpportunities.permanentMove}
+                {opportunities?.immediateOpportunities?.permanentMove}
               </p>
             </div>
           </div>
@@ -194,7 +208,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
               Current Market Value
             </p>
             <p className="text-2xl font-black text-cyan-400 mb-1.5">
-              {opportunities.negotiationPositioning.currentMarketValue}
+              {opportunities?.negotiationPositioning?.currentMarketValue}
             </p>
             <p className="text-[10px] text-gray-700 font-medium">
               Based on recent performance
@@ -205,7 +219,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
               Asking Price
             </p>
             <p className="text-2xl font-black text-white mb-1.5">
-              {opportunities.negotiationPositioning.askingPrice}
+              {opportunities?.negotiationPositioning?.askingPrice}
             </p>
             <p className="text-[10px] text-gray-700 font-medium">
               Negotiating position
@@ -216,7 +230,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
               Realistic Price
             </p>
             <p className="text-2xl font-black text-orange-400 mb-1.5">
-              {opportunities.negotiationPositioning.realisticPrice}
+              {opportunities?.negotiationPositioning?.realisticPrice}
             </p>
             <p className="text-[10px] text-gray-700 font-medium">
               Expected final fee
@@ -227,7 +241,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
               Leverage
             </p>
             <p className="text-2xl font-black text-cyan-400 mb-1.5">
-              {opportunities.negotiationPositioning.leverage}
+              {opportunities?.negotiationPositioning?.leverage}
             </p>
             <p className="text-[10px] text-gray-700 font-medium">
               Assessment of market interest
@@ -244,7 +258,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
               Strong Negotiation Position
             </h4>
             <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
-              {opportunities.negotiationPositioning.assessment}
+              {opportunities?.negotiationPositioning?.assessment}
             </p>
           </div>
         </div>
@@ -267,7 +281,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
         </div>
 
         <div className="relative ml-4 pl-10 space-y-12 before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[2px] before:bg-linear-to-b before:from-cyan-500/40 before:via-purple-500/40 before:to-gray-800/40">
-          {opportunities.careerPathway.map((step) => (
+          {opportunities?.careerPathway?.map((step) => (
             <div key={step.number} className="relative">
               <div
                 className={`absolute -left-[54px] top-1 w-7 h-7 rounded-full border-2 border-[#0B0E14] flex items-center justify-center text-[12px] font-black z-10 ${
@@ -314,9 +328,7 @@ const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
               Optimal Pathway
             </h4>
             <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
-              Based on current trajectory, age profile, and market
-              opportunities, the AC Milan move represents the ideal next step
-              for career progression.
+              {"optimalPathwaySummary" in opportunities ? (opportunities as { optimalPathwaySummary: string }).optimalPathwaySummary : `Based on current trajectory, age profile, and market opportunities, the AC Milan move represents the ideal next step for career progression.`}
             </p>
           </div>
         </div>
