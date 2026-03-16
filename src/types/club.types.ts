@@ -80,11 +80,57 @@ export interface PlayerScoutingReportData {
 
 // Tactical Analysis
 export interface TacticalAnalysisData {
-  possession: number;
-  pressingIntensity: string;
-  defensiveLine: string;
-  attackingWidth: string;
-  keyTacticalInsights: string[];
+  formation_effectiveness: {
+    formation: string;
+    attack_score: number;
+    defense_score: number;
+    transition_score: number;
+    overall_score: number;
+    positional_discipline: {
+      full_backs: string;
+      midfielders: string;
+      center_backs: string;
+      forwards: string;
+    };
+  };
+  build_up_phase: {
+    success_ratio_percent: number;
+    average_time_seconds: number;
+    key_player: string;
+    improvement_area: {
+      title: string;
+      description: string;
+    };
+  };
+  defensive_organization: {
+    shape: string;
+    pressing_trigger: string;
+    success_rate_percent: number;
+    vulnerability: {
+      title: string;
+      description: string;
+    };
+  };
+  key_strengths: Array<{
+    label: string;
+    score: number;
+  }>;
+  tactical_vulnerabilities: Array<{
+    title: string;
+    incidents: string;
+  }>;
+  defensive_shape_consistency: {
+    first_half_percent: number;
+    second_half_percent: number;
+    drop_off_percent: number;
+    key_issue: string;
+  };
+  decision_making_patterns: {
+    when_to_press_percent: number;
+    when_to_counter_percent: number;
+    substitution_timing_percent: number;
+    formation_changes_percent: number;
+  };
 }
 
 // Opposition Analysis

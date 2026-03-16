@@ -1,36 +1,36 @@
 import { AlertTriangle } from "lucide-react";
 
-const vulnerabilities = [
-  { label: "High defensive line", incidents: "3" },
-  { label: "Left side overload vulnerability", incidents: "Multiple" },
-  { label: "Late game concentration lapses", incidents: "Frequent" },
-  { label: "Set-piece attack variety", incidents: "Low" },
-];
+interface TacticalVulnerabilitiesProps {
+  data?: Array<{
+    title: string;
+    incidents: string;
+  }>;
+}
 
-const TacticalVulnerabilities = () => {
+const TacticalVulnerabilities = ({ data }: TacticalVulnerabilitiesProps) => {
+  if (!data) return null;
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5 h-full">
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5 h-full">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <AlertTriangle size={16} className="text-red-400" />
-        <h2 className="text-base font-semibold text-red-400">
-          Tactical Vulnerabilities
-        </h2>
+      <div className="flex items-center gap-2 mb-6">
+        <AlertTriangle size={18} className="text-red-500" />
+        <h2 className="text-base font-bold text-red-500">Tactical Vulnerabilities</h2>
       </div>
 
       <div className="space-y-3">
-        {vulnerabilities.map((item, i) => (
+        {data.map((item, i) => (
           <div
             key={i}
-            className="bg-[#27272A] border-l-4 border-red-500 rounded-r-xl p-4"
+            className="bg-[#1A1D24] border-l-4 border-red-500 rounded-xl p-4"
           >
-            <p className="text-sm font-medium text-red-400 mb-0.5">
-              {item.label}
+            <p className="text-xs font-bold text-red-500 mb-1">
+              {item.title}
             </p>
-            <p className="text-xs text-gray-400">
-              Incidents:{" "}
-              <span className="text-gray-200 font-medium">{item.incidents}</span>
-            </p>
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] text-zinc-500">Incidents:</span>
+              <span className="text-[10px] text-zinc-300 font-medium">{item.incidents}</span>
+            </div>
           </div>
         ))}
       </div>

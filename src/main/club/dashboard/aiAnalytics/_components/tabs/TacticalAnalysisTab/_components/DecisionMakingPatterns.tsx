@@ -1,30 +1,39 @@
-const patterns = [
-  { label: "When to press", value: 70, barColor: "bg-green-400", textColor: "text-green-400" },
-  { label: "When to counter", value: 85, barColor: "bg-green-400", textColor: "text-green-400" },
-  { label: "Substitution timing", value: 80, barColor: "bg-green-400", textColor: "text-green-400" },
-  { label: "Formation changes", value: 60, barColor: "bg-yellow-400", textColor: "text-yellow-400" },
-];
+interface DecisionMakingPatternsProps {
+  data?: {
+    when_to_press_percent: number;
+    when_to_counter_percent: number;
+    substitution_timing_percent: number;
+    formation_changes_percent: number;
+  };
+}
 
-const DecisionMakingPatterns = () => {
+const DecisionMakingPatterns = ({ data }: DecisionMakingPatternsProps) => {
+  if (!data) return null;
+
+  const patterns = [
+    { label: "When to press", value: data.when_to_press_percent, color: "text-cyan-400", barColor: "bg-cyan-400" },
+    { label: "When to counter", value: data.when_to_counter_percent, color: "text-green-500", barColor: "bg-green-500" },
+    { label: "Substitution timing", value: data.substitution_timing_percent, color: "text-green-500", barColor: "bg-green-500" },
+    { label: "Formation changes", value: data.formation_changes_percent, color: "text-yellow-500", barColor: "bg-yellow-500" },
+  ];
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
-      <h2 className="text-base font-semibold text-white mb-5">
-        Decision-Making Patterns
-      </h2>
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5">
+      <h2 className="text-base font-bold text-white mb-6">Decision-Making Patterns</h2>
 
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-4 gap-4">
         {patterns.map((item, i) => (
           <div
             key={i}
-            className="bg-[#27272A] rounded-xl border border-gray-800 p-4"
+            className="bg-[#1A1D24] rounded-xl border border-white/5 p-4"
           >
-            <p className="text-xs text-gray-400 mb-1">{item.label}</p>
-            <p className={`text-2xl font-bold ${item.textColor} mb-2`}>
+            <p className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1 font-bold">{item.label}</p>
+            <p className={`text-2xl font-bold ${item.color} mb-3 tracking-tighter`}>
               {item.value}%
             </p>
-            <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[#12141B] rounded-full overflow-hidden border border-white/5">
               <div
-                className={`h-full ${item.barColor} rounded-full transition-all duration-500`}
+                className={`h-full ${item.barColor} rounded-full`}
                 style={{ width: `${item.value}%` }}
               />
             </div>
