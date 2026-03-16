@@ -12,6 +12,126 @@ const AgentOverview = () => {
     },
   ];
 
+  const PlayersData = [
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 15,
+      isRising: true,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 15,
+      isRising: true,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+    {
+      name: "James Mitchell",
+      team: "Manchester United",
+      goals: 12,
+      assists: 7,
+      minutes: 1890,
+      marketTrend: 8,
+      isRising: false,
+    },
+  ];
+
   return (
     <div className=" bg-[#0B0E14] min-h-screen text-white">
       {/* Header */}
@@ -54,33 +174,18 @@ const AgentOverview = () => {
 
       {/* Player Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <PlayerCard
-          name="James Mitchell"
-          team="Manchester United"
-          goals={12}
-          assists={7}
-          minutes={1890}
-          marketTrend={15}
-          isRising={true}
-        />
-        <PlayerCard
-          name="James Mitchell"
-          team="Manchester United"
-          goals={12}
-          assists={7}
-          minutes={1890}
-          marketTrend={15}
-          isRising={true}
-        />
-        <PlayerCard
-          name="James Mitchell"
-          team="Manchester United"
-          goals={12}
-          assists={7}
-          minutes={1890}
-          marketTrend={8}
-          isRising={false}
-        />
+        {PlayersData.map((player, i) => (
+          <PlayerCard
+            key={i}
+            name={player.name}
+            team={player.team}
+            goals={player.goals}
+            assists={player.assists}
+            minutes={player.minutes}
+            marketTrend={player.marketTrend}
+            isRising={player.isRising}
+          />
+        ))}
       </div>
     </div>
   );
