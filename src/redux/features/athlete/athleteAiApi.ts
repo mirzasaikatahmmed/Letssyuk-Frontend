@@ -5,6 +5,7 @@ import type {
   NutritionEnergyResponse,
   WeeklyStructureResponse,
   TechnicalSkillsResponse,
+  PhysicalPerformanceResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -34,6 +35,11 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
       query: (playerId) => `/athlete/analysis/${playerId}/technical-skills-engine`,
       providesTags: ["AIRecommendation"],
     }),
+    getPhysicalPerformance: builder.query<PhysicalPerformanceResponse, string>({
+      query: (playerId) =>
+        `/athlete/analysis/${playerId}/physical-performance-dashboard`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
@@ -43,4 +49,5 @@ export const {
   useGetNutritionEnergyQuery,
   useGetWeeklyStructureQuery,
   useGetTechnicalSkillsEngineQuery,
+  useGetPhysicalPerformanceQuery,
 } = athleteAiApi;

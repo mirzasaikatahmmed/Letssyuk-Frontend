@@ -164,3 +164,60 @@ export interface TechnicalSkillsResponse {
     data: TechnicalSkillsData;
   };
 }
+
+export interface PhysicalAttribute {
+  rating: number;
+  benchmark: string;
+  target: string;
+}
+
+export interface InjuryRiskAssessment {
+  risk_level: string;
+  risk_factors: string[];
+  prevention: string[];
+}
+
+export interface TrainingProgram {
+  speed_agility: {
+    exercises: string[];
+    frequency: string;
+    progression: string;
+  };
+  strength_training: {
+    exercises: string[];
+    frequency: string;
+    intensity: string;
+  };
+}
+
+export interface WeeklyFocus {
+  priority_attributes: string[];
+  target_improvements: string[];
+  risk_mitigation: string[];
+}
+
+export interface PhysicalPerformanceData {
+  title: string;
+  subtitle: string;
+  physical_profile: {
+    speed_acceleration: PhysicalAttribute;
+    stamina_endurance: PhysicalAttribute;
+    strength_power: PhysicalAttribute;
+    agility_mobility: PhysicalAttribute;
+  };
+  injury_risk_assessment: InjuryRiskAssessment;
+  training_program: TrainingProgram;
+  weekly_focus: WeeklyFocus;
+}
+
+export interface PhysicalPerformanceResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: PhysicalPerformanceData;
+  };
+}

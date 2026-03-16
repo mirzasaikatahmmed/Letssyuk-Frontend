@@ -8,41 +8,75 @@ import {
   Brain,
 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetPhysicalPerformanceQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
+const getRatingColor = (rating: number) => {
+  if (rating >= 8) return "bg-[#00C950]";
+  if (rating >= 6) return "bg-[#155DFC]";
+  return "bg-[#FE9A00]";
+};
+
+const getRiskColor = (level: string) => {
+  switch (level.toLowerCase()) {
+    case "high": return "text-red-500";
+    case "medium": return "text-[#FE9A00]";
+    case "low": return "text-green-500";
+    default: return "text-gray-400";
+  }
+};
+
+const getRiskBg = (level: string) => {
+  switch (level.toLowerCase()) {
+    case "high": return "bg-red-500/10 border-red-500/20";
+    case "medium": return "bg-[#FE9A00]/10 border-[#FE9A00]/20";
+    case "low": return "bg-green-500/10 border-green-500/20";
+    default: return "bg-[#1A1610] border-[#FE9A00]/20";
+  }
+};
 const PhysicalPerformanceDashboard = () => {
   const navigate = useNavigate();
+
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetPhysicalPerformanceQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: physicalData } = aiResponse.analysis;
 
   const profileMetrics = [
     {
       title: "Speed & Acceleration",
-      rating: 8,
-      benchmark: "Elite",
-      target: "Improve 0-10m sprint",
-      color: "bg-[#00C950]",
+      ...physicalData.physical_profile.speed_acceleration,
+      color: getRatingColor(physicalData.physical_profile.speed_acceleration.rating),
     },
     {
       title: "Stamina & Endurance",
-      rating: 7,
-      benchmark: "Good",
-      target: "Increase high-intensity running",
-      color: "bg-[#155DFC]",
+      ...physicalData.physical_profile.stamina_endurance,
+      color: getRatingColor(physicalData.physical_profile.stamina_endurance.rating),
     },
     {
       title: "Strength & Power",
-      rating: 6,
-      benchmark: "Average",
-      target: "Improve lower body strength",
-      color: "bg-[#FE9A00]",
+      ...physicalData.physical_profile.strength_power,
+      color: getRatingColor(physicalData.physical_profile.strength_power.rating),
     },
     {
       title: "Agility & Mobility",
-      rating: 9,
-      benchmark: "Elite",
-      target: "Maintain",
-      color: "bg-[#00C950]",
+      ...physicalData.physical_profile.agility_mobility,
+      color: getRatingColor(physicalData.physical_profile.agility_mobility.rating),
     },
   ];
-
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
       {/* Top Header with Back Button */}
@@ -67,10 +101,10 @@ const PhysicalPerformanceDashboard = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Physical Performance Dashboard
+                {physicalData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Physical metrics tracking and improvement
+                {physicalData.subtitle}
               </p>
             </div>
           </div>
@@ -128,9 +162,9 @@ const PhysicalPerformanceDashboard = () => {
       </div>
 
       {/* Section 2: Injury Risk Assessment */}
-      <div className="bg-[#1A1610] border border-[#FE9A00]/20 p-5 rounded-xl text-white">
+      <div className={`${getRiskBg(physicalData.injury_risk_assessment.risk_level)} p-5 rounded-xl text-white border`}>
         <div className="flex items-center gap-2 mb-4">
-          <AlertCircle className="text-[#FE9A00]" size={16} />
+          <AlertCircle className={getRiskColor(physicalData.injury_risk_assessment.risk_level)} size={16} />
           <h3 className="text-xs font-bold uppercase tracking-widest">
             Injury Risk Assessment
           </h3>
@@ -140,14 +174,16 @@ const PhysicalPerformanceDashboard = () => {
             <span className="text-gray-500 text-[11px] font-medium block">
               Risk Level:
             </span>
-            <span className="text-[#FE9A00] text-sm font-bold">Medium</span>
+            <span className={`${getRiskColor(physicalData.injury_risk_assessment.risk_level)} text-sm font-bold`}>
+              {physicalData.injury_risk_assessment.risk_level}
+            </span>
           </div>
           <div className="space-y-1">
             <span className="text-gray-500 text-[11px] font-medium block">
               Risk Factors:
             </span>
             <span className="text-gray-300 text-[11px]">
-              Previous ankle injury, high training load
+               {physicalData.injury_risk_assessment.risk_factors.join(", ")}
             </span>
           </div>
           <div className="space-y-1">
@@ -155,7 +191,7 @@ const PhysicalPerformanceDashboard = () => {
               Prevention:
             </span>
             <span className="text-gray-300 text-[11px]">
-              Ankle strengthening, load management
+               {physicalData.injury_risk_assessment.prevention.join(", ")}
             </span>
           </div>
         </div>
@@ -175,13 +211,13 @@ const PhysicalPerformanceDashboard = () => {
                   Exercises:
                 </span>
                 <p className="text-[11px] text-gray-300">
-                  Cone drills, sprint intervals, change of direction
+                  {physicalData.training_program.speed_agility.exercises.join(", ")}
                 </p>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-500">Frequency:</span>
                 <span className="font-bold text-cyan-400 uppercase">
-                  3x/week
+                  {physicalData.training_program.speed_agility.frequency}
                 </span>
               </div>
               <div className="space-y-1">
@@ -189,33 +225,33 @@ const PhysicalPerformanceDashboard = () => {
                   Progression:
                 </span>
                 <p className="text-[11px] text-gray-300">
-                  Increase intensity by 10% weekly
+                  {physicalData.training_program.speed_agility.progression}
                 </p>
               </div>
             </div>
           </Card>
 
           <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl space-y-4">
-            <h4 className="font-bold text-sm">Strength Training (with gym)</h4>
+            <h4 className="font-bold text-sm">Strength Training</h4>
             <div className="space-y-4">
               <div className="space-y-1">
                 <span className="text-gray-500 text-[11px] font-bold block uppercase tracking-tighter">
                   Exercises:
                 </span>
                 <p className="text-[11px] text-gray-300">
-                  Squats, lunges, calf raises, core work
+                  {physicalData.training_program.strength_training.exercises.join(", ")}
                 </p>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-500">Frequency:</span>
                 <span className="font-bold text-cyan-400 uppercase">
-                  2x/week
+                  {physicalData.training_program.strength_training.frequency}
                 </span>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-500">Intensity:</span>
                 <span className="font-bold text-cyan-400">
-                  Moderate to high
+                  {physicalData.training_program.strength_training.intensity}
                 </span>
               </div>
             </div>
@@ -239,7 +275,7 @@ const PhysicalPerformanceDashboard = () => {
               Priority Attributes:
             </span>
             <p className="text-[11px] text-gray-300 font-medium">
-              Acceleration, lower body strength
+              {physicalData.weekly_focus.priority_attributes.join(", ")}
             </p>
           </div>
           <div className="space-y-1">
@@ -247,7 +283,7 @@ const PhysicalPerformanceDashboard = () => {
               Target Improvements:
             </span>
             <p className="text-[11px] text-gray-300 font-medium">
-              Reduce 20m sprint time by 0.2s
+              {physicalData.weekly_focus.target_improvements.join(", ")}
             </p>
           </div>
           <div className="space-y-1">
@@ -255,7 +291,7 @@ const PhysicalPerformanceDashboard = () => {
               Risk Mitigation:
             </span>
             <p className="text-[11px] text-gray-300 font-medium">
-              Regular mobility work, proper warmup
+              {physicalData.weekly_focus.risk_mitigation.join(", ")}
             </p>
           </div>
         </div>
