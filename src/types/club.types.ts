@@ -176,9 +176,46 @@ export interface OppositionAnalysisData {
 
 // Academy Tracker
 export interface AcademyDevelopmentData {
-  totalPlayers: number;
-  topProspects: Array<{ name: string; age: number; potential: string }>;
-  averageGrowthRate: string;
+  individual_development: {
+    player_name: string;
+    age_group: string;
+    current_level: string;
+    development_rate: string;
+    consistency: string;
+    coach_rating: number;
+    pillar_status: {
+      technical: string;
+      tactical: string;
+      physical: string;
+      mental: string;
+    };
+  };
+  age_group_benchmarks: {
+    u16_technical_benchmarks: Array<{
+      metric: string;
+      target: string;
+    }>;
+    u18_physical_expectations: Array<{
+      metric: string;
+      target: string;
+    }>;
+  };
+  development_trajectory: {
+    growth_rate_percent_per_6_months: string;
+    acceleration: string;
+    plateau_risk: string;
+    projected_peak_age_range: string;
+  };
+  talent_markers: string[];
+  development_risks: string[];
+  first_team_promotion_readiness: {
+    technical_score: number;
+    tactical_score: number;
+    physical_score: number;
+    mental_score: number;
+    overall_score: number;
+    recommended_timeline: string;
+  };
 }
 
 // Squad Intelligence

@@ -1,48 +1,42 @@
-import { Shield } from "lucide-react";
+interface PromotionReadinessProps {
+  data?: {
+    technical_score: number;
+    tactical_score: number;
+    physical_score: number;
+    mental_score: number;
+    overall_score: number;
+    recommended_timeline: string;
+  };
+}
 
-const readinessStats = [
-  { label: "Technical", value: "80/10", sub: "Ready", subColor: "text-green-400" },
-  { label: "Tactical", value: "70/10", sub: "Needs work", subColor: "text-yellow-400" },
-  { label: "Physical", value: "90/10", sub: "Ready", subColor: "text-green-400" },
-  { label: "Mental", value: "60/10", sub: "Needs development", subColor: "text-red-400" },
-  { label: "Overall", value: "75/10", sub: "75%", subColor: "text-cyan-400" },
-];
+const PromotionReadiness = ({ data }: PromotionReadinessProps) => {
+  if (!data) return null;
 
-const PromotionReadiness = () => {
+  const readinessStats = [
+    { label: "Technical", value: `${data.technical_score * 10}/10`, sub: "Ready", color: "text-green-400" },
+    { label: "Tactical", value: `${data.tactical_score * 10}/10`, sub: "Needs work", color: "text-red-400" },
+    { label: "Physical", value: `${data.physical_score * 10}/10`, sub: "Ready", color: "text-yellow-400" },
+    { label: "Mental", value: `${data.mental_score * 10}/10`, sub: "Needs development", color: "text-red-400" },
+    { label: "Overall", value: `${data.overall_score * 10}/10`, sub: "75%", color: "text-yellow-400" },
+  ];
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-7 h-7 bg-cyan-500/10 rounded-lg flex items-center justify-center">
-          <Shield size={15} className="text-cyan-400" />
-        </div>
-        <h2 className="text-base font-semibold text-white">
-          First-Team Promotion Readiness
-        </h2>
-      </div>
+    <div className="bg-[#12141B] rounded-xl border border-white/5 p-6 space-y-4">
+      <h2 className="text-base font-bold text-white tracking-tight">First-Team Promotion Readiness</h2>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-5 gap-3 mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
         {readinessStats.map((stat, i) => (
-          <div
-            key={i}
-            className="bg-[#27272A] rounded-xl border border-gray-800 p-4"
-          >
-            <p className="text-xs text-gray-500 mb-1">{stat.label}</p>
-            <p className="text-xl font-bold text-white mb-1">{stat.value}</p>
-            <p className={`text-xs font-medium ${stat.subColor}`}>{stat.sub}</p>
+          <div key={i} className="bg-[#1A1D24] rounded-lg border border-white/5 p-4 box-border">
+            <p className="text-[10px] text-zinc-500 mb-1 font-bold">{stat.label}</p>
+            <p className="text-xl font-bold text-white leading-tight">{stat.value}</p>
+            <p className={`text-[10px]  mt-1 font-medium ${stat.color}`}>{stat.sub}</p>
           </div>
         ))}
       </div>
 
-      {/* Recommended Timeline */}
-      <div className="bg-cyan-900/20 border border-cyan-800/50 rounded-xl p-4">
-        <p className="text-xs font-semibold text-cyan-400 mb-1">
-          Recommended Timeline
-        </p>
-        <p className="text-xs text-gray-300">
-          18-24 months until first-team ready
-        </p>
+      <div className="bg-cyan-500/5 border border-cyan-500/10 rounded-lg p-4">
+        <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-1">Recommended Timeline</p>
+        <p className="text-xs text-zinc-300 leading-relaxed font-medium">{data.recommended_timeline} until first-team ready</p>
       </div>
     </div>
   );

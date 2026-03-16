@@ -1,25 +1,27 @@
-import { Star } from "lucide-react";
+import { Medal } from "lucide-react";
 
-const markers = [
-  "Exceptional vision identified",
-  "Leadership qualities emerging",
-  "Technical proficiency high",
-  "Physical development on track",
-];
+interface TalentMarkersProps {
+  data?: string[];
+}
 
-const TalentMarkers = () => {
+const TalentMarkers = ({ data }: TalentMarkersProps) => {
+  if (!data) return null;
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5 h-full">
-      <div className="flex items-center gap-2 mb-5">
-        <Star size={16} className="text-cyan-400" />
-        <h2 className="text-base font-semibold text-cyan-400">Talent Markers</h2>
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5 h-full">
+      <div className="flex items-center gap-2 mb-6">
+        <Medal size={18} className="text-green-500" />
+        <h2 className="text-base font-bold text-white tracking-tight">Talent Markers</h2>
       </div>
 
       <div className="space-y-3">
-        {markers.map((item, i) => (
-          <div key={i} className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-            <span className="text-sm text-gray-300">{item}</span>
+        {data.map((item, i) => (
+          <div
+            key={i}
+            className="bg-[#1A1D24] rounded-lg border border-white/5 p-4 flex items-center gap-3"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+            <p className="text-[11px] text-zinc-300 font-medium leading-relaxed">{item}</p>
           </div>
         ))}
       </div>
