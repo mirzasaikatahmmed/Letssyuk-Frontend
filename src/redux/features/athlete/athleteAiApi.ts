@@ -4,6 +4,7 @@ import type {
   PriorityFocusResponse,
   NutritionEnergyResponse,
   WeeklyStructureResponse,
+  TechnicalSkillsResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -29,6 +30,10 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
       query: (playerId) => `/athlete/analysis/${playerId}/weekly-performance-planner`,
       providesTags: ["AIRecommendation"],
     }),
+    getTechnicalSkillsEngine: builder.query<TechnicalSkillsResponse, string>({
+      query: (playerId) => `/athlete/analysis/${playerId}/technical-skills-engine`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
@@ -37,4 +42,5 @@ export const {
   useGetPriorityFocusQuery,
   useGetNutritionEnergyQuery,
   useGetWeeklyStructureQuery,
+  useGetTechnicalSkillsEngineQuery,
 } = athleteAiApi;

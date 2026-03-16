@@ -109,3 +109,58 @@ export interface WeeklyStructureResponse {
     data: WeeklyStructureData;
   };
 }
+
+export interface SkillRating {
+  skill: string | null;
+  current: number | null;
+  target: number | null;
+  priority: string | null;
+}
+
+export interface TechnicalDevelopmentPlan {
+  passing_mechanics: {
+    drills: string | null;
+    frequency: string | null;
+    duration: string | null;
+  };
+  weak_foot_training: {
+    drills: string | null;
+    frequency: string | null;
+    duration: string | null;
+  };
+}
+
+export interface DailyRoutine {
+  total_duration: string | null;
+  warmup: string | null;
+  main_session: string | null;
+  cooldown: string | null;
+}
+
+export interface ProgressTracking {
+  weekly_targets: string | null;
+  key_metrics: string | null;
+  success_indicators: string | null;
+}
+
+export interface TechnicalSkillsData {
+  title: string;
+  subtitle: string;
+  technical_assessment: string | null;
+  skill_ratings: SkillRating[];
+  development_plan: TechnicalDevelopmentPlan;
+  daily_routine: DailyRoutine;
+  progress_tracking: ProgressTracking;
+}
+
+export interface TechnicalSkillsResponse {
+  feature: string;
+  player_id: string;
+  analysis: {
+    status: string;
+    analysis_type: string;
+    timestamp: string;
+    model: string;
+    data: TechnicalSkillsData;
+  };
+}
