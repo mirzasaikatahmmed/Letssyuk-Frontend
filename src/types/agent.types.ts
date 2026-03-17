@@ -24,16 +24,26 @@ export interface AgentRisk {
   recommendation: string;
 }
 
+export interface ContractDetail {
+  label: string;
+  value: string;
+  detail: string;
+}
+
 export interface ContractStructureData {
-  duration: string;
-  dateRange: string;
-  baseSalary: string;
-  annualSalary: string;
-  performanceBonuses: string;
-  bonusDetail: string;
-  imageRights: string;
-  imageRightsDetail: string;
-  aiSummary: string;
+  status: string;
+  analysis_type: string;
+  timestamp: string;
+  model: string;
+  data: {
+    title: string;
+    subtitle: string;
+    contract_duration: ContractDetail;
+    base_salary: ContractDetail;
+    performance_bonuses: ContractDetail;
+    image_rights: ContractDetail;
+    ai_summary: string;
+  };
 }
 
 export interface ContractStructureResponse {

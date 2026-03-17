@@ -12,71 +12,33 @@ import {
 } from "lucide-react";
 
 import type { Player } from "../_data/data";
-import { useGetMeQuery } from "@/redux/features/auth/authApi";
-import {
-  useGetContractStructureQuery,
-  useGetRiskClauseFlaggingQuery,
-  useGetMarketValueBenchmarkingQuery,
-  useGetScenarioComparisonQuery,
-  useGetNegotiationPreparationQuery,
-  useGetCareerContractTimelineQuery,
-} from "@/redux/features/agent/agentsApi";
-import Loading from "@/components/share/Loading/Loading";
 
 interface ContractViewProps {
   player: Player;
 }
 
 const ContractView: React.FC<ContractViewProps> = ({ player }) => {
-  const { data: userData } = useGetMeQuery();
-  const agentId = userData?.agentOwned?.id;
-
-  const { data: structureRes, isLoading: isStructureLoading } =
-    useGetContractStructureQuery(agentId as string, { skip: !agentId });
-  const { data: risksRes, isLoading: isRisksLoading } =
-    useGetRiskClauseFlaggingQuery(agentId as string, { skip: !agentId });
-  const { data: marketRes, isLoading: isMarketLoading } =
-    useGetMarketValueBenchmarkingQuery(agentId as string, { skip: !agentId });
-  const { data: scenarioRes, isLoading: isScenarioLoading } =
-    useGetScenarioComparisonQuery(agentId as string, { skip: !agentId });
-  const { data: negotiationRes, isLoading: isNegotiationLoading } =
-    useGetNegotiationPreparationQuery(agentId as string, { skip: !agentId });
-  const { data: timelineRes, isLoading: isTimelineLoading } =
-    useGetCareerContractTimelineQuery(agentId as string, { skip: !agentId });
-
-  const structureData = structureRes?.analysis || player.contractDetails;
-  const risksData = risksRes?.analysis || {
+  const structureData = player.contractDetails;
+  const risksData = {
     risks: player.contractDetails.risks,
     market_standards_summary:
       "Clauses are generally within market standards. Release clause and loyalty bonuses are competitive and fairly structured.",
   };
-  const marketData =
-    marketRes?.analysis || player.contractDetails.marketValueComparison;
-  const scenarioData =
-    scenarioRes?.analysis || player.contractDetails.scenarioComparison;
-  const negotiationData = negotiationRes?.analysis || {
+  const marketData = player.contractDetails.marketValueComparison;
+  const scenarioData = player.contractDetails.scenarioComparison;
+  const negotiationData = {
     talkingPoints: player.contractDetails.talkingPoints,
     strategicConcessions: player.contractDetails.strategicConcessions,
     walkAwayThreshold: player.contractDetails.walkAwayThreshold,
   };
-  const timelineData =
-    timelineRes?.analysis || { timeline: player.contractDetails.timeline };
+  const timelineData = {
+    timeline: player.contractDetails.timeline,
+  };
 
   const [isStructureOpen, setIsStructureOpen] = useState(true);
   const [isRisksOpen, setIsRisksOpen] = useState(true);
   const [isMarketValueOpen, setIsMarketValueOpen] = useState(false);
   const [isScenarioOpen, setIsScenarioOpen] = useState(false);
-
-  if (
-    isStructureLoading ||
-    isRisksLoading ||
-    isMarketLoading ||
-    isScenarioLoading ||
-    isNegotiationLoading ||
-    isTimelineLoading
-  ) {
-    return <Loading count={3} className="p-8" />;
-  }
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
