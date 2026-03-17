@@ -337,9 +337,50 @@ export interface MatchArchiveData {
 
 // Staff Briefing
 export interface StaffBriefingData {
-  criticalNotes: string[];
-  trainingFocus: string;
-  medicalAlerts: string[];
+  coach_briefing_notes: {
+    technical_briefing_structure: {
+      total_minutes: number;
+      agenda: Array<{
+        order: string;
+        topic: string;
+        minutes: string;
+      }>;
+    };
+    tactical_instructions: {
+      defensive_shape: string;
+      pressing_triggers: string;
+      attacking: string;
+      formation_in_possession: string;
+    };
+    key_data_points: {
+      possession_percent: number;
+      pass_accuracy_percent: number;
+      shots_on_target: string;
+      expected_goals: string;
+    };
+  };
+  match_preparation_talking_points: {
+    pre_match_messaging: {
+      theme: string;
+      motivation: string;
+      focus: string;
+      discipline: string;
+    };
+    tactical_emphasis_points: Array<{
+      order: string;
+      text: string;
+    }>;
+  };
+  training_focus_recommendations_next_week: Array<{
+    day: string;
+    focus: string;
+    intensity: string;
+  }>;
+  skill_development_priorities: Array<{
+    rank: string;
+    skill: string;
+    priority: string;
+  }>;
 }
 
 // Transfer Planning

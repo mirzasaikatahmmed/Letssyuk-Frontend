@@ -1,43 +1,57 @@
 import { Calendar } from "lucide-react";
 
-const schedule = [
-  { day: "Monday", activity: "Technical (passing patterns)", badge: "Medium", badgeBg: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" },
-  { day: "Tuesday", activity: "Tactical (defensive shape)", badge: "High", badgeBg: "bg-orange-500/20 text-orange-400 border-orange-500/30" },
-  { day: "Wednesday", activity: "Physical (high intensity)", badge: "Very High", badgeBg: "bg-red-500/20 text-red-400 border-red-500/30" },
-  { day: "Thursday", activity: "Tactical (attacking moves)", badge: "Medium", badgeBg: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" },
-  { day: "Friday", activity: "Light session (set-pieces)", badge: "Low", badgeBg: "bg-green-500/20 text-green-400 border-green-500/30" },
-  { day: "Saturday", activity: "Match", badge: "Match", badgeBg: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30" },
-  { day: "Sunday", activity: "Recovery", badge: "Rest", badgeBg: "bg-gray-500/20 text-gray-400 border-gray-500/30" },
-];
+interface TrainingFocusRecommendationsProps {
+  data: Array<{
+    day: string;
+    focus: string;
+    intensity: string;
+  }>;
+}
 
-const TrainingFocusRecommendations = () => {
+const TrainingFocusRecommendations = ({ data }: TrainingFocusRecommendationsProps) => {
+  const getBadgeStyles = (intensity: string) => {
+    switch (intensity.toLowerCase()) {
+      case "high":
+        return "bg-amber-500/10 text-amber-500 border-amber-500/20";
+      case "very high":
+        return "bg-red-500/10 text-red-500 border-red-500/20";
+      case "medium":
+        return "bg-amber-500/10 text-amber-500 border-amber-500/20";
+      case "low":
+        return "bg-green-500/10 text-green-500 border-green-500/20";
+      case "match":
+        return "bg-cyan-500/10 text-cyan-500 border-cyan-500/20";
+      case "rest":
+      default:
+        return "bg-emerald-500/10 text-emerald-500 border-emerald-500/20";
+    }
+  };
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-7 h-7 bg-cyan-500/10 rounded-lg flex items-center justify-center">
-          <Calendar size={15} className="text-cyan-400" />
-        </div>
-        <h2 className="text-base font-semibold text-white">
-          Training Focus Recommendations{" "}
-          <span className="text-gray-400">(Next Week)</span>
-        </h2>
-      </div>
+    <div className="space-y-4">
+      <h3 className="text-sm font-bold text-white px-1 flex items-center gap-2">
+        <Calendar size={18} className="text-cyan-500" />
+        Training Focus Recommendations (Next Week)
+      </h3>
 
       <div className="space-y-2">
-        {schedule.map((item, i) => (
+        {data.map((item, i) => (
           <div
             key={i}
-            className="bg-[#27272A] rounded-xl border border-gray-800 px-4 py-3 flex justify-between items-center"
+            className="flex justify-between items-center bg-[#121214] rounded-2xl border border-white/5 px-6 py-4"
           >
             <div>
-              <p className="text-sm font-semibold text-white">{item.day}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{item.activity}</p>
+              <p className="text-xs font-bold text-white mb-1.5">{item.day}</p>
+              <p className="text-[10px] text-zinc-500 font-medium">
+                Technical ({item.focus})
+              </p>
             </div>
             <span
-              className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${item.badgeBg}`}
+              className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border ${getBadgeStyles(
+                item.intensity
+              )}`}
             >
-              {item.badge}
+              {item.intensity}
             </span>
           </div>
         ))}

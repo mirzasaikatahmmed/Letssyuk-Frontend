@@ -1,33 +1,44 @@
-import { Target } from "lucide-react";
+import { Award } from "lucide-react";
 
-const priorities = [
-  { title: "1. Final third decision making", priority: "High", priorityColor: "text-red-400", borderColor: "border-red-500" },
-  { title: "2. Defensive transition speed", priority: "High", priorityColor: "text-red-400", borderColor: "border-red-500" },
-  { title: "3. Pressing coordination", priority: "Medium", priorityColor: "text-yellow-400", borderColor: "border-yellow-500" },
-  { title: "4. Set-piece execution", priority: "Medium", priorityColor: "text-yellow-400", borderColor: "border-yellow-500" },
-];
+interface SkillDevelopmentPrioritiesProps {
+  data: Array<{
+    rank: string;
+    skill: string;
+    priority: string;
+  }>;
+}
 
-const SkillDevelopmentPriorities = () => {
+const SkillDevelopmentPriorities = ({ data }: SkillDevelopmentPrioritiesProps) => {
+  const getPriorityColor = (priority: string) => {
+    switch (priority.toLowerCase()) {
+      case "high":
+        return "border-red-500";
+      case "medium":
+        return "border-amber-500";
+      default:
+        return "border-zinc-500";
+    }
+  };
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-7 h-7 bg-cyan-500/10 rounded-lg flex items-center justify-center">
-          <Target size={15} className="text-cyan-400" />
-        </div>
-        <h2 className="text-base font-semibold text-white">
-          Skill Development Priorities
-        </h2>
-      </div>
+    <div className="space-y-4">
+      <h3 className="text-sm font-bold text-white px-1 flex items-center gap-2">
+        <Award size={18} className="text-cyan-500" />
+        Skill Development Priorities
+      </h3>
 
-      <div className="grid grid-cols-2 gap-3">
-        {priorities.map((item, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {data.map((item, i) => (
           <div
             key={i}
-            className={`bg-[#27272A] border-l-4 ${item.borderColor} rounded-r-xl p-4`}
+            className={`bg-[#121214] rounded-xl overflow-hidden border border-white/5 border-l-[3px] ${getPriorityColor(
+              item.priority
+            )} p-6`}
           >
-            <p className="text-sm font-semibold text-white mb-1">{item.title}</p>
-            <p className={`text-xs font-medium ${item.priorityColor}`}>
+            <p className="text-xs font-bold text-white mb-2">
+              {item.rank}. {item.skill}
+            </p>
+            <p className="text-[10px] font-bold text-amber-500 uppercase tracking-tighter">
               Priority: {item.priority}
             </p>
           </div>
