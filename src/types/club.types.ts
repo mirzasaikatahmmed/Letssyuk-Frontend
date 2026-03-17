@@ -220,9 +220,43 @@ export interface AcademyDevelopmentData {
 
 // Squad Intelligence
 export interface SquadIntelligenceData {
-  squadHarmony: number;
-  peakPerformanceWindow: string;
-  vulnerablePositions: string[];
+  player_role_balance_analysis: {
+    creators: number;
+    destroyers: number;
+    carriers: number;
+    finishers: number;
+    balance_status: string;
+  };
+  squad_depth: {
+    position: string;
+    chart: Array<{
+      rank: number;
+      role: string;
+      player: string;
+      score: number;
+    }>;
+    depth_score: number;
+    depth_rating: string;
+  };
+  critical_gaps: string[];
+  over_utilized_players: Array<{
+    player: string;
+    minutes: string;
+    status: string;
+    action: string;
+  }>;
+  under_utilized_players: Array<{
+    player: string;
+    minutes: string;
+    status: string;
+    action: string;
+  }>;
+  optimal_rotation_strategy: {
+    core_players_minutes_percent: string;
+    rotation_players_minutes_percent: string;
+    squad_players_minutes_percent: string;
+    youth_integration_minutes_percent: string;
+  };
 }
 
 // Recruitment Needs
