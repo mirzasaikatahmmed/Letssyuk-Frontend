@@ -1,39 +1,33 @@
-const players = [
-  {
-    name: "Player X",
-    minutes: "95% of minutes",
-    risk: "High",
-    action: "Reduce minutes by 15%",
-  },
-  {
-    name: "Player Y",
-    minutes: "90% of minutes",
-    risk: "Monitor",
-    action: "Reduce minutes by 15%",
-  },
-];
+interface OverUtilizedPlayersProps {
+  data?: Array<{
+    player: string;
+    minutes: string;
+    status: string;
+    action: string;
+  }>;
+}
 
-const OverUtilizedPlayers = () => {
+const OverUtilizedPlayers = ({ data }: OverUtilizedPlayersProps) => {
+  if (!data) return null;
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5 h-full">
-      <h2 className="text-base font-semibold text-red-400 mb-5">
-        Over-Utilized Players
-      </h2>
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5 h-full space-y-5">
+      <h2 className="text-base font-bold text-red-500 tracking-tight">Over-Utilized Players</h2>
 
       <div className="space-y-3">
-        {players.map((player, i) => (
+        {data.map((item, i) => (
           <div
             key={i}
-            className="bg-[#27272A] rounded-xl border border-gray-800 p-4"
+            className="bg-[#1A1D24] rounded-lg border border-white/5 p-5 flex justify-between items-center"
           >
-            <div className="flex justify-between items-start mb-1">
-              <p className="text-sm font-semibold text-white">{player.name}</p>
-              <span className="text-xs font-bold text-red-400">
-                {player.minutes}
-              </span>
+            <div className="space-y-1">
+              <p className="text-sm font-bold text-white tracking-tight">{item.player}</p>
+              <p className="text-[10px] text-zinc-500 font-medium">Risk: {item.status}</p>
+              <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-tight">Action: {item.action}</p>
             </div>
-            <p className="text-xs text-gray-400 mb-1">Risk: {player.risk}</p>
-            <p className="text-xs text-cyan-400">Action: {player.action}</p>
+            <div className="text-right">
+              <p className="text-sm font-bold text-red-500">95% of minutes</p> {/* Hardcoded string suffix to match image style if minutes is just a number, or just show item.minutes if it includes % */}
+            </div>
           </div>
         ))}
       </div>

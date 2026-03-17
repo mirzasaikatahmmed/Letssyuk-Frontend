@@ -15,6 +15,6 @@ const baseQuery = fetchBaseQuery({
 export const aiBaseApi = createApi({
   reducerPath: "aiApi",
   baseQuery,
-  tagTypes: ["AIRecommendation", "MatchPreparation"],
+  tagTypes: ["AIRecommendation", "MatchPreparation", "ClubPlayerScouting", "ClubTacticalAnalysis", "ClubOppositionAnalysis", "ClubAcademyTracker", "ClubSquadIntelligence", "ClubRecruitmentNeeds", "ClubMatchArchive", "ClubStaffBriefing", "ClubTransferPlanning", "ClubCustomDashboard"],
   endpoints: () => ({}),
 });

@@ -31,6 +31,7 @@ const AgentPlayerData = () => {
       icon: Clock,
       color: "text-[#FFB01F]",
     },
+    
   ];
 
   return (

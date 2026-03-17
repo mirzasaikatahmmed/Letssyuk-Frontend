@@ -1,43 +1,51 @@
 import { Users } from "lucide-react";
 
-const roles = [
-  { label: "Creators", count: 3 },
-  { label: "Destroyers", count: 2 },
-  { label: "Carriers", count: 4 },
-  { label: "Finishers", count: 3 },
-];
+interface PlayerRoleBalanceProps {
+  data?: {
+    creators: number;
+    destroyers: number;
+    carriers: number;
+    finishers: number;
+    balance_status: string;
+  };
+}
 
-const PlayerRoleBalance = () => {
+const PlayerRoleBalance = ({ data }: PlayerRoleBalanceProps) => {
+  if (!data) return null;
+
+  const roles = [
+    { label: "Creators", count: data.creators },
+    { label: "Destroyers", count: data.destroyers },
+    { label: "Carriers", count: data.carriers },
+    { label: "Finishers", count: data.finishers },
+  ];
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
+    <div className="bg-[#12141B] rounded-xl border border-white/5 p-6 space-y-5">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-7 h-7 bg-cyan-500/10 rounded-lg flex items-center justify-center">
-          <Users size={15} className="text-cyan-400" />
-        </div>
-        <h2 className="text-base font-semibold text-white">
-          Player Role Balance Analysis
-        </h2>
+      <div className="flex items-center gap-2">
+        <Users size={18} className="text-cyan-400" />
+        <h2 className="text-base font-bold text-white tracking-tight">Player Role Balance Analysis</h2>
       </div>
 
       {/* Role Cards */}
-      <div className="grid grid-cols-4 gap-3 mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         {roles.map((role, i) => (
           <div
             key={i}
-            className="bg-[#27272A] rounded-xl border border-gray-800 p-4 text-center"
+            className="bg-[#1A1D24] rounded-lg border border-white/5 p-5 text-center flex flex-col items-center justify-center min-h-[120px]"
           >
-            <p className="text-xs text-gray-500 mb-2">{role.label}</p>
-            <p className="text-4xl font-bold text-white mb-1">{role.count}</p>
-            <p className="text-xs text-gray-500">players</p>
+            <p className="text-[10px] text-zinc-500 mb-2 font-medium">{role.label}</p>
+            <p className="text-4xl font-bold text-white leading-none mb-1">{role.count}</p>
+            <p className="text-[10px] text-zinc-500 font-medium">players</p>
           </div>
         ))}
       </div>
 
       {/* Balance Banner */}
-      <div className="bg-green-900/30 border border-green-800/50 rounded-xl p-4">
-        <p className="text-sm font-semibold text-green-400">
-          Balance: Good (optimal mix)
+      <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+        <p className="text-sm font-bold text-green-400">
+          Balance: {data.balance_status} (optimal mix)
         </p>
       </div>
     </div>

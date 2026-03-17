@@ -1,24 +1,29 @@
 import { Card } from "@/components/ui/card";
 import { Brain, Info, ChevronDown, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetTacticalAwarenessQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
 const TacticalAwarenessAssistant = () => {
   const navigate = useNavigate();
 
-  const decisionMakingCues = [
-    {
-      label: "Pass vs Dribble:",
-      text: "Pass if teammate in space, dribble if 1v1 advantage",
-    },
-    {
-      label: "Press vs Drop:",
-      text: "Press if support nearby, drop if isolated",
-    },
-    {
-      label: "Overlap Timing:",
-      text: "Overlap when winger cuts inside",
-    },
-  ];
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetTacticalAwarenessQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: tacticalData } = aiResponse.analysis;
 
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
@@ -44,10 +49,10 @@ const TacticalAwarenessAssistant = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Tactical Awareness Assistant
+                {tacticalData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Position-specific tactical education
+                {tacticalData.subtitle}
               </p>
             </div>
           </div>
@@ -58,7 +63,7 @@ const TacticalAwarenessAssistant = () => {
       {/* Section 1: Position Tactics */}
       <Card className="bg-[#0D161E]/40 border-gray-800 p-6 rounded-xl text-white">
         <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
-          POSITION TACTICS (Attacking Midfielder)
+          POSITION TACTICS ({tacticalData.position_tactics.position})
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-2">
@@ -66,7 +71,7 @@ const TacticalAwarenessAssistant = () => {
               Responsibilities:
             </span>
             <p className="text-[12px] text-gray-300">
-              Create chances, link midfield/attack, press high
+              {tacticalData.position_tactics.responsibilities}
             </p>
           </div>
           <div className="space-y-2">
@@ -74,7 +79,7 @@ const TacticalAwarenessAssistant = () => {
               Key Actions:
             </span>
             <p className="text-[12px] text-gray-300">
-              Through balls, late runs, defensive transition
+               {tacticalData.position_tactics.key_actions}
             </p>
           </div>
           <div className="space-y-2">
@@ -82,7 +87,7 @@ const TacticalAwarenessAssistant = () => {
               Success Indicators:
             </span>
             <p className="text-[12px] text-gray-300">
-              Key passes, chances created, assists
+               {tacticalData.position_tactics.success_indicators}
             </p>
           </div>
         </div>
@@ -94,30 +99,14 @@ const TacticalAwarenessAssistant = () => {
           MOVEMENT PATTERNS
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
-            <h4 className="font-bold text-sm mb-2">Off-ball</h4>
-            <p className="text-[12px] text-gray-400">
-              Check to receive, create passing lanes
-            </p>
-          </Card>
-          <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
-            <h4 className="font-bold text-sm mb-2">Defensive</h4>
-            <p className="text-[12px] text-gray-400">
-              Press opposition deep midfielder
-            </p>
-          </Card>
-          <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
-            <h4 className="font-bold text-sm mb-2">Transition</h4>
-            <p className="text-[12px] text-gray-400">
-              Immediate support to forward
-            </p>
-          </Card>
-          <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
-            <h4 className="font-bold text-sm mb-2">Support</h4>
-            <p className="text-[12px] text-gray-400">
-              Provide outlet for fullbacks
-            </p>
-          </Card>
+          {tacticalData.movement_patterns.map((pattern, idx) => (
+            <Card key={idx} className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl text-white">
+              <h4 className="font-bold text-sm mb-2">{pattern.title}</h4>
+              <p className="text-[12px] text-gray-400">
+                {pattern.description}
+              </p>
+            </Card>
+          ))}
         </div>
       </div>
 
@@ -127,15 +116,15 @@ const TacticalAwarenessAssistant = () => {
           DECISION-MAKING CUES
         </h3>
         <div className="space-y-3">
-          {decisionMakingCues.map((item, idx) => (
+          {tacticalData.decision_making_cues.map((item, idx) => (
             <div
               key={idx}
               className="bg-[#0D161E]/40 border border-gray-800 p-4 rounded-xl flex items-center gap-4 text-[12px]"
             >
               <span className="text-cyan-400 font-bold whitespace-nowrap">
-                {item.label}
+                {item.label}:
               </span>
-              <p className="text-gray-400">{item.text}</p>
+              <p className="text-gray-400">{item.guidance}</p>
             </div>
           ))}
         </div>
@@ -152,7 +141,7 @@ const TacticalAwarenessAssistant = () => {
               Pattern Recognition:
             </span>
             <p className="text-[12px] text-gray-400">
-              Watch for defensive line height
+              {tacticalData.opponent_reading.pattern_recognition}
             </p>
           </div>
           <div className="space-y-1">
@@ -160,14 +149,16 @@ const TacticalAwarenessAssistant = () => {
               Anticipation:
             </span>
             <p className="text-[12px] text-gray-400">
-              Predict pass to opposition striker
+               {tacticalData.opponent_reading.anticipation}
             </p>
           </div>
           <div className="space-y-1">
             <span className="text-white text-[11px] font-bold block">
               Weakness Exploitation:
             </span>
-            <p className="text-[12px] text-gray-400">Target slow center-back</p>
+            <p className="text-[12px] text-gray-400">
+               {tacticalData.opponent_reading.weakness_exploitation}
+            </p>
           </div>
         </div>
       </Card>
@@ -183,13 +174,13 @@ const TacticalAwarenessAssistant = () => {
               Formation Adjustments:
             </h4>
             <p className="text-[12px] text-gray-400">
-              Wider in 4-3-3, more central in 4-2-3-1
+              {tacticalData.system_adaptation.formation_adjustments}
             </p>
           </div>
           <div className="space-y-2">
             <h4 className="text-white text-xs font-bold">Game Plan:</h4>
             <p className="text-[12px] text-gray-400">
-              High press vs weak defenders, counter vs strong teams
+               {tacticalData.system_adaptation.game_plan}
             </p>
           </div>
         </div>
@@ -199,8 +190,7 @@ const TacticalAwarenessAssistant = () => {
       <div className="bg-[#0D1117] border border-gray-800 p-3 rounded-lg flex items-center gap-3">
         <Info size={16} className="text-gray-600 shrink-0" />
         <p className="text-gray-500 text-[10px] leading-relaxed">
-          Tactical guidance only. Always follow your coach's instructions and
-          team strategy.
+          {tacticalData.disclaimer}
         </p>
       </div>
     </div>

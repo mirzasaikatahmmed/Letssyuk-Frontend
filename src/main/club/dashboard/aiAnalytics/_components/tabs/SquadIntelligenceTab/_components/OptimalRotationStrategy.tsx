@@ -1,35 +1,37 @@
 import { BarChart2 } from "lucide-react";
 
-const rotationStats = [
-  { label: "Core Players", value: "70-80%", sub: "of minutes" },
-  { label: "Rotation Players", value: "40-60%", sub: "of minutes" },
-  { label: "Squad Players", value: "20-40%", sub: "of minutes" },
-  { label: "Youth Integration", value: "10-20%", sub: "of minutes" },
-];
+interface OptimalRotationStrategyProps {
+  data?: {
+    core_players_minutes_percent: string;
+    rotation_players_minutes_percent: string;
+    squad_players_minutes_percent: string;
+    youth_integration_minutes_percent: string;
+  };
+}
 
-const OptimalRotationStrategy = () => {
+const OptimalRotationStrategy = ({ data }: OptimalRotationStrategyProps) => {
+  if (!data) return null;
+
+  const strategyData = [
+    { label: "Core Players", value: data.core_players_minutes_percent },
+    { label: "Rotation Players", value: data.rotation_players_minutes_percent },
+    { label: "Squad Players", value: data.squad_players_minutes_percent },
+    { label: "Youth Integration", value: data.youth_integration_minutes_percent },
+  ];
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-5">
-        <div className="w-7 h-7 bg-cyan-500/10 rounded-lg flex items-center justify-center">
-          <BarChart2 size={15} className="text-cyan-400" />
-        </div>
-        <h2 className="text-base font-semibold text-white">
-          Optimal Rotation Strategy
-        </h2>
+    <div className="bg-[#12141B] rounded-xl border border-white/5 p-6 space-y-5">
+      <div className="flex items-center gap-2">
+        <BarChart2 size={18} className="text-cyan-400" />
+        <h2 className="text-base font-bold text-white tracking-tight">Optimal Rotation Strategy</h2>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-3">
-        {rotationStats.map((stat, i) => (
-          <div
-            key={i}
-            className="bg-[#27272A] rounded-xl border border-gray-800 p-4"
-          >
-            <p className="text-xs text-gray-500 mb-1">{stat.label}</p>
-            <p className="text-2xl font-bold text-cyan-400">{stat.value}</p>
-            <p className="text-xs text-gray-500 mt-1">{stat.sub}</p>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+        {strategyData.map((item, i) => (
+          <div key={i} className="bg-[#1A1D24] p-5 rounded-lg border border-white/5 flex flex-col items-start justify-center min-h-[100px]">
+            <p className="text-[10px] text-zinc-500 font-bold mb-2">{item.label}</p>
+            <p className="text-xl font-bold text-cyan-400 leading-none mb-1">{item.value}</p>
+            <p className="text-[10px] text-zinc-500 font-medium">of minutes</p>
           </div>
         ))}
       </div>

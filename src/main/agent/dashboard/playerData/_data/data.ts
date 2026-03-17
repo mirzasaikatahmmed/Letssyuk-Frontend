@@ -819,4 +819,208 @@ export const playersData: Player[] = [
       },
     },
   },
+  {
+    id: 4,
+    name: "Marcus Rashford",
+    age: 24,
+    nation: "England",
+    position: "Striker",
+    foot: "Right Foot",
+    club: "Manchester United",
+    contract: "Jun 2026",
+    goals: 12,
+    assists: 7,
+    matches: 25,
+    minutes: "1,890",
+    value: "€22M",
+    status: "Rising",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
+    height: "185 cm",
+    performanceTracking: [
+      {
+        label: "Pass Accuracy",
+        value: "89%",
+        trend: "+2%",
+        color: "text-cyan-400",
+      },
+      {
+        label: "Assists",
+        value: "7",
+        target: "Target: 8",
+        color: "text-white",
+      },
+      { label: "Avg Rating", value: "7.2", max: "/10", color: "text-white" },
+      {
+        label: "Minutes Played",
+        value: "1890",
+        percent: "89%",
+        color: "text-white",
+      },
+    ],
+    developmentProgress: [
+      { label: "Weak Foot", value: 6, max: 10, bonus: "+1" },
+      { label: "Defensive Work", value: 7, max: 10, status: "Improved" },
+      {
+        label: "Leadership",
+        value: 5,
+        max: 10,
+        status: "Growing",
+        color: "bg-orange-500",
+      },
+      { label: "Physical Strength", value: 8, max: 10, bonus: "+15%" },
+    ],
+    marketReadiness: {
+      overall: 8.0,
+      technical: 9.0,
+      physical: 8.0,
+      mental: 7.0,
+      assessment:
+        "Ready for top 5 league move. Consider opportunities in 2026 summer window.",
+      preparations: [
+        "Big match experience needed",
+        "Media training recommended",
+        "Language prep for international move",
+      ],
+    },
+    contractDetails: {
+      duration: "4 years",
+      dateRange: "July 2024 - June 2028",
+      baseSalary: "£85,000/week",
+      annualSalary: "£4.4M annually",
+      performanceBonuses: "£15,000/goal",
+      bonusDetail: "Up to £500K/year",
+      imageRights: "30% player",
+      imageRightsDetail: "70% club owned",
+      aiSummary:
+        "Strong base salary with competitive bonuses. Image rights split is below market standard for this player's profile.",
+      risks: [
+        {
+          type: "High Risk",
+          title: "One-sided Termination Clause",
+          description:
+            "Club can terminate with 30 days notice during first 2 years. Player has no reciprocal rights.",
+          recommendation:
+            "Negotiate mutual termination rights or increase buyout clause protection during next renewal window.",
+        },
+        {
+          type: "Medium Risk",
+          title: "Performance-Trigger Risks",
+          description:
+            "Bonuses only trigger at 15+ goals. Current pace: 12 goals/season.",
+          recommendation:
+            "Request tiered bonus structure (10/15/20 goals) to better align with realistic performance.",
+        },
+      ],
+      talkingPoints: [
+        "Performance exceeds contract value - 12 goals vs 8 goal target",
+        "Market comparable salaries are 15-20% higher",
+        "Image rights split below industry standard for Premier League",
+      ],
+      strategicConcessions: [
+        "Accept lower weekly if image rights increase to 40%",
+        "Trade buyout clause for higher loyalty bonus",
+      ],
+      walkAwayThreshold: "Below £82K/week with no image rights improvements",
+      timeline: [
+        {
+          label: "START",
+          title: "Contract Signed",
+          date: "July 2024",
+          theme: "cyan",
+        },
+        {
+          label: "MID",
+          title: "Performance Review",
+          date: "Dec 2024",
+          badge: "Target: 8 Goals",
+          theme: "orange",
+        },
+        {
+          label: "END",
+          title: "Contract Expiry",
+          date: "June 2028",
+          theme: "gray",
+        },
+      ],
+      marketValueComparison: {
+        currentMarketValue: "€22M",
+        contractSalary: "£85K/week",
+        marketAverage: "£400K/wk",
+        salaryPercentile: 99,
+        percentileText: "Elite Tier (99%)",
+        status: "Under Market Value",
+        recommendation:
+          "Due to high goals/match ratio, current value has outpaced base salary targets. Consider renegotiation.",
+      },
+      scenarioComparison: {
+        currentContract: {
+          title: "Current Contract",
+          financialValue: "£97.5M (5 years)",
+          playingTimeProbability: "Guaranteed (99%)",
+          careerGrowthImpact: "World Class",
+          badge: "Active",
+        },
+        alternativeOffer: {
+          title: "Elite Extension",
+          financialValue: "£125M (6 years)",
+          playingTimeProbability: "Guaranteed (98%)",
+          careerGrowthImpact: "Legendary",
+          badge: "AI Recommended",
+        },
+      },
+      opportunities: {
+        topClubMatches: [
+          {
+            id: 1,
+            name: "Real Madrid",
+            league: "La Liga • Spain",
+            logo: "RMC",
+            color: "bg-gray-200",
+            score: 99,
+            matchLabel: "Perfect Match",
+            positionNeed: "Main Striker",
+            tacticalSystem: "Any",
+            developmentPath: "Ballon d'Or Platform",
+            contactStatus: "Daily Contact (Rumor)",
+            whyThisMatch:
+              "The only logical progression for the world's best player.",
+          },
+        ],
+        immediateOpportunities: {
+          winterWindow: "Inactive",
+          summerWindow: "Release Clause Active",
+          loanOption: "None",
+          permanentMove: "Record Breaking Fee",
+        },
+        negotiationPositioning: {
+          currentMarketValue: "€180-200M",
+          askingPrice: "€250M",
+          realisticPrice: "Release Clause",
+          leverage: "Absolute",
+          assessment: "Player holds all the cards due to the release clause.",
+        },
+        careerPathway: [
+          {
+            number: 1,
+            title: "Short-term",
+            timeframe: "2024",
+            description: "UCL / Treble contention",
+          },
+          {
+            number: 2,
+            title: "Medium-term",
+            timeframe: "2025",
+            description: "Ballon d'Or Achievement",
+          },
+          {
+            number: 3,
+            title: "Long-term",
+            timeframe: "2027",
+            description: "Historical goal records target",
+          },
+        ],
+      },
+    },
+  },
 ];

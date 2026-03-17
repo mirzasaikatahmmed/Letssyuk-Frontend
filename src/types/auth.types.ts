@@ -1,12 +1,52 @@
 export type UserRole = "ATHLETE" | "CLUB" | "AGENT" | "ADMIN" | "USER";
 
 export const ROLE_DASHBOARDS: Record<UserRole, string> = {
-  ATHLETE: "/player/dashboard/overview",
-  CLUB: "/club/dashboard/overview",
-  AGENT: "/agent/dashboard/overview",
+  ATHLETE: "/player/onboarding",
+  CLUB: "/club/onboarding",
+  AGENT: "/agent/onboarding",
   ADMIN: "/admin/dashboard",
-  USER: "/"
+  USER: "/",
 };
+
+export interface PlayerOwned {
+  id: string;
+  userId: string;
+  visibility: string;
+  displayName: string | null;
+  profilePhotoUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}
+
+export interface ClubOwned {
+  id: string;
+  ownerUserId: string;
+  clubName: string;
+  country: string;
+  league: string;
+  clubWebsite: string;
+  city: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}
+
+export interface AgentOwned {
+  id: string;
+  userId: string;
+  agencyName: string;
+  country: string;
+  city: string;
+  website: string | null;
+  bio: string | null;
+  Specialization: string | null;
+  agencyImage: string | null;
+  primaryGoal: string[];
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}
 
 export interface User {
   id: string;
@@ -14,33 +54,18 @@ export interface User {
   email: string;
   phone?: string;
   role: UserRole;
-  profilePicture?: string;
+  profilePicture?: string | null;
   isVerified: boolean;
   isBlocked: boolean;
   isDeleted: boolean;
   isProfileUpdated: boolean;
   affiliateId?: string;
-  playerOwned?: {
-    id: string;
-    userId: string;
-    visibility: string;
-    displayName: string | null;
-    profilePhotoUrl: string | null;
-  };
-  clubOwned?: {
-    id: string;
-    userId: string;
-    visibility: string;
-    displayName: string | null;
-    profilePhotoUrl: string | null;
-  };
-  agentOwned?: {
-    id: string;
-    userId: string;
-    visibility: string;
-    displayName: string | null;
-    profilePhotoUrl: string | null;
-  };
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  playerOwned?: PlayerOwned | null;
+  clubOwned?: ClubOwned | null;
+  agentOwned?: AgentOwned | null;
   iat?: number;
   exp?: number;
 }
@@ -55,7 +80,7 @@ export interface AuthState {
 export interface LoginResponse {
   success: boolean;
   message: string;
-  data: string; 
+  data: string;
 }
 
 export type GetMeResponse = User;
@@ -67,9 +92,13 @@ export interface LoginCredentials {
 
 export type SignupRole = UserRole;
 
-export const SIGNUP_ROLES: SignupRole[] = ["ATHLETE", "CLUB", "AGENT", "USER", "ADMIN"];
-
-
+export const SIGNUP_ROLES: SignupRole[] = [
+  "ATHLETE",
+  "CLUB",
+  "AGENT",
+  "USER",
+  "ADMIN",
+];
 
 export interface SignupCredentials {
   fullName: string;
@@ -101,8 +130,6 @@ export interface VerifyOtpResponse {
   message: string;
   data: string;
 }
-
-
 
 export interface ForgotPasswordCredentials {
   email: string;
@@ -153,6 +180,3 @@ export interface GenerateOtpResponse {
     createdAt: string;
   };
 }
-
-
-

@@ -1,48 +1,42 @@
 import { Card } from "@/components/ui/card";
 import { Info, ChevronDown, ChevronLeft, Zap } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetTechnicalSkillsEngineQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
+const getPriorityColor = (priority: string | null) => {
+  if (!priority) return "text-gray-500";
+  switch (priority.toLowerCase()) {
+    case "high":
+    case "critical":
+      return "text-red-500";
+    case "medium":
+      return "text-yellow-500";
+    case "low":
+    default:
+      return "text-green-500";
+  }
+};
 const TechnicalSkillsEngine = () => {
   const navigate = useNavigate();
 
-  const skillRatings = [
-    {
-      name: "Passing Accuracy",
-      current: 8.5,
-      target: 9,
-      priority: "High",
-      priorityColor: "text-red-500",
-    },
-    {
-      name: "First Touch",
-      current: 9,
-      target: 9.5,
-      priority: "Medium",
-      priorityColor: "text-yellow-500",
-    },
-    {
-      name: "Dribbling",
-      current: 9.5,
-      target: 9.8,
-      priority: "Low",
-      priorityColor: "text-green-500",
-    },
-    {
-      name: "Shooting",
-      current: 8,
-      target: 8.7,
-      priority: "High",
-      priorityColor: "text-red-500",
-    },
-    {
-      name: "Weak Foot",
-      current: 6,
-      target: 7.5,
-      priority: "High",
-      priorityColor: "text-red-500",
-    },
-  ];
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
 
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetTechnicalSkillsEngineQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: techData } = aiResponse.analysis;
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
       {/* Top Header with Back Button */}
@@ -67,10 +61,10 @@ const TechnicalSkillsEngine = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Technical Skills Engine
+                {techData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Skills assessment and development plan
+                {techData.subtitle}
               </p>
             </div>
           </div>
@@ -85,9 +79,9 @@ const TechnicalSkillsEngine = () => {
         </h3>
         <p className="text-[11px] text-gray-400">
           <span className="font-bold text-gray-300">
-            Position Requirements:{" "}
+            Assessment:{" "}
           </span>
-          Creative playmaker, final pass specialist, dribbling in tight spaces
+          {techData.technical_assessment || "Initial assessment pending comprehensive data review."}
         </p>
       </Card>
 
@@ -97,16 +91,18 @@ const TechnicalSkillsEngine = () => {
           Skill Ratings (1-10 scale)
         </h3>
         <Card className="bg-[#0B0E14] border-0">
-          {skillRatings.map((skill, idx) => (
-            <div key={idx} className=" relative bg-[#0D161E] border border-gray-800 p-6 rounded-xl space-y-8">
+          {techData.skill_ratings.map((skill, idx) => (
+            <div key={idx} className=" relative bg-[#0D161E] border border-gray-800 p-6 rounded-xl space-y-8 mb-4">
               <div className="flex justify-between items-center">
                 <h4 className="text-sm font-bold text-gray-200">
-                  {skill.name}
+                  {skill.skill || "Skill N/A"}
                 </h4>
                 <div
-                  className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-black/40 border border-gray-800/50 ${skill.priorityColor}`}
+                  className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-black/40 border border-gray-800/50 ${getPriorityColor(
+                    skill.priority
+                  )}`}
                 >
-                  {skill.priority}
+                  {skill.priority || "Normal"}
                 </div>
               </div>
 
@@ -119,7 +115,7 @@ const TechnicalSkillsEngine = () => {
                     </span>
                     <div className="flex items-baseline gap-0.5">
                       <span className="text-white text-md font-bold leading-none">
-                        {skill.current}
+                        {skill.current || 0}
                       </span>
                       <span className="text-gray-600 text-[10px] font-bold">
                         /10
@@ -129,7 +125,7 @@ const TechnicalSkillsEngine = () => {
                   <div className="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gray-600"
-                      style={{ width: `${skill.current * 10}%` }}
+                      style={{ width: `${(skill.current || 0) * 10}%` }}
                     ></div>
                   </div>
                 </div>
@@ -142,7 +138,7 @@ const TechnicalSkillsEngine = () => {
                     </span>
                     <div className="flex items-baseline gap-0.5">
                       <span className="text-[#00BFAE] text-md font-bold leading-none">
-                        {skill.target}
+                        {skill.target || 0}
                       </span>
                       <span className="text-gray-600 text-[10px] font-bold">
                         /10
@@ -152,12 +148,12 @@ const TechnicalSkillsEngine = () => {
                   <div className="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-[#00BFAE]"
-                      style={{ width: `${skill.target * 10}%` }}
+                      style={{ width: `${(skill.target || 0) * 10}%` }}
                     ></div>
                   </div>
                 </div>
               </div>
-              {idx !== skillRatings.length - 1 && (
+              {idx !== techData.skill_ratings.length - 1 && (
                 <div className="absolute -bottom-4 left-0 right-0 h-px bg-gray-800/30" />
               )}
             </div>
@@ -181,16 +177,20 @@ const TechnicalSkillsEngine = () => {
                   Drills:
                 </span>
                 <p className="text-[11px] text-gray-400">
-                  Wall passing, long-range passing, weighted passes
+                  {techData.development_plan.passing_mechanics.drills || "Pending analysis"}
                 </p>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-400">Frequency:</span>
-                <span className="font-bold text-[#00BFAE]">4x/week</span>
+                <span className="font-bold text-[#00BFAE]">
+                  {techData.development_plan.passing_mechanics.frequency || "TBD"}
+                </span>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-400">Duration:</span>
-                <span className="font-bold text-[#00BFAE]">30 min/session</span>
+                <span className="font-bold text-[#00BFAE]">
+                  {techData.development_plan.passing_mechanics.duration || "TBD"}
+                </span>
               </div>
             </div>
           </Card>
@@ -205,16 +205,20 @@ const TechnicalSkillsEngine = () => {
                   Drills:
                 </span>
                 <p className="text-[11px] text-gray-400">
-                  Weak foot passing, shooting, dribbling
+                  {techData.development_plan.weak_foot_training.drills || "Pending analysis"}
                 </p>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-400">Frequency:</span>
-                <span className="font-bold text-[#00BFAE]">Daily</span>
+                <span className="font-bold text-[#00BFAE]">
+                  {techData.development_plan.weak_foot_training.frequency || "TBD"}
+                </span>
               </div>
               <div className="flex justify-between items-center text-[11px]">
                 <span className="text-gray-400">Duration:</span>
-                <span className="font-bold text-[#00BFAE]">15 min/day</span>
+                <span className="font-bold text-[#00BFAE]">
+                  {techData.development_plan.weak_foot_training.duration || "TBD"}
+                </span>
               </div>
             </div>
           </Card>
@@ -224,37 +228,36 @@ const TechnicalSkillsEngine = () => {
       {/* Daily Routine */}
       <Card className="bg-[#0D161E]/40 border border-[#00BFAE]/10 p-5 rounded-xl space-y-4 relative overflow-hidden">
         <div className="flex justify-between items-center relative z-10">
-          <h3 className="text-xs font-bold uppercase tracking-widest pl-1">
+          <h3 className="text-xs text-white font-bold uppercase tracking-widest pl-1">
             Daily Routine
           </h3>
-          <div className="text-[11px] font-bold">
+          <div className="text-[11px] text-white font-bold">
             Total Duration:{" "}
             <span className="text-white">
-              60 minutes
+              {techData.daily_routine.total_duration || "TBD"}
             </span>
           </div>
         </div>
         <div className="space-y-2 relative z-10">
           <p className="text-[11px] text-gray-400">
-            <span className="text-[#00BFAE] font-bold mr-1">• Warmup:</span> 10m
-            (juggling, light passing)
+            <span className="text-[#00BFAE] font-bold mr-1">• Warmup:</span> {techData.daily_routine.warmup || "Pending"}
           </p>
           <p className="text-[11px] text-gray-400">
             <span className="text-[#00BFAE] font-bold mr-1">
               • Main session:
             </span>{" "}
-            40m (skill focus of the day)
+            {techData.daily_routine.main_session || "Pending"}
           </p>
           <p className="text-[11px] text-gray-400">
             <span className="text-[#00BFAE] font-bold mr-1">• Cooldown:</span>{" "}
-            10m (static stretching)
+            {techData.daily_routine.cooldown || "Pending"}
           </p>
         </div>
       </Card>
 
       {/* Progress Tracking */}
       <Card className="bg-[#0D161E]/40 border-gray-800 p-5 rounded-xl space-y-4">
-        <h3 className="text-xs font-bold uppercase tracking-widest pl-1">
+        <h3 className="text-xs text-white font-bold uppercase tracking-widest pl-1">
           Progress Tracking
         </h3>
         <div className="space-y-4">
@@ -263,7 +266,7 @@ const TechnicalSkillsEngine = () => {
               Weekly targets:
             </span>
             <p className="text-[11px] text-gray-400">
-              Improve weak foot accuracy by 5%
+              {techData.progress_tracking.weekly_targets || "Pending"}
             </p>
           </div>
           <div className="space-y-1">
@@ -271,7 +274,7 @@ const TechnicalSkillsEngine = () => {
               Key metrics:
             </span>
             <p className="text-[11px] text-gray-400">
-              Pass completion %, shot accuracy %
+               {techData.progress_tracking.key_metrics || "Pending"}
             </p>
           </div>
           <div className="space-y-1">
@@ -279,7 +282,7 @@ const TechnicalSkillsEngine = () => {
               Success indicators:
             </span>
             <p className="text-[11px] text-gray-400">
-              Consistent weak foot usage in matches
+               {techData.progress_tracking.success_indicators || "Pending"}
             </p>
           </div>
         </div>

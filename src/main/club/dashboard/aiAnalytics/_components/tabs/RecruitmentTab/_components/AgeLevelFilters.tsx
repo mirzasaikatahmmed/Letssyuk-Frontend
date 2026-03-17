@@ -1,21 +1,29 @@
-const filters = [
-  { label: "U21 (Development)", value: "30%", color: "text-cyan-400" },
-  { label: "22-26 (Peak)", value: "50%", color: "text-green-400" },
-  { label: "27+ (Experience)", value: "20%", color: "text-yellow-400" },
-];
+interface AgeLevelFiltersProps {
+  data?: {
+    u21_development_percent: number;
+    age_22_26_peak_percent: number;
+    age_27_plus_experience_percent: number;
+  };
+}
 
-const AgeLevelFilters = () => {
+const AgeLevelFilters = ({ data }: AgeLevelFiltersProps) => {
+  if (!data) return null;
+
+  const filters = [
+    { label: "U21 (Development)", value: `${data.u21_development_percent}%`, color: "text-cyan-400" },
+    { label: "22-26 (Peak)", value: `${data.age_22_26_peak_percent}%`, color: "text-green-500" },
+    { label: "27+ (Experience)", value: `${data.age_27_plus_experience_percent}%`, color: "text-yellow-500" },
+  ];
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5 h-full">
-      <h2 className="text-base font-semibold text-white mb-5">
-        Age &amp; Level Filters
-      </h2>
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5 h-full space-y-5">
+      <h2 className="text-sm font-bold text-white tracking-tight">Age & Level Filters</h2>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {filters.map((item, i) => (
-          <div key={i} className="bg-[#27272A] rounded-xl border border-gray-800 p-4">
-            <p className="text-xs text-gray-500 mb-2">{item.label}</p>
-            <p className={`text-3xl font-bold ${item.color}`}>{item.value}</p>
+          <div key={i} className="bg-[#1A1D24] rounded-lg border border-white/5 p-4 space-y-1">
+            <p className="text-[10px] text-zinc-500 font-medium">{item.label}</p>
+            <p className={`text-xl font-bold ${item.color}`}>{item.value}</p>
           </div>
         ))}
       </div>

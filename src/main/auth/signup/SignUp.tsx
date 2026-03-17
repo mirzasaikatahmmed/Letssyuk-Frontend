@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
@@ -331,7 +332,7 @@ const SignUp = () => {
           <AuthButton
             type="submit"
             isLoading={isLoading}
-            label="Verify E-mail"
+            label="Sign Up"
             loadingLabel="Processing..."
             className="mt-4"
           />

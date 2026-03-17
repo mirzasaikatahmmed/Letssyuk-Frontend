@@ -138,7 +138,7 @@ const MatchPreparationSystem = () => {
                 {analysis.match_day_warmup.duration}
               </span>
             </div>
-            <div className="space-y-2 max-w-md">
+            <div className="space-y-2 max-w-lg">
               <span className="text-white text-xs font-bold block">
                 Sequence:
               </span>

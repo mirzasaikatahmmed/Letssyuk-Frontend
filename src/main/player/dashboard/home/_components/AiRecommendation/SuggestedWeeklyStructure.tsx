@@ -1,19 +1,46 @@
 import { useNavigate } from "react-router";
 import { Card } from "@/components/ui/card";
 import { Info, ChevronLeft, ChevronDown, Calendar } from "lucide-react";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetWeeklyStructureQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
+const getSessionColor = (focus: string) => {
+  switch (focus.toLowerCase()) {
+    case "technical":
+      return "#0DA9A2";
+    case "physical":
+      return "#9810FA";
+    case "match":
+    case "match prep":
+      return "#E17100";
+    case "recovery":
+      return "#00A63E";
+    case "rest":
+      return "#364153";
+    default:
+      return "#155DFC";
+  }
+};
 const SuggestedWeeklyStructure = () => {
   const navigate = useNavigate();
-  const days = [
-    { day: "Mon", type: "Technical", time: "90 min", color: "#0DA9A2" },
-    { day: "Tue", type: "Physical", time: "60 min", color: "#9810FA" },
-    { day: "Wed", type: "Match", time: "90 min", color: "#E17100" },
-    { day: "Thu", type: "Recovery", time: "Light", color: "#00A63E" },
-    { day: "Fri", type: "Technical", time: "90 min", color: "#0DA9A2" },
-    { day: "Sat", type: "Match Prep", time: "60 min", color: "#155DFC" },
-    { day: "Sun", type: "Rest", time: "Full", color: "#364153" },
-  ];
 
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetWeeklyStructureQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const weeklyData = aiResponse.analysis.data;
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
       {/* Top Header with Back Button */}
@@ -38,10 +65,10 @@ const SuggestedWeeklyStructure = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Suggested Weekly Structure
+                {weeklyData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                AI-optimized training and recovery cycle
+                {weeklyData.subtitle}
               </p>
             </div>
           </div>
@@ -56,23 +83,23 @@ const SuggestedWeeklyStructure = () => {
         <Card className="bg-[#0B1219] border-gray-800 p-6 rounded-2xl shadow-xl">
           {/* Horizontal Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 mb-8">
-            {days.map((item, index) => (
+            {weeklyData.weekly_structure.map((item, index) => (
               <div
                 key={index}
                 className="rounded-xl p-4 flex flex-col justify-between h-36 transition-all hover:scale-[1.03] cursor-default border border-white/10 shadow-lg"
-                style={{ backgroundColor: item.color }}
+                style={{ backgroundColor: getSessionColor(item.focus) }}
               >
                 <div>
                   <p className="text-white/80 text-[10px] font-bold uppercase tracking-wider">
                     {item.day}
                   </p>
                   <p className="text-white text-sm font-extrabold mt-1 leading-tight">
-                    {item.type}
+                    {item.focus}
                   </p>
                 </div>
                 <div className="bg-black/20 p-1.5 rounded-md text-center border border-white/5">
                   <p className="text-white/90 text-[10px] font-bold">
-                    {item.time}
+                    {item.session_detail}
                   </p>
                 </div>
               </div>

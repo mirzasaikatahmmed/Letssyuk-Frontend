@@ -12,17 +12,71 @@ import {
 } from "lucide-react";
 
 import type { Player } from "../_data/data";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import {
+  useGetContractStructureQuery,
+  useGetRiskClauseFlaggingQuery,
+  useGetMarketValueBenchmarkingQuery,
+  useGetScenarioComparisonQuery,
+  useGetNegotiationPreparationQuery,
+  useGetCareerContractTimelineQuery,
+} from "@/redux/features/agent/agentsApi";
+import Loading from "@/components/share/Loading/Loading";
 
 interface ContractViewProps {
   player: Player;
 }
 
 const ContractView: React.FC<ContractViewProps> = ({ player }) => {
-  const { contractDetails } = player;
+  const { data: userData } = useGetMeQuery();
+  const agentId = userData?.agentOwned?.id;
+
+  const { data: structureRes, isLoading: isStructureLoading } =
+    useGetContractStructureQuery(agentId as string, { skip: !agentId });
+  const { data: risksRes, isLoading: isRisksLoading } =
+    useGetRiskClauseFlaggingQuery(agentId as string, { skip: !agentId });
+  const { data: marketRes, isLoading: isMarketLoading } =
+    useGetMarketValueBenchmarkingQuery(agentId as string, { skip: !agentId });
+  const { data: scenarioRes, isLoading: isScenarioLoading } =
+    useGetScenarioComparisonQuery(agentId as string, { skip: !agentId });
+  const { data: negotiationRes, isLoading: isNegotiationLoading } =
+    useGetNegotiationPreparationQuery(agentId as string, { skip: !agentId });
+  const { data: timelineRes, isLoading: isTimelineLoading } =
+    useGetCareerContractTimelineQuery(agentId as string, { skip: !agentId });
+
+  const structureData = structureRes?.analysis || player.contractDetails;
+  const risksData = risksRes?.analysis || {
+    risks: player.contractDetails.risks,
+    market_standards_summary:
+      "Clauses are generally within market standards. Release clause and loyalty bonuses are competitive and fairly structured.",
+  };
+  const marketData =
+    marketRes?.analysis || player.contractDetails.marketValueComparison;
+  const scenarioData =
+    scenarioRes?.analysis || player.contractDetails.scenarioComparison;
+  const negotiationData = negotiationRes?.analysis || {
+    talkingPoints: player.contractDetails.talkingPoints,
+    strategicConcessions: player.contractDetails.strategicConcessions,
+    walkAwayThreshold: player.contractDetails.walkAwayThreshold,
+  };
+  const timelineData =
+    timelineRes?.analysis || { timeline: player.contractDetails.timeline };
+
   const [isStructureOpen, setIsStructureOpen] = useState(true);
   const [isRisksOpen, setIsRisksOpen] = useState(true);
   const [isMarketValueOpen, setIsMarketValueOpen] = useState(false);
   const [isScenarioOpen, setIsScenarioOpen] = useState(false);
+
+  if (
+    isStructureLoading ||
+    isRisksLoading ||
+    isMarketLoading ||
+    isScenarioLoading ||
+    isNegotiationLoading ||
+    isTimelineLoading
+  ) {
+    return <Loading count={3} className="p-8" />;
+  }
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -65,10 +119,10 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                   Contract Duration
                 </p>
                 <p className="text-xl font-bold text-white mb-1">
-                  {contractDetails.duration}
+                  {structureData?.duration}
                 </p>
                 <p className="text-[10px] text-gray-500 font-medium">
-                  {contractDetails.dateRange}
+                  {structureData?.dateRange}
                 </p>
               </div>
               <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
@@ -76,10 +130,10 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                   Base Salary
                 </p>
                 <p className="text-xl font-bold text-[#53DDF5] mb-1">
-                  {contractDetails.baseSalary}
+                  {structureData?.baseSalary}
                 </p>
                 <p className="text-[10px] text-gray-500 font-medium">
-                  {contractDetails.annualSalary}
+                  {structureData?.annualSalary}
                 </p>
               </div>
               <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
@@ -87,10 +141,10 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                   Performance Bonuses
                 </p>
                 <p className="text-xl font-bold text-white mb-1">
-                  {contractDetails.performanceBonuses}
+                  {structureData?.performanceBonuses}
                 </p>
                 <p className="text-[10px] text-gray-500 font-medium">
-                  {contractDetails.bonusDetail}
+                  {structureData?.bonusDetail}
                 </p>
               </div>
               <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl">
@@ -98,10 +152,10 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                   Image Rights
                 </p>
                 <p className="text-xl font-bold text-white mb-1">
-                  {contractDetails.imageRights}
+                  {structureData?.imageRights}
                 </p>
                 <p className="text-[10px] text-gray-500 font-medium">
-                  {contractDetails.imageRightsDetail}
+                  {structureData?.imageRightsDetail}
                 </p>
               </div>
             </div>
@@ -116,7 +170,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                   AI Summary
                 </h4>
                 <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
-                  {contractDetails.aiSummary}
+                  {structureData.aiSummary}
                 </p>
               </div>
             </div>
@@ -158,7 +212,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
         >
           <div className="overflow-hidden">
             <div className="space-y-4">
-              {contractDetails.risks.map((risk, index) => (
+              {risksData?.risks?.map((risk, index) => (
                 <div
                   key={index}
                   className={`${risk.type === "High Risk" ? "bg-[#1A1112]" : "bg-[#1A1811]"} border ${risk.type === "High Risk" ? "border-red-500/10" : "border-orange-500/10"} p-5 rounded-2xl relative overflow-hidden group`}
@@ -200,13 +254,10 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                 </div>
                 <div>
                   <h4 className="text-[13px] font-bold text-cyan-400 font-sans">
-                    {contractDetails.risks.length < 2
-                      ? "Clauses are generally within market standards"
-                      : "Most clauses are within market standards"}
+                    Market Standard Assessment
                   </h4>
                   <p className="text-[11px] text-gray-500">
-                    Release clause and loyalty bonuses are competitive and
-                    fairly structured.
+                    {risksData?.market_standards_summary || "Clauses are generally within market standards."}
                   </p>
                 </div>
               </div>
@@ -257,7 +308,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                     Current Market Value
                   </p>
                   <p className="text-2xl font-bold text-[#00D1FF]">
-                    {contractDetails.marketValueComparison.currentMarketValue}
+                    {marketData.currentMarketValue}
                   </p>
                 </div>
                 <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
@@ -265,7 +316,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                     Contract Salary
                   </p>
                   <p className="text-2xl font-bold text-white">
-                    {contractDetails.marketValueComparison.contractSalary}
+                    {marketData.contractSalary}
                   </p>
                 </div>
                 <div className="bg-[#0B0E14] border border-gray-800/80 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
@@ -273,7 +324,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                     Market Average
                   </p>
                   <p className="text-2xl font-bold text-gray-400">
-                    {contractDetails.marketValueComparison.marketAverage}
+                    {marketData.marketAverage}
                   </p>
                 </div>
               </div>
@@ -285,14 +336,14 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                     Salary Percentile
                   </p>
                   <p className="text-[11px] text-orange-400 font-bold">
-                    {contractDetails.marketValueComparison.percentileText}
+                    {marketData.percentileText}
                   </p>
                 </div>
                 <div className="h-2 w-full bg-gray-800/50 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-orange-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.4)] transition-all duration-1000"
                     style={{
-                      width: `${contractDetails.marketValueComparison.salaryPercentile}%`,
+                      width: `${marketData.salaryPercentile}%`,
                     }}
                   />
                 </div>
@@ -305,10 +356,10 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                 </div>
                 <div>
                   <h4 className="text-[13px] font-bold text-orange-400 mb-1">
-                    {contractDetails.marketValueComparison.status}
+                    {marketData.status}
                   </h4>
                   <p className="text-[11px] text-gray-400 leading-relaxed font-medium">
-                    {contractDetails.marketValueComparison.recommendation}
+                    {marketData.recommendation}
                   </p>
                 </div>
               </div>
@@ -354,15 +405,11 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                 <div className="bg-[#0B0E14] border border-gray-800/80 p-7 rounded-2xl relative">
                   <div className="flex justify-between items-center mb-6">
                     <h5 className="text-[14px] font-bold text-white">
-                      {contractDetails.scenarioComparison.currentContract.title}
+                      {scenarioData?.currentContract?.title}
                     </h5>
-                    {contractDetails.scenarioComparison.currentContract
-                      .badge && (
+                    {scenarioData?.currentContract?.badge && (
                       <span className="bg-gray-800/80 text-gray-500 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">
-                        {
-                          contractDetails.scenarioComparison.currentContract
-                            .badge
-                        }
+                        {scenarioData?.currentContract?.badge}
                       </span>
                     )}
                   </div>
@@ -373,10 +420,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                         Financial Value
                       </p>
                       <p className="text-[16px] font-bold text-white">
-                        {
-                          contractDetails.scenarioComparison.currentContract
-                            .financialValue
-                        }
+                        {scenarioData?.currentContract?.financialValue}
                       </p>
                     </div>
                     <div>
@@ -384,10 +428,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                         Playing Time Probability
                       </p>
                       <p className="text-[16px] font-bold text-[#00D1FF]">
-                        {
-                          contractDetails.scenarioComparison.currentContract
-                            .playingTimeProbability
-                        }
+                        {scenarioData?.currentContract?.playingTimeProbability}
                       </p>
                     </div>
                     <div>
@@ -395,10 +436,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                         Career Growth Impact
                       </p>
                       <p className="text-[16px] font-bold text-white">
-                        {
-                          contractDetails.scenarioComparison.currentContract
-                            .careerGrowthImpact
-                        }
+                        {scenarioData?.currentContract?.careerGrowthImpact}
                       </p>
                     </div>
                   </div>
@@ -408,18 +446,11 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                 <div className="bg-[#0C1218] border border-cyan-500/20 p-7 rounded-2xl relative shadow-[0_0_30px_rgba(6,182,212,0.02)]">
                   <div className="flex justify-between items-center mb-6">
                     <h5 className="text-[14px] font-bold text-white">
-                      {
-                        contractDetails.scenarioComparison.alternativeOffer
-                          .title
-                      }
+                      {scenarioData?.alternativeOffer?.title}
                     </h5>
-                    {contractDetails.scenarioComparison.alternativeOffer
-                      .badge && (
+                    {scenarioData?.alternativeOffer?.badge && (
                       <span className="bg-cyan-500/10 text-cyan-400 text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter border border-cyan-500/20">
-                        {
-                          contractDetails.scenarioComparison.alternativeOffer
-                            .badge
-                        }
+                        {scenarioData?.alternativeOffer?.badge}
                       </span>
                     )}
                   </div>
@@ -430,10 +461,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                         Financial Value
                       </p>
                       <p className="text-[16px] font-bold text-[#00D1FF]">
-                        {
-                          contractDetails.scenarioComparison.alternativeOffer
-                            .financialValue
-                        }
+                        {scenarioData?.alternativeOffer?.financialValue}
                       </p>
                     </div>
                     <div>
@@ -441,10 +469,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                         Playing Time Probability
                       </p>
                       <p className="text-[16px] font-bold text-white">
-                        {
-                          contractDetails.scenarioComparison.alternativeOffer
-                            .playingTimeProbability
-                        }
+                        {scenarioData?.alternativeOffer?.playingTimeProbability}
                       </p>
                     </div>
                     <div>
@@ -452,10 +477,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
                         Career Growth Impact
                       </p>
                       <p className="text-[16px] font-bold text-[#00D1FF]">
-                        {
-                          contractDetails.scenarioComparison.alternativeOffer
-                            .careerGrowthImpact
-                        }
+                        {scenarioData?.alternativeOffer?.careerGrowthImpact}
                       </p>
                     </div>
                   </div>
@@ -488,7 +510,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
               Key Talking Points
             </p>
             <ul className="space-y-3">
-              {contractDetails.talkingPoints.map((point, index) => (
+              {negotiationData?.talkingPoints?.map((point, index) => (
                 <li
                   key={index}
                   className="flex items-start gap-3 text-[11px] text-gray-300 font-medium"
@@ -505,7 +527,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
               Strategic Concessions
             </p>
             <ul className="space-y-3">
-              {contractDetails.strategicConcessions.map((concession, index) => (
+              {negotiationData?.strategicConcessions?.map((concession, index) => (
                 <li
                   key={index}
                   className="flex items-start gap-3 text-[11px] text-gray-300 font-medium"
@@ -522,7 +544,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
               Walk-Away Threshold
             </p>
             <p className="text-[11px] text-gray-400 font-medium">
-              {contractDetails.walkAwayThreshold}
+              {negotiationData.walkAwayThreshold}
             </p>
           </div>
 
@@ -553,7 +575,7 @@ const ContractView: React.FC<ContractViewProps> = ({ player }) => {
           <div className="absolute left-[20px] top-4 bottom-4 w-px bg-gray-800/60" />
 
           <div className="space-y-12">
-            {contractDetails.timeline.map((event, index) => (
+            {timelineData?.timeline?.map((event, index) => (
               <div key={index} className="relative flex items-start group">
                 {/* Event Label Circle (Marker) */}
                 <div

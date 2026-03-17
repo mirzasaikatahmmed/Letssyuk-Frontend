@@ -9,9 +9,29 @@ import {
   Calendar,
 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetPlayerDevelopmentPathwayQuery } from "@/redux/features/athlete/athleteAiApi";
+import Loading from "@/components/share/Loading/Loading";
 
 const PlayerDevelopmentPathway = () => {
   const navigate = useNavigate();
+
+  const { data: userData } = useGetMeQuery();
+  const playerId = userData?.playerOwned?.id;
+
+  const {
+    data: aiResponse,
+    isLoading,
+    isError,
+  } = useGetPlayerDevelopmentPathwayQuery(playerId as string, {
+    skip: !playerId,
+  });
+
+  if (isLoading || isError || !aiResponse) {
+    return <Loading count={3} className="p-6" />;
+  }
+
+  const { data: pathwayData } = aiResponse.analysis;
 
   return (
     <div className="bg-[#0B0E14] text-white p-6 space-y-6 min-h-screen font-sans">
@@ -37,10 +57,10 @@ const PlayerDevelopmentPathway = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold leading-none mb-1">
-                Player Development Pathway
+                {pathwayData.title}
               </h2>
               <p className="text-gray-500 text-xs leading-none">
-                Long-term career progression planning
+                {pathwayData.subtitle}
               </p>
             </div>
           </div>
@@ -64,7 +84,7 @@ const PlayerDevelopmentPathway = () => {
                 Skill Priorities:
               </span>
               <p className="text-[11px] text-gray-400">
-                Weak foot, defensive positioning
+                {pathwayData.three_month_plan.skill_priorities}
               </p>
             </div>
             <div className="space-y-1">
@@ -72,7 +92,7 @@ const PlayerDevelopmentPathway = () => {
                 Performance Benchmarks:
               </span>
               <p className="text-[11px] text-gray-400">
-                85% pass accuracy, 5 goals/assists
+                {pathwayData.three_month_plan.performance_benchmarks}
               </p>
             </div>
             <div className="space-y-1">
@@ -80,7 +100,7 @@ const PlayerDevelopmentPathway = () => {
                 Training Focus:
               </span>
               <p className="text-[11px] text-gray-400">
-                Technical repetition, tactical understanding
+                {pathwayData.three_month_plan.training_focus}
               </p>
             </div>
             <div className="space-y-1">
@@ -88,7 +108,7 @@ const PlayerDevelopmentPathway = () => {
                 Success Indicators:
               </span>
               <p className="text-[11px] text-gray-400">
-                Consistent starting position, improved stats
+                {pathwayData.three_month_plan.success_indicators}
               </p>
             </div>
           </div>
@@ -108,7 +128,7 @@ const PlayerDevelopmentPathway = () => {
                 Milestones:
               </span>
               <p className="text-[11px] text-gray-400">
-                Secure starting spot, improve fitness metrics
+                {pathwayData.six_month_plan.milestones}
               </p>
             </div>
             <div className="space-y-1">
@@ -116,7 +136,7 @@ const PlayerDevelopmentPathway = () => {
                 Skill Targets:
               </span>
               <p className="text-[11px] text-gray-400">
-                Master 3 new dribbling moves
+                {pathwayData.six_month_plan.skill_targets}
               </p>
             </div>
             <div className="space-y-1">
@@ -124,7 +144,7 @@ const PlayerDevelopmentPathway = () => {
                 Physical Goals:
               </span>
               <p className="text-[11px] text-gray-400">
-                Increase stamina by 15%
+                {pathwayData.six_month_plan.physical_goals}
               </p>
             </div>
             <div className="space-y-1">
@@ -132,7 +152,7 @@ const PlayerDevelopmentPathway = () => {
                 Tactical Targets:
               </span>
               <p className="text-[11px] text-gray-400">
-                Understand multiple formations
+                {pathwayData.six_month_plan.tactical_targets}
               </p>
             </div>
           </div>
@@ -152,28 +172,32 @@ const PlayerDevelopmentPathway = () => {
                 Season Objectives:
               </span>
               <p className="text-[11px] text-gray-400">
-                10+ goals/assists, team leadership
+                {pathwayData.twelve_month_plan.season_objectives}
               </p>
             </div>
             <div className="space-y-1">
               <span className="text-white text-[11px] font-bold block">
                 Performance Benchmarks:
               </span>
-              <p className="text-[11px] text-gray-400">Elite level metrics</p>
+              <p className="text-[11px] text-gray-400">
+                {pathwayData.twelve_month_plan.performance_benchmarks}
+              </p>
             </div>
             <div className="space-y-1">
               <span className="text-white text-[11px] font-bold block">
                 Career Steps:
               </span>
               <p className="text-[11px] text-gray-400">
-                Move to higher division
+                {pathwayData.twelve_month_plan.career_steps}
               </p>
             </div>
             <div className="space-y-1">
               <span className="text-white text-[11px] font-bold block">
                 Level Advancement:
               </span>
-              <p className="text-[11px] text-gray-400">Professional contract</p>
+              <p className="text-[11px] text-gray-400">
+                {pathwayData.twelve_month_plan.level_advancement}
+              </p>
             </div>
           </div>
         </Card>
@@ -190,7 +214,7 @@ const PlayerDevelopmentPathway = () => {
               Career Phases:
             </span>
             <p className="text-[11px] text-gray-400">
-              Development (18-21), Peak (22-28), Leadership (29+)
+              {pathwayData.long_term_pathway.career_phases}
             </p>
           </div>
           <div className="space-y-2">
@@ -198,7 +222,7 @@ const PlayerDevelopmentPathway = () => {
               Development Trajectory:
             </span>
             <p className="text-[11px] text-gray-400">
-              Academy &rarr; Reserve &rarr; First team &rarr; International
+              {pathwayData.long_term_pathway.development_trajectory}
             </p>
           </div>
           <div className="space-y-2">
@@ -206,7 +230,7 @@ const PlayerDevelopmentPathway = () => {
               Next Steps:
             </span>
             <p className="text-[11px] text-gray-400">
-              European exposure, national team consideration
+              {pathwayData.long_term_pathway.next_steps}
             </p>
           </div>
         </div>
@@ -223,21 +247,23 @@ const PlayerDevelopmentPathway = () => {
               Progress Metrics:
             </span>
             <p className="text-[11px] text-gray-400">
-              Monthly performance reviews
+              {pathwayData.tracking_monitoring.progress_metrics}
             </p>
           </div>
           <div className="space-y-1">
             <span className="text-white text-[11px] font-bold block uppercase opacity-70">
               Review Points:
             </span>
-            <p className="text-[11px] text-gray-400">End of each phase</p>
+            <p className="text-[11px] text-gray-400">
+              {pathwayData.tracking_monitoring.review_points}
+            </p>
           </div>
           <div className="space-y-1">
             <span className="text-white text-[11px] font-bold block uppercase opacity-70">
               Adjustment Protocols:
             </span>
             <p className="text-[11px] text-gray-400">
-              Modify based on performance
+              {pathwayData.tracking_monitoring.adjustment_protocols}
             </p>
           </div>
         </div>

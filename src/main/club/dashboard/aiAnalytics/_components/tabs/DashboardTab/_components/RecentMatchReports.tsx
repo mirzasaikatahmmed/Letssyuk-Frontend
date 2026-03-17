@@ -1,56 +1,80 @@
-const RecentMatchReports = () => {
-  const matches = [
-    { match: "Win vs Liverpool", rating: "4.2/5", dot: "text-green-400" },
-    { match: "Draw vs Chelsea", rating: "3.8/5", dot: "text-yellow-400" },
-    { match: "Win vs Arsenal", rating: "4.5/5", dot: "text-green-400" },
-    { match: "Loss vs Man City", rating: "3/5", dot: "text-red-400" },
-    { match: "Win vs Tottenham", rating: "4/5", dot: "text-green-400" },
-  ];
+import { TrendingUp } from "lucide-react";
+
+interface RecentMatchReportsProps {
+  data?: {
+    reports: Array<{
+      title: string;
+      rating: string;
+      result_type: string;
+    }>;
+    key_findings: Array<{
+      label: string;
+      value: string;
+    }>;
+  };
+}
+
+const RecentMatchReports = ({ data }: RecentMatchReportsProps) => {
+  if (!data) return null;
+
+  const getResultColor = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "win":
+        return "text-green-500";
+      case "loss":
+        return "text-red-500";
+      case "draw":
+        return "text-yellow-500";
+      default:
+        return "text-zinc-500";
+    }
+  };
+
+  const getFindingColor = (label: string) => {
+    const val = label.toLowerCase();
+    if (val.includes("strength")) return "text-green-400";
+    if (val.includes("weakness")) return "text-red-400";
+    if (val.includes("trend")) return "text-cyan-400";
+    if (val.includes("alert")) return "text-yellow-400";
+    return "text-cyan-400";
+  };
 
   return (
-    <div>
-      <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-        <span className="text-red-500">📊</span> Recent Match Reports
+    <div className="bg-[#12141B] p-6 rounded-2xl border border-white/5 h-full">
+      <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+        <TrendingUp className="text-cyan-400" size={20} />
+        Recent Match Reports
       </h2>
-      <div className="bg-[#18181B] rounded-xl border border-gray-800 overflow-hidden">
-        {/* Match rows */}
-        <div className="divide-y divide-gray-800">
-          {matches.map((item, idx) => (
-            <div
-              key={idx}
-              className="px-4 py-3 flex justify-between items-center"
-            >
-              <div>
-                <p className="text-sm text-white font-medium">{item.match}</p>
-                <p className="text-xs text-gray-500">Rating: {item.rating}</p>
-              </div>
-              <span className={`text-2xl ${item.dot}`}>●</span>
-            </div>
-          ))}
-        </div>
 
-        {/* Key Findings */}
-        <div className="px-4 py-4 border-t border-gray-800">
-          <p className="text-sm font-semibold text-white mb-3">Key Findings</p>
-          <ul className="space-y-1 text-xs">
-            <li>
-              <span className="text-green-400 font-medium">• Strength: </span>
-              <span className="text-gray-300">Counter-attack effectiveness</span>
+      <div className="space-y-3 mb-6">
+        {data.reports.map((item, idx) => (
+          <div
+            key={idx}
+            className="bg-[#1A1D24] p-4 rounded-xl border border-white/5 flex justify-between items-center transition-all hover:bg-[#23272F]"
+          >
+            <div className="flex items-center gap-3">
+              <span className={`w-2 h-2 rounded-full ${getResultColor(item.result_type)} shadow-[0_0_8px_rgba(0,0,0,0.5)]`} />
+              <div>
+                <p className="text-sm text-white font-semibold">{item.title}</p>
+                <p className="text-[11px] text-zinc-500 mt-0.5">Rating: {item.rating}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-[#1A1D24] p-4 rounded-xl border border-white/5">
+        <p className="text-sm font-semibold text-white mb-3">Key Findings</p>
+        <ul className="space-y-2">
+          {data.key_findings.map((finding, idx) => (
+            <li key={idx} className="flex gap-2 text-[11px] leading-relaxed">
+              <span className={`font-bold whitespace-nowrap ${getFindingColor(finding.label)}`}>
+                • {finding.label}:
+              </span>
+              <span className="text-zinc-400">{finding.value}</span>
             </li>
-            <li>
-              <span className="text-red-400 font-medium">• Weakness: </span>
-              <span className="text-gray-300">Set-piece defense</span>
-            </li>
-            <li>
-              <span className="text-cyan-400 font-medium">• Trend: </span>
-              <span className="text-gray-300">Improving possession stats</span>
-            </li>
-            <li>
-              <span className="text-yellow-400 font-medium">• Alert: </span>
-              <span className="text-gray-300">Injury concerns for 2 players</span>
-            </li>
-          </ul>
-        </div>
+          ))}
+        </ul>
       </div>
     </div>
   );
