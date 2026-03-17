@@ -1,4 +1,17 @@
 
+export interface Club {
+  id: string;
+  ownerUserId: string;
+  clubName: string;
+  country: string;
+  league: string;
+  clubWebsite: string;
+  city: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+}
+
 export interface ClubAIAnalysisResponse<T> {
   feature: string;
   club_id: string;
