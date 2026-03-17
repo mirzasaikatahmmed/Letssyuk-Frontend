@@ -306,15 +306,33 @@ export interface RecruitmentNeedsData {
 }
 
 // Match Archive
-export interface MatchArchiveEntry {
+export interface MatchArchiveReport {
   date: string;
-  opponent: string;
   result: string;
-  keyOutcome: string;
+  formation: string;
+  rating: number;
+  action_label: string;
 }
 
 export interface MatchArchiveData {
-  recentMatches: MatchArchiveEntry[];
+  searchable_intelligence_library: {
+    search_archive_placeholder: string;
+    season_filter: string;
+    competition_filter: string;
+    reports: MatchArchiveReport[];
+  };
+  opposition_reports_history: {
+    opponent_database: string;
+    matches_analyzed: number;
+    win_rate_percent: number;
+    avg_goals_conceded: number;
+    key_weakness: string;
+    tactical_evolution_note: string;
+  };
+  advanced_search_options: Array<{
+    title: string;
+    description: string;
+  }>;
 }
 
 // Staff Briefing
