@@ -1,21 +1,29 @@
-const trialDetails = [
-  { label: "Duration", value: "2-4 weeks" },
-  { label: "Compensation", value: "Basic accommodation + expenses" },
-  { label: "Evaluation", value: "Weekly assessment" },
-];
+interface TrialContractsProps {
+  data?: {
+    duration: string;
+    compensation: string;
+    evaluation: string;
+  };
+}
 
-const TrialContracts = () => {
+const TrialContracts = ({ data }: TrialContractsProps) => {
+  if (!data) return null;
+
+  const trialDetails = [
+    { label: "Duration", value: data.duration },
+    { label: "Compensation", value: data.compensation },
+    { label: "Evaluation", value: data.evaluation },
+  ];
+
   return (
-    <div className="bg-[#18181B] rounded-xl border border-gray-800 p-5 h-full">
-      <h2 className="text-base font-semibold text-white mb-5">
-        Trial Contracts
-      </h2>
+    <div className="bg-[#12141B] p-6 rounded-xl border border-white/5 h-full space-y-5">
+      <h2 className="text-sm font-bold text-white tracking-tight">Trial Contracts</h2>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {trialDetails.map((item, i) => (
-          <div key={i} className="bg-[#27272A] rounded-xl border border-gray-800 p-4">
-            <p className="text-xs text-gray-500 mb-1">{item.label}</p>
-            <p className="text-sm font-semibold text-white">{item.value}</p>
+          <div key={i} className="bg-[#1A1D24] rounded-lg border border-white/5 p-4 space-y-1">
+            <p className="text-[10px] text-zinc-500 font-medium">{item.label}</p>
+            <p className="text-xs font-bold text-white">{item.value}</p>
           </div>
         ))}
       </div>

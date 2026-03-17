@@ -261,9 +261,48 @@ export interface SquadIntelligenceData {
 
 // Recruitment Needs
 export interface RecruitmentNeedsData {
-  primaryTargetPosition: string;
-  budgetAllocation: string;
-  shortlistedPlayersCount: number;
+  position_needs: {
+    title: string;
+    skill_requirements: {
+      defensive_positioning: string;
+      crossing_accuracy: string;
+      pace_30m_sprint: string;
+      recovery_speed: string;
+    };
+    experience_level: {
+      minimum_appearances: string;
+      preferred_appearances: string;
+      age_range: string;
+      development_potential: string;
+    };
+  };
+  contract_options: {
+    trial_contract: {
+      duration: string;
+      compensation: string;
+      evaluation: string;
+    };
+    short_term_contract: {
+      duration: string;
+      compensation: string;
+      bonuses: string;
+    };
+  };
+  age_and_level_filters: {
+    u21_development_percent: number;
+    age_22_26_peak_percent: number;
+    age_27_plus_experience_percent: number;
+  };
+  visibility_controls: {
+    publication_audience: Array<{
+      label: string;
+      value: string;
+    }>;
+    information_disclosure: Array<{
+      label: string;
+      value: string;
+    }>;
+  };
 }
 
 // Match Archive
