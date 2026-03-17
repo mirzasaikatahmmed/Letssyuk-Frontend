@@ -326,9 +326,45 @@ export interface StaffBriefingData {
 
 // Transfer Planning
 export interface TransferPlanningData {
-  windowStrategy: string;
-  estimatedSpend: string;
-  playerSalesPotential: string;
+  transfer_window_priorities: {
+    priority_positions: Array<{
+      priority: string;
+      position: string;
+      note: string;
+    }>;
+    transfer_budget_optimization: {
+      total_budget: string;
+      allocations: Array<{
+        position: string;
+        amount: string;
+      }>;
+    };
+  };
+  squad_age_distribution: {
+    u21: { players: number; percent: number };
+    age_22_26: { players: number; percent: number };
+    age_27_30: { players: number; percent: number };
+    age_31_plus: { players: number; percent: number };
+    balance_status: string;
+  };
+  experience_balance: {
+    under_50_apps: string;
+    apps_50_150: string;
+    apps_150_plus: string;
+    ideal_mix_status: string;
+  };
+  contract_expiry_risk_flags: {
+    expiring_in_6_months: { count: number; risk: string };
+    expiring_in_12_months: { count: number; risk: string };
+    expiring_in_24_months: { count: number; risk: string };
+    long_term: { count: number; risk: string };
+    renewal_priority_assessment: Array<{
+      rank: string;
+      player: string;
+      detail: string;
+      badge: string;
+    }>;
+  };
 }
 
 // Dashboard
