@@ -1,27 +1,12 @@
 import { Layout, TrendingUp, DollarSign, Calendar, Info } from "lucide-react";
 import type { Player } from "../_data/data";
-import { useGetMeQuery } from "@/redux/features/auth/authApi";
-import { useGetOpportunityMatchingQuery } from "@/redux/features/agent/agentsApi";
-import Loading from "@/components/share/Loading/Loading";
 
 interface OpportunitiesViewProps {
   player: Player;
 }
 
 const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ player }) => {
-  const { data: userData } = useGetMeQuery();
-  const agentId = userData?.agentOwned?.id;
-
-  const { data: aiResponse, isLoading } = useGetOpportunityMatchingQuery(
-    agentId as string,
-    { skip: !agentId },
-  );
-
-  if (isLoading) {
-    return <Loading count={3} className="p-8" />;
-  }
-
-  const opportunities = aiResponse?.analysis || player.contractDetails.opportunities;
+  const opportunities = player.contractDetails.opportunities;
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">

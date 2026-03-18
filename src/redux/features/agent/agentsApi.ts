@@ -14,35 +14,35 @@ export const agentsApi = aiBaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getContractStructure: builder.query<ContractStructureResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/contract-structure-analyzer`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentContractStructure"],
     }),
     getRiskClauseFlagging: builder.query<RiskClauseResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/risk-clause-flagging`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentRiskClause"],
     }),
     getMarketValueBenchmarking: builder.query<MarketValueBenchmarkingResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/market-value-benchmarking`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentMarketValue"],
     }),
     getScenarioComparison: builder.query<ScenarioComparisonResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/scenario-comparison-engine`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentScenarioComparison"],
     }),
     getNegotiationPreparation: builder.query<NegotiationPreparationResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/negotiation-preparation-assistant`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentNegotiationPreparation"],
     }),
     getCareerContractTimeline: builder.query<CareerContractTimelineResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/career-contract-timeline`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentCareerTimeline"],
     }),
     getOpportunityMatching: builder.query<OpportunityMatchingResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/opportunity-matching`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentOpportunityMatching"],
     }),
     getPlayerMonitoring: builder.query<PlayerMonitoringResponse, string>({
       query: (agentId) => `/agent/analysis/${agentId}/player-monitoring`,
-      providesTags: ["AIRecommendation"],
+      providesTags: ["AgentPlayerMonitoring"],
     }),
   }),
 });

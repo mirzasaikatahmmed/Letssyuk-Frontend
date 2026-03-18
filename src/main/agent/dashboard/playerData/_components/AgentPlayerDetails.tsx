@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { Edit3, X, TrendingUp, Clock, ExternalLink } from "lucide-react";
+import { useParams, useNavigate } from "react-router";
+import { TrendingUp, Clock, ExternalLink, ArrowLeft } from "lucide-react";
 import { playersData } from "../_data/data";
 
 import OverviewView from "./OverviewView";
@@ -8,9 +8,10 @@ import ContractView from "./ContractView";
 import OpportunitiesView from "./OpportunitiesView";
 
 const AgentPlayerDetails = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState<string>("Overview");
+
+  const navigate = useNavigate();
 
   const player = playersData.find((p) => p.id === Number(id)) || playersData[0];
 
@@ -34,6 +35,18 @@ const AgentPlayerDetails = () => {
   return (
     <div className="bg-[#0B0E14] min-h-screen text-white p-6 pb-12 font-sans overflow-x-hidden">
       {/* Top Navigation Header */}
+      <div className="mb-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="group flex items-center gap-2.5 px-4 py-2 bg-[#11161D] hover:bg-cyan-500/10 border border-gray-800 hover:border-cyan-500/30 rounded-xl text-gray-400 hover:text-cyan-400 text-xs font-bold transition-all duration-300 cursor-pointer"
+        >
+          <ArrowLeft
+            size={16}
+            className="transition-transform duration-300 group-hover:-translate-x-1"
+          />
+          Back
+        </button>
+      </div>
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <div className="h-14 w-14 rounded-full border-2 border-cyan-500/30 overflow-hidden shadow-lg shadow-cyan-500/10">
@@ -55,19 +68,6 @@ const AgentPlayerDetails = () => {
               <span>{player.club}</span>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#1A232E] hover:bg-[#252F3C] border border-cyan-900/30 rounded-lg text-cyan-400 text-xs font-bold transition-all cursor-pointer font-sans">
-            <Edit3 size={14} />
-            Edit Player Data
-          </button>
-          <button
-            onClick={() => navigate(-1)}
-            className="p-2 text-gray-500 hover:text-white transition-colors cursor-pointer"
-          >
-            <X size={20} />
-          </button>
         </div>
       </div>
 
