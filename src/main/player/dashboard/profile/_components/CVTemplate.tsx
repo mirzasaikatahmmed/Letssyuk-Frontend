@@ -108,7 +108,7 @@ const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>((props, re
         <SectionHeader label="Performance Insights" />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 30px" }}>
           {data.performance?.keyStats?.map((s, i) => (
-            <div key={i} style={{ borderBottom: `1px solid ${DIVIDER}`, paddingBottom: "8px" }}>
+            <div key={i}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "13px", fontWeight: "700", color: "#222" }}>{s.label}</span>
                 <span style={{ fontSize: "12px", color: "#777" }}>{s.value}</span>
