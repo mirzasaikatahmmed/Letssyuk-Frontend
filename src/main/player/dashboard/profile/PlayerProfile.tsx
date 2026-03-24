@@ -62,6 +62,33 @@ const PlayerProfile = () => {
         if (!cvRef.current) {
           throw new Error("CV Template failed to render in the DOM.");
         }
+
+        // Inject style override to replace oklch() colors (unsupported by html2canvas)
+        const oklchOverride = document.createElement('style');
+        oklchOverride.id = 'oklch-pdf-override';
+        oklchOverride.textContent = `
+          *, *::before, *::after {
+            --background: #ffffff !important;
+            --foreground: #0a0a0a !important;
+            --card: #ffffff !important;
+            --card-foreground: #0a0a0a !important;
+            --popover: #ffffff !important;
+            --popover-foreground: #0a0a0a !important;
+            --primary: #171717 !important;
+            --primary-foreground: #fafafa !important;
+            --secondary: #f5f5f5 !important;
+            --secondary-foreground: #171717 !important;
+            --muted: #f5f5f5 !important;
+            --muted-foreground: #737373 !important;
+            --accent: #f5f5f5 !important;
+            --accent-foreground: #171717 !important;
+            --destructive: #ef4444 !important;
+            --border: #e5e5e5 !important;
+            --input: #e5e5e5 !important;
+            --ring: #0a0a0a !important;
+          }
+        `;
+        document.head.appendChild(oklchOverride);
         
         const options = {
           margin: 0.2,
@@ -79,11 +106,13 @@ const PlayerProfile = () => {
 
         // Generate and save PDF
         await html2pdf().from(cvRef.current).set(options).save();
+        document.getElementById('oklch-pdf-override')?.remove();
         toast.success("CV generated successfully!");
       } else {
         toast.error("Failed to fetch CV data from the server. Please try again.");
       }
     } catch (error: any) {
+      document.getElementById('oklch-pdf-override')?.remove();
       console.error("Redux API CV Error detailed:", error);
       const errorMessage = error?.status 
         ? `API Error (${error.status}): ${error?.data?.message || "Check your network"}`
@@ -132,9 +161,16 @@ const PlayerProfile = () => {
         </div>
       </div>
 
-      {/* Hidden CV Template for PDF mapping - only render when we have data */}
+      {/* Removed hidden-cv-container Tailwind class and used pure inline styles for isolation */}
       {cvData && (
-        <div className="absolute top-[-9999px] left-[-9999px] w-[800px]">
+        <div style={{ 
+          position: 'absolute', 
+          top: '-10000px', 
+          left: '-10000px', 
+          width: '800px', 
+          backgroundColor: '#ffffff',
+          zIndex: -9999
+        }}>
           <CVTemplate ref={cvRef} data={cvData} />
         </div>
       )}
