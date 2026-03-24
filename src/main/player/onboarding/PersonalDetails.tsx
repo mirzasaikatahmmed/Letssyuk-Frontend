@@ -1,7 +1,10 @@
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { Info, Save } from "lucide-react";
+import { Info, Save, ChevronRight } from "lucide-react";
 import { useOnboarding } from "@/context/OnboardingContext";
+import countryList from "react-select-country-list";
+import ISO6391 from "iso-639-1";
 
 type FormValues = {
   fullName: string;
@@ -15,6 +18,15 @@ type FormValues = {
 const PersonalDetails = () => {
   const navigate = useNavigate();
   const { data, updateStep } = useOnboarding();
+
+  // Country list data
+  const countries = useMemo(() => countryList().getData(), []);
+
+  // Full language list
+  const languages = useMemo(() => {
+    const list = ISO6391.getAllNames().sort((a, b) => a.localeCompare(b));
+    return list;
+  }, []);
 
   const {
     register,
@@ -98,25 +110,44 @@ const PersonalDetails = () => {
               Select Nationality*
             </label>
             <select
-              {...register("nationality", { required: true })}
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:border-cyan-500/50"
+              {...register("nationality", {
+                required: "Nationality is required",
+              })}
+              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/30 transition-all cursor-pointer"
             >
-              <option value="">Nationality</option>
-              <option>Bangladesh</option>
-              <option>England</option>
+              <option value="">Select your country</option>
+              {countries.map((country) => (
+                <option
+                  key={country.value}
+                  value={country.label}
+                  className="bg-[#12121A]"
+                >
+                  {country.label}
+                </option>
+              ))}
             </select>
+            {errors.nationality && (
+              <p className="text-red-400 text-xs">
+                {errors.nationality.message}
+              </p>
+            )}
           </div>
 
           {/* Gender */}
           <div className="flex flex-col gap-2">
             <label className="text-gray-300 text-sm font-medium">Gender*</label>
             <select
-              {...register("gender", { required: true })}
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white"
+              {...register("gender", { required: "Please select your gender" })}
+              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/30 transition-all cursor-pointer"
             >
-              <option>Male</option>
-              <option>Female</option>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
+            {errors.gender && (
+              <p className="text-red-400 text-xs">{errors.gender.message}</p>
+            )}
           </div>
 
           {/* Language */}
@@ -125,12 +156,21 @@ const PersonalDetails = () => {
               Preferred Language*
             </label>
             <select
-              {...register("language", { required: true })}
-              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white"
+              {...register("language", {
+                required: "Please select your language",
+              })}
+              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/30 transition-all cursor-pointer"
             >
-              <option>English</option>
-              <option>Bangla</option>
+              <option value="">Select Language</option>
+              {languages.map((lang) => (
+                <option key={lang} value={lang} className="bg-[#12121A]">
+                  {lang}
+                </option>
+              ))}
             </select>
+            {errors.language && (
+              <p className="text-red-400 text-xs">{errors.language.message}</p>
+            )}
           </div>
         </div>
       </form>
@@ -148,9 +188,9 @@ const PersonalDetails = () => {
         <button
           type="submit"
           form="onboarding-form"
-          className="px-8 py-2.5 rounded-lg bg-[#235D67] text-[#12121A] text-sm flex items-center gap-2 cursor-pointer"
+          className="px-8 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 text-[#0b0f14] font-bold text-sm flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(6,182,212,0.2)] cursor-pointer"
         >
-          Continue <span className="text-lg">›</span>
+          Continue <ChevronRight size={18} />
         </button>
       </div>
     </div>
