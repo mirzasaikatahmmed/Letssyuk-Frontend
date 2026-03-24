@@ -1,5 +1,5 @@
 import React from "react";
-import { Mail, Phone, MapPin, Globe, User } from "lucide-react";
+import { User } from "lucide-react";
 
 interface CVData {
   fullName: string;
@@ -67,17 +67,17 @@ const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>((props, re
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 22px", fontSize: "12px", color: "#555" }}>
             <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <p><Mail size={12} color={GREEN} /></p> <p>{data.email}</p>
+              <span style={{ color: GREEN, fontSize: "13px" }}>✉</span><span>{data.email}</span>
             </span>
             <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <p><Phone size={12} color={GREEN} /></p> <p>{data.phone}</p>
+              <span style={{ color: GREEN, fontSize: "13px" }}>✆</span><span>{data.phone}</span>
             </span>
             <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <p><MapPin size={12} color={GREEN} /></p> <p>{data.location || "N/A"}</p>
+              <span style={{ color: GREEN, fontSize: "13px" }}>⊙</span><span>{data.location || "N/A"}</span>
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", color: "#555", marginTop: "6px" }}>
-            <p><Globe size={12} color={GREEN} /></p> <p>www.onyxsportai.com</p>
+            <span style={{ color: GREEN, fontSize: "13px" }}>⊕</span><span>www.onyxsportai.com</span>
           </div>
         </div>
 
