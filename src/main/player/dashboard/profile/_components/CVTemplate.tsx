@@ -24,11 +24,10 @@ const GREEN = "#2e7d32";
 const DIVIDER = "#e0e0e0";
 
 const SectionHeader = ({ label }: { label: string }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+  <div style={{ borderBottom: `2px solid ${DIVIDER}`, paddingBottom: "6px", marginBottom: "14px" }}>
     <span style={{ fontSize: "13px", fontWeight: "800", color: "#222", textTransform: "uppercase", letterSpacing: "1.5px" }}>
       {label}
     </span>
-    <div style={{ flex: 1, height: "1px", backgroundColor: DIVIDER, marginLeft: "6px" }} />
   </div>
 );
 
