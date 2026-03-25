@@ -13,10 +13,26 @@ interface CVData {
     keyStats: Array<{ label: string; value: string }>;
   };
   highlights: { summary: string[] };
-  skills: { coreSkills: string[] };
+  skills: {
+    coreSkills: string[];
+    technicalSkills: string[];
+    physicalTraits: string[];
+    mentalityTraits: string[];
+    positionSpecificAttributes: string[];
+    overallSkillSummary: string;
+  };
   positionProfile: {
     primaryPosition: string;
+    dominantFoot: string;
     positionSummary: string;
+  };
+  availability?: {
+    currentClubOrStatus: string;
+    playingLevel: string;
+  };
+  physical?: {
+    heightCm: number;
+    weightKg: number;
   };
 }
 
@@ -44,26 +60,6 @@ const SectionHeader = ({ label }: { label: string }) => (
     </span>
   </div>
 );
-
-const DashedBar = ({ percent }: { percent: number }) => {
-  const total = 20;
-  const filled = Math.round((percent / 100) * total);
-  return (
-    <div style={{ display: "flex", gap: "3px", marginTop: "5px" }}>
-      {Array.from({ length: total }).map((_, i) => (
-        <div
-          key={i}
-          style={{
-            width: "14px",
-            height: "4px",
-            borderRadius: "2px",
-            backgroundColor: i < filled ? GREEN : "#d0d0d0",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>(
   (props, ref) => {
@@ -185,7 +181,7 @@ const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>(
         </div>
 
         {/* PROFESSIONAL SUMMARY */}
-        <div style={{ marginBottom: "26px" }}>
+        <div style={{ marginBottom: "26px", pageBreakInside: "avoid" }}>
           <SectionHeader label="Professional Summary" />
           <p
             style={{
@@ -200,7 +196,7 @@ const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>(
         </div>
 
         {/* PERFORMANCE STATS (as Work Experience style) */}
-        <div style={{ marginBottom: "26px" }}>
+        <div style={{ marginBottom: "26px", pageBreakInside: "avoid" }}>
           <SectionHeader label="Performance Insights" />
           <div
             style={{
@@ -242,7 +238,7 @@ const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>(
         </div>
 
         {/* MATCH HIGHLIGHTS */}
-        <div style={{ marginBottom: "26px" }}>
+        <div style={{ marginBottom: "26px", pageBreakInside: "avoid" }}>
           <SectionHeader label="Match Highlights" />
           <ol
             style={{
@@ -259,52 +255,94 @@ const CVTemplate = React.forwardRef<HTMLDivElement, { data: CVData }>(
           </ol>
         </div>
 
-        {/* SKILLS */}
-        <div style={{ marginBottom: "26px" }}>
-          <SectionHeader label="Skills" />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr 1fr",
-              gap: "14px 20px",
-            }}
-          >
-            {data.skills?.coreSkills?.slice(0, 6).map((skill, i) => (
-              <div key={i}>
-                <span
-                  style={{ fontSize: "13px", color: "#333", fontWeight: "500" }}
-                >
-                  {skill}
+        {/* POSITION PROFILE */}
+        <div style={{ marginBottom: "26px", pageBreakInside: "avoid" }}>
+          <SectionHeader label="Position Profile" />
+          <div style={{ fontSize: "13px", color: "#444", lineHeight: "1.7" }}>
+            <div style={{ marginBottom: "6px" }}>
+              <strong style={{ color: "#222" }}>Position: </strong>
+              {data.positionProfile?.primaryPosition}
+              {data.positionProfile?.dominantFoot && (
+                <span style={{ marginLeft: "16px" }}>
+                  <strong style={{ color: "#222" }}>Dominant Foot: </strong>
+                  {data.positionProfile.dominantFoot}
                 </span>
-                <DashedBar percent={75 - (i % 3) * 10} />
+              )}
+            </div>
+            {data.availability?.currentClubOrStatus && (
+              <div style={{ marginBottom: "6px" }}>
+                <strong style={{ color: "#222" }}>Club/Status: </strong>
+                {data.availability.currentClubOrStatus}
               </div>
-            ))}
+            )}
+            {data.physical && (
+              <div style={{ marginBottom: "6px" }}>
+                <strong style={{ color: "#222" }}>Height: </strong>
+                {data.physical.heightCm} cm
+                <span style={{ marginLeft: "16px" }}>
+                  <strong style={{ color: "#222" }}>Weight: </strong>
+                  {data.physical.weightKg} kg
+                </span>
+              </div>
+            )}
+            <div
+              style={{ marginTop: "6px", fontStyle: "italic", color: "#555" }}
+            >
+              {data.positionProfile?.positionSummary}
+            </div>
           </div>
         </div>
 
-        {/* POSITION PROFILE (as Achievements) */}
-        <div style={{ marginBottom: "26px" }}>
-          <SectionHeader label="Position Profile" />
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-          >
-            <div
+        {/* SKILLS */}
+        <div style={{ marginBottom: "26px", pageBreakInside: "avoid" }}>
+          <SectionHeader label="Skills" />
+
+          {[
+            { title: "Core Skills", items: data.skills?.coreSkills },
+            { title: "Technical Skills", items: data.skills?.technicalSkills },
+            { title: "Physical Traits", items: data.skills?.physicalTraits },
+            { title: "Mentality", items: data.skills?.mentalityTraits },
+            {
+              title: "Position Specific",
+              items: data.skills?.positionSpecificAttributes,
+            },
+          ].map((group, gi) =>
+            group.items?.length ? (
+              <div
+                key={gi}
+                style={{ marginBottom: "10px", pageBreakInside: "avoid" }}
+              >
+                <div
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: "700",
+                    color: GREEN,
+                    textTransform: "uppercase",
+                    letterSpacing: "1px",
+                    marginBottom: "6px",
+                  }}
+                >
+                  {group.title}
+                </div>
+                <div style={{ fontSize: "13px", color: "#333" }}>
+                  {group.items.join(", ")}
+                </div>
+              </div>
+            ) : null,
+          )}
+
+          {data.skills?.overallSkillSummary && (
+            <p
               style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "10px",
-                fontSize: "13px",
-                color: "#444",
+                fontSize: "12px",
+                color: "#666",
+                fontStyle: "italic",
+                margin: "8px 0 0 0",
               }}
             >
-              <span>
-                <strong style={{ color: "#222" }}>
-                  {data.positionProfile?.primaryPosition}
-                </strong>{" "}
-                — {data.positionProfile?.positionSummary}
-              </span>
-            </div>
-          </div>
+              {data.skills.overallSkillSummary}
+            </p>
+          )}
         </div>
 
         {/* FOOTER */}
