@@ -9,6 +9,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAgentFormContext } from "../context/AgentFormContext";
+import { useMemo } from "react";
+import countryList from "react-select-country-list";
 
 interface AgentDetailsStepProps {
   onNext: () => void;
@@ -16,6 +18,9 @@ interface AgentDetailsStepProps {
 
 export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
   const { formData, updateFormData } = useAgentFormContext();
+
+  // Country list data
+  const countries = useMemo(() => countryList().getData(), []);
 
   const canProceed =
     formData.fullName && formData.email && formData.phone && formData.country;
@@ -110,12 +115,11 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
                 <SelectValue placeholder="Select country" />
               </SelectTrigger>
               <SelectContent className="bg-[#161d26] border-slate-700 text-white">
-                <SelectItem value="England">England</SelectItem>
-                <SelectItem value="Spain">Spain</SelectItem>
-                <SelectItem value="France">France</SelectItem>
-                <SelectItem value="Germany">Germany</SelectItem>
-                <SelectItem value="Italy">Italy</SelectItem>
-                <SelectItem value="Bangladesh">Bangladesh</SelectItem>
+                {countries.map((country) => (
+                  <SelectItem key={country.value} value={country.value}>
+                    {country.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
