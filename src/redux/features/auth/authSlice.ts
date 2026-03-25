@@ -31,8 +31,7 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<LoginResponse>) => {
       const token = action.payload.data;
       const decoded = jwtDecode<User>(token);
-      // console.log(decoded, 'decoded token.......');
-      
+
       state.user = decoded;
       state.accessToken = token;
       state.refreshToken = null;

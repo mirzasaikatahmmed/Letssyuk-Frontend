@@ -21,8 +21,11 @@ import {
   useVerifyOtpMutation,
   useGenerateOtpMutation,
 } from "@/redux/features/auth/authApi";
-import { ROLE_ONBOARDING, type User } from "@/types/auth.types";
+import { ROLE_ONBOARDING, type User, type UserRole } from "@/types/auth.types";
 import { jwtDecode } from "jwt-decode";
+
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/features/auth/authSlice";
 
 interface VerifyOtpFormValues {
   code: string;
@@ -35,11 +38,13 @@ interface ApiError {
 }
 
 const VerifyOtp = () => {
+  const dispatch = useDispatch();
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const [generateOtp, { isLoading: isResending }] = useGenerateOtpMutation();
   const navigate = useNavigate();
   const location = useLocation();
-  const email = location.state?.email || "";
+  const email = (location.state?.email || "").trim().toLowerCase();
+  const role = location.state?.role as UserRole | undefined;
   const type = location.state?.type || "EMAIL_VERIFY";
 
   const form = useForm<VerifyOtpFormValues>({
@@ -55,29 +60,48 @@ const VerifyOtp = () => {
     }
 
     try {
-      const response = await verifyOtp({
+      const payload = {
         email,
         code: values.code,
         type: type,
-      }).unwrap();
+      };
+
+      const response = await verifyOtp(payload).unwrap();
 
       if (response.success) {
         toast.success(response.message || "Verification successful");
+
+        const token = response.data;
+
         if (type === "RESET_PASSWORD") {
           navigate("/auth/reset-password", {
             state: {
               email,
-              token: response.data,
+              token,
             },
           });
-        } else {
-          const token = response.data;
+          return;
+        }
+
+        if (typeof token === "string") {
+          dispatch(
+            setUser({ success: true, message: "Logged in", data: token }),
+          );
           const decoded = jwtDecode<User>(token);
           const redirectPath = ROLE_ONBOARDING[decoded.role] || "/";
           navigate(redirectPath);
+        } else {
+          toast.info("Verification complete!");
+          if (role) {
+            const redirectPath = ROLE_ONBOARDING[role] || "/";
+            navigate(redirectPath);
+          } else {
+            navigate("/auth/sign-in");
+          }
         }
       }
     } catch (err: unknown) {
+      console.error("OTP Verification Error:", err);
       const error = err as ApiError;
       toast.error(
         error?.data?.message || "Verification failed. Please check the code.",

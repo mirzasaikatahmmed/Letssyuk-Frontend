@@ -95,7 +95,12 @@ const SignUp = () => {
         toast.success(
           response.data || "Email sent successfully, please verify your email",
         );
-        navigate("/auth/verify-otp", { state: { email: values.email } });
+        navigate("/auth/verify-otp", { 
+          state: { 
+            email: values.email,
+            role: values.role 
+          } 
+        });
       }
     } catch (err: unknown) {
       const error = err as ApiError;
