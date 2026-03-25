@@ -19,6 +19,8 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useVerifyOtpMutation, useGenerateOtpMutation } from "@/redux/features/auth/authApi";
+import { ROLE_ONBOARDING, type User } from "@/types/auth.types";
+import { jwtDecode } from "jwt-decode";
 
 interface VerifyOtpFormValues {
   code: string;
@@ -67,7 +69,10 @@ const VerifyOtp = () => {
             } 
           });
         } else {
-          navigate("/auth/sign-in");
+          const token = response.data;
+          const decoded = jwtDecode<User>(token);
+          const redirectPath = ROLE_ONBOARDING[decoded.role] || "/";
+          navigate(redirectPath);
         }
       }
     } catch (err: unknown) {
