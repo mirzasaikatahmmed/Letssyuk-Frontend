@@ -256,11 +256,11 @@ export const Routes = createBrowserRouter([
         ],
       },
       {
-        element: <PublicRoute />,
+        path: "auth",
+        element: <AuthLayout />,
         children: [
           {
-            path: "auth",
-            element: <AuthLayout />,
+            element: <PublicRoute />,
             children: [
               {
                 path: "sign-in",
@@ -278,6 +278,11 @@ export const Routes = createBrowserRouter([
                 path: "reset-password",
                 element: <ResetPassword />,
               },
+            ],
+          },
+          {
+            element: <PublicRoute redirectTo="onboarding" />,
+            children: [
               {
                 path: "verify-otp",
                 element: <VerifyOtp />,

@@ -6,6 +6,16 @@ import { jwtDecode } from "jwt-decode";
 // Helper function to decode user from token in cookies
 const getInitialUser = (): User | null => {
   const token = Cookies.get("accessToken");
+  const userCookie = Cookies.get("user");
+
+  if (userCookie) {
+    try {
+      return JSON.parse(userCookie) as User;
+    } catch {
+      return null;
+    }
+  }
+
   if (token) {
     try {
       return jwtDecode<User>(token);
@@ -39,6 +49,7 @@ const authSlice = createSlice({
 
       // Set cookies
       Cookies.set("accessToken", token, { expires: 1 });
+      Cookies.set("user", JSON.stringify(decoded), { expires: 1 });
     },
     logout: (state) => {
       state.user = null;
@@ -49,6 +60,7 @@ const authSlice = createSlice({
       // Remove cookies
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
+      Cookies.remove("user");
     },
   },
 });

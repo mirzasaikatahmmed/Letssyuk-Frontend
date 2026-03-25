@@ -1,15 +1,17 @@
-export type UserRole = "ATHLETE" | "CLUB" | "AGENT";
+export type UserRole = "ATHLETE" | "CLUB" | "AGENT" | "ADMIN";
 
 export const ROLE_ONBOARDING: Record<UserRole, string> = {
   ATHLETE: "/player/onboarding",
   CLUB: "/club/onboarding",
   AGENT: "/agent/onboarding",
+  ADMIN: "/admin/dashboard", 
 };
 
 export const ROLE_DASHBOARDS: Record<UserRole, string> = {
   ATHLETE: "/player/dashboard/overview",
   CLUB: "/club/dashboard/overview",
   AGENT: "/agent/dashboard/overview",
+  ADMIN: "/admin/dashboard",
 };
 
 export interface PlayerOwned {
