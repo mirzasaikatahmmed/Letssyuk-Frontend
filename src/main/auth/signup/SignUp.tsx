@@ -53,7 +53,6 @@ const defaultValues: SignUpFormValues = {
 const inputClassName =
   "h-12 rounded-xl w-full border-[#1B314B] bg-[#0F172A]/60 text-base text-white placeholder:text-[#6A798F] focus-visible:ring-1 focus-visible:ring-[#00E5FF] focus-visible:border-[#00E5FF] transition-all duration-200";
 
-
 interface ApiError {
   data?: {
     message?: string;
@@ -93,7 +92,9 @@ const SignUp = () => {
     try {
       const response = await signup(formData).unwrap();
       if (response.success) {
-        toast.success(response.data || "Email sent successfully, please verify your email");
+        toast.success(
+          response.data || "Email sent successfully, please verify your email",
+        );
         navigate("/auth/verify-otp", { state: { email: values.email } });
       }
     } catch (err: unknown) {
@@ -102,7 +103,10 @@ const SignUp = () => {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: any) => {
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: any,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       field.onChange(file);
@@ -112,8 +116,12 @@ const SignUp = () => {
   return (
     <div className="w-full max-w-[500px] rounded-2xl md:rounded-3xl border border-white/10 bg-[#070B14]/90 p-6 sm:p-8 md:p-10 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.8)] backdrop-blur-xl">
       <div className="mb-6 md:mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">Create Account</h1>
-        <p className="text-[#B7BFCD] text-base md:text-lg">Join our sports analytics platform</p>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+          Create Account
+        </h1>
+        <p className="text-[#B7BFCD] text-base md:text-lg">
+          Join our sports analytics platform
+        </p>
       </div>
 
       <Form {...form}>
@@ -125,7 +133,9 @@ const SignUp = () => {
             rules={{ required: "Full name is required" }}
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">Full Name</FormLabel>
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">
+                  Full Name
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter your full name"
@@ -146,12 +156,14 @@ const SignUp = () => {
               required: "Email is required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }
+                message: "Invalid email address",
+              },
             }}
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">Email Address</FormLabel>
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">
+                  Email Address
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="email"
@@ -172,7 +184,9 @@ const SignUp = () => {
             rules={{ required: "Phone number is required" }}
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">Phone Number</FormLabel>
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">
+                  Phone Number
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter your phone number"
@@ -191,8 +205,13 @@ const SignUp = () => {
             name="role"
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">I am joining as a</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">
+                  I am joining as a
+                </FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger className={inputClassName}>
                       <SelectValue placeholder="Select your role" />
@@ -217,11 +236,13 @@ const SignUp = () => {
             name="password"
             rules={{
               required: "Password is required",
-              minLength: { value: 6, message: "Minimum 6 characters required" }
+              minLength: { value: 6, message: "Minimum 6 characters required" },
             }}
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">Password</FormLabel>
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">
+                  Password
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
@@ -235,7 +256,11 @@ const SignUp = () => {
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-[#95A4BA] hover:text-white transition-colors"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                      {showPassword ? (
+                        <EyeOff className="size-5" />
+                      ) : (
+                        <Eye className="size-5" />
+                      )}
                     </button>
                   </div>
                 </FormControl>
@@ -251,7 +276,9 @@ const SignUp = () => {
             rules={{ required: "Please confirm your password" }}
             render={({ field }) => (
               <FormItem className="space-y-2">
-                <FormLabel className="text-[#E7EAF0] text-base font-normal">Repeat Password</FormLabel>
+                <FormLabel className="text-[#E7EAF0] text-base font-normal">
+                  Repeat Password
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
@@ -263,9 +290,15 @@ const SignUp = () => {
                     <button
                       type="button"
                       className="absolute right-4 top-1/2 -translate-y-1/2 text-[#95A4BA] hover:text-white transition-colors"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                     >
-                      {showConfirmPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
+                      {showConfirmPassword ? (
+                        <EyeOff className="size-5" />
+                      ) : (
+                        <Eye className="size-5" />
+                      )}
                     </button>
                   </div>
                 </FormControl>
@@ -300,9 +333,7 @@ const SignUp = () => {
             name="image"
             render={({ field }) => (
               <FormItem className="space-y-3">
-                <div
-                  className="border border-[#1B314B] bg-[#0F172A]/40 rounded-2xl p-6"
-                >
+                <div className="border border-[#1B314B] bg-[#0F172A]/40 rounded-2xl p-6">
                   <p className="text-[#E7EAF0] text-base font-medium mb-1">
                     Upload ID document (Passport / School ID)
                   </p>
@@ -310,11 +341,11 @@ const SignUp = () => {
                     Required for age verification
                   </p>
 
-                  <label
-                    className="flex items-center justify-center gap-2 w-full h-12 rounded-xl border border-[#00E5FF] bg-transparent text-[#00E5FF] font-semibold cursor-pointer hover:bg-[#00E5FF]/10 transition-colors"
-                  >
+                  <label className="flex items-center justify-center gap-2 w-full h-12 rounded-xl border border-[#00E5FF] bg-transparent text-[#00E5FF] font-semibold cursor-pointer hover:bg-[#00E5FF]/10 transition-colors">
                     <Upload className="size-5" />
-                    {field.value ? field.value.name : "Click to upload document"}
+                    {field.value
+                      ? field.value.name
+                      : "Click to upload document"}
                     <input
                       type="file"
                       className="hidden"
@@ -341,7 +372,10 @@ const SignUp = () => {
           <div className="pt-4 text-center">
             <p className="text-[#B7BFCD] text-base font-normal">
               Already have an account?{" "}
-              <Link to="/auth/sign-in" className="text-[#00E5FF] font-semibold hover:underline decoration-2 underline-offset-4 ml-1">
+              <Link
+                to="/auth/sign-in"
+                className="text-[#00E5FF] font-semibold hover:underline decoration-2 underline-offset-4 ml-1"
+              >
                 Sign In
               </Link>
             </p>

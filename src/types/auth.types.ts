@@ -1,11 +1,15 @@
-export type UserRole = "ATHLETE" | "CLUB" | "AGENT" | "ADMIN" | "USER";
+export type UserRole = "ATHLETE" | "CLUB" | "AGENT";
 
-export const ROLE_DASHBOARDS: Record<UserRole, string> = {
+export const ROLE_ONBOARDING: Record<UserRole, string> = {
   ATHLETE: "/player/onboarding",
   CLUB: "/club/onboarding",
   AGENT: "/agent/onboarding",
-  ADMIN: "/admin/dashboard",
-  USER: "/",
+};
+
+export const ROLE_DASHBOARDS: Record<UserRole, string> = {
+  ATHLETE: "/player/dashboard/overview",
+  CLUB: "/club/dashboard/overview",
+  AGENT: "/agent/dashboard/overview",
 };
 
 export interface PlayerOwned {
@@ -92,13 +96,7 @@ export interface LoginCredentials {
 
 export type SignupRole = UserRole;
 
-export const SIGNUP_ROLES: SignupRole[] = [
-  "ATHLETE",
-  "CLUB",
-  "AGENT",
-  "USER",
-  "ADMIN",
-];
+export const SIGNUP_ROLES: SignupRole[] = ["ATHLETE", "CLUB", "AGENT"];
 
 export interface SignupCredentials {
   fullName: string;
