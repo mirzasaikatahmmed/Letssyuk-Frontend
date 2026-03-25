@@ -2,8 +2,8 @@ export type UserRole = "ATHLETE" | "CLUB" | "AGENT" | "ADMIN" | "USER";
 
 export const ROLE_DASHBOARDS: Record<UserRole, string> = {
   ATHLETE: "/player/dashboard/overview",
-  CLUB: "/club/onboarding",
-  AGENT: "/agent/onboarding",
+  CLUB: "/club/dashboard/overview",
+  AGENT: "/agent/dashboard/overview",
   ADMIN: "/admin/dashboard",
   USER: "/",
 };
