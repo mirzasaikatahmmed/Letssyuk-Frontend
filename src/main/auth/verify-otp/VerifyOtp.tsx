@@ -101,7 +101,6 @@ const VerifyOtp = () => {
         }
       }
     } catch (err: unknown) {
-      console.error("OTP Verification Error:", err);
       const error = err as ApiError;
       toast.error(
         error?.data?.message || "Verification failed. Please check the code.",
