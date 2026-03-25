@@ -419,3 +419,57 @@ export interface MentalHealthSupportResponse {
     data: MentalHealthSupportData;
   };
 }
+
+export interface PlayerCvData {
+  playerId: string;
+  generatedAt: string;
+  summary: {
+    text: string;
+  };
+  physical: {
+    heightCm: number;
+    weightKg: number;
+  };
+  performance: {
+    competitionLevel: string;
+    matchesPlayed: number;
+    averageMinutesPerMatch: number;
+    goals: number;
+    assists: number;
+    cleanSheets: number;
+    keyStats: Array<{
+      label: string;
+      value: string;
+    }>;
+  };
+  highlights: {
+    summary: string[];
+    videoLinks: string[];
+  };
+  availability: {
+    currentClubOrStatus: string;
+    playingLevel: string;
+  };
+  positionProfile: {
+    primaryPosition: string;
+    secondaryPositions: string[];
+    dominantFoot: string;
+    positionSummary: string;
+  };
+  skills: {
+    coreSkills: string[];
+    technicalSkills: string[];
+    physicalTraits: string[];
+    mentalityTraits: string[];
+    positionSpecificAttributes: string[];
+    overallSkillSummary: string;
+  };
+  injuryHistory: {
+    last12Months: string;
+  };
+}
+
+export interface PlayerCvResponse {
+  success: boolean;
+  data: PlayerCvData;
+}

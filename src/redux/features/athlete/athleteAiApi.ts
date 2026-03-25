@@ -10,6 +10,7 @@ import type {
   PlayerDevelopmentResponse,
   RecoveryLoadResponse,
   MentalHealthSupportResponse,
+  PlayerCvResponse,
 } from "@/types/ai.types";
 import { aiBaseApi } from "../../api/aiBaseApi";
 
@@ -69,6 +70,10 @@ export const athleteAiApi = aiBaseApi.injectEndpoints({
         `/athlete/analysis/${playerId}/mental-health-wellbeing-support`,
       providesTags: ["AIRecommendation"],
     }),
+    getFormattedPlayerCv: builder.query<PlayerCvResponse, string>({
+      query: (playerId) => `/athlete/analysis/${playerId}/formatted-player-cv`,
+      providesTags: ["AIRecommendation"],
+    }),
   }),
 });
 
@@ -83,4 +88,6 @@ export const {
   useGetPlayerDevelopmentPathwayQuery,
   useGetRecoveryLoadManagementQuery,
   useGetMentalHealthSupportQuery,
+  useGetFormattedPlayerCvQuery,
+  useLazyGetFormattedPlayerCvQuery,
 } = athleteAiApi;
