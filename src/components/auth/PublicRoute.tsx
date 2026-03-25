@@ -1,13 +1,21 @@
 import { Navigate, Outlet } from "react-router";
 import { useAppSelector } from "@/redux/hooks";
-import { ROLE_DASHBOARDS } from "@/types/auth.types";
+import { ROLE_DASHBOARDS, ROLE_ONBOARDING } from "@/types/auth.types";
 
-const PublicRoute = () => {
+interface PublicRouteProps {
+  redirectTo?: "dashboard" | "onboarding";
+}
+
+const PublicRoute = ({ redirectTo = "dashboard" }: PublicRouteProps) => {
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   if (isAuthenticated && user) {
-    // If already logged in, redirect to their dashboard
-    const redirectPath = ROLE_DASHBOARDS[user.role] || "/";
+    // Dynamically choose redirect path
+    const redirectPath =
+      redirectTo === "onboarding"
+        ? ROLE_ONBOARDING[user.role] || "/"
+        : ROLE_DASHBOARDS[user.role] || "/";
+
     return <Navigate to={redirectPath} replace />;
   }
 
