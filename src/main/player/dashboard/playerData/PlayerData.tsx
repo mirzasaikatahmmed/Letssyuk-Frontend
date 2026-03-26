@@ -14,7 +14,25 @@ import {
 } from "lucide-react";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetProfileCompletionQuery } from "@/redux/api/playerApi";
+
 const PlayerData = () => {
+  const { data: userData } = useGetMeQuery();
+  const playerOwned =
+    userData?.playerOwned || (userData as any)?.data?.playerOwned;
+  const playerId = playerOwned?.id;
+
+  const { data: completionData } = useGetProfileCompletionQuery(playerId, {
+    skip: !playerId,
+  });
+
+  const completion = completionData?.data || {
+    percent: 0,
+    completedSteps: 0,
+    totalSteps: 9,
+  };
+
   const dataCategories = [
     {
       title: "Personal Details",
@@ -91,15 +109,15 @@ const PlayerData = () => {
           <div>
             <h3 className="text-base font-bold">Data Update Completion</h3>
             <p className="text-sm text-gray-400 mt-1">
-              45% complete • 8 sections
+              {completion.percent}% complete • {completion.totalSteps} sections
             </p>
           </div>
-          <span className="text-4xl font-bold">45%</span>
+          <span className="text-4xl font-bold">{completion.percent}%</span>
         </div>
         <div className="h-2.5 w-full bg-[#121212]/60 rounded-full overflow-hidden border border-white/5">
           <div
             className="h-full bg-linear-to-r from-[#30D5C8] via-[#30D5C8] to-[#BED1FF]"
-            style={{ width: "45%" }}
+            style={{ width: `${completion.percent}%` }}
           ></div>
         </div>
       </Card>

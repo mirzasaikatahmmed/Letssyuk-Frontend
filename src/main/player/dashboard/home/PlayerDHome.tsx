@@ -8,8 +8,10 @@ import AIRecommendations from "./_components/AiRecommendation/AiRecommendation";
 
 import { useGetMeQuery } from "@/redux/features/auth/authApi";
 import { useGetProfileCompletionQuery } from "@/redux/api/playerApi";
+import { useNavigate } from "react-router";
 
 const PlayerDHome = () => {
+  const navigate = useNavigate();
   const { data: userData } = useGetMeQuery();
   
   // Robustly get playerOwned from direct or wrapped response
@@ -91,7 +93,7 @@ const PlayerDHome = () => {
                   AI recommendations.
                 </p>
               </div>
-              <Button className="w-full bg-[#53DDF5] hover:bg-cyan-400 text-black font-semibold h-12">
+              <Button onClick={() => navigate("/player/dashboard/data")} className="w-full bg-[#53DDF5] hover:bg-cyan-400 text-black font-semibold h-12 cursor-pointer">
                 Complete Now &gt;
               </Button>
             </div>
