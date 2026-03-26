@@ -2,13 +2,33 @@ import Error from "@/components/share/Error/Error";
 import Loading from "@/components/share/Loading/Loading";
 import SubscriptionPlanCard from "@/components/subscription/SubscriptionPlanCard";
 import { useGetPlansQuery } from "@/redux/api/plansApi";
+import { useCreateCheckoutSessionMutation } from "@/redux/api/subscriptionApi";
 import { toast } from "sonner";
 
 const ClubSubscription = () => {
   const { data: plansData, isLoading, isError } = useGetPlansQuery("CLUB");
+  const [createCheckout] = useCreateCheckoutSessionMutation();
 
-  const handleSelectPlan = (planName: string) => {
-    toast.success(`${planName} selected! Redirecting to payment...`);
+  const handleSelectPlan = async (planId: string, planName: string) => {
+    try {
+      if (planName.toLowerCase().includes("enterprise") || planName.toLowerCase().includes("custom")) {
+        toast.info("Please contact our sales team for custom enterprise onboarding.");
+        return;
+      }
+
+      toast.loading(`Preparing ${planName} checkout...`);
+      const res = await createCheckout({ planId }).unwrap();
+      
+      if (res.success && res.data) {
+        window.location.assign(res.data);
+      } else {
+        toast.dismiss();
+        toast.error("Failed to create checkout session. Please try again.");
+      }
+    } catch (err: any) {
+      toast.dismiss();
+      toast.error(err?.data?.message || "Something went wrong. Please try again.");
+    }
   };
 
   if (isLoading) {
@@ -63,7 +83,7 @@ const ClubSubscription = () => {
                 text: feature.feature.name,
                 included: true,
               }))}
-              onSelect={() => handleSelectPlan(plan.name)}
+              onSelect={() => handleSelectPlan(plan.id, plan.name)}
             />
           ))}
         </div>
