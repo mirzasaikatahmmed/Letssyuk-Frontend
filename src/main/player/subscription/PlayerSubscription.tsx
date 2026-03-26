@@ -1,80 +1,69 @@
+import Error from "@/components/share/Error/Error";
+import Loading from "@/components/share/Loading/Loading";
 import SubscriptionPlanCard from "@/components/subscription/SubscriptionPlanCard";
+import { useGetPlansQuery } from "@/redux/api/plansApi";
 import { toast } from "sonner";
 
 const PlayerSubscription = () => {
+  const { data: plansData, isLoading, isError } = useGetPlansQuery("ATHLETE");
+
   const handleSelectPlan = (planName: string) => {
     toast.success(`${planName} selected! Redirecting to payment...`);
   };
 
-  const playerPlans = [
-    {
-      name: "Starter",
-      price: "29",
-      period: "month",
-      description: "Essential analytics for developing players.",
-      features: [
-        { text: "Personal performance dashboard", included: true },
-        { text: "Weekly training insights", included: true },
-        { text: "Basic video analysis", included: true },
-        { text: "Progress tracking", included: true },
-        { text: "Email support", included: true },
-      ],
-      isPopular: false,
-      buttonText: "Get Started",
-    },
-    {
-      name: "Elite",
-      price: "79",
-      period: "month",
-      description: "For players seeking advanced recruitment exposure.",
-      features: [
-        { text: "Everything in Starter", included: true },
-        { text: "AI-powered recommendations", included: true },
-        { text: "Advanced video breakdowns", included: true },
-        { text: "Benchmark comparisons", included: true },
-        { text: "Load management tools", included: true },
-        { text: "Priority support", included: true },
-      ],
-      isPopular: true,
-      buttonText: "Book a Demo",
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      period: "month",
-      description: "Full-scale solution for pro careers and branding.",
-      features: [
-        { text: "Everything in Elite", included: true },
-        { text: "Custom development plans", included: true },
-        { text: "1-on-1 analyst sessions", included: true },
-        { text: "Brand analytics (OnyxBrand)", included: true },
-        { text: "Agent collaboration tools", included: true },
-        { text: "Dedicated account manager", included: true },
-      ],
-      isPopular: false,
-      isCustom: true,
-      buttonText: "Contact Sales",
-    },
-  ];
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (isError || !plansData?.success) {
+    return <Error message="Failed to load plans. Please try again later." />
+  }
+
+  // Define sort order and button text mappings
+  const sortOrder: Record<string, number> = {
+    "Starter": 1,
+    "Pro": 2,
+    "Elite": 2,
+    "Enterprise": 3,
+  };
+
+  const getButtonText = (name: string) => {
+    const n = name.toLowerCase();
+    if (n.includes("enterprise") || n.includes("custom")) return "Contact Sales";
+    if (n.includes("pro") || n.includes("elite")) return "Book a Demo";
+    return "Get Started";
+  };
+
+  const sortedPlans = [...plansData.data].sort((a, b) => {
+    const orderA = sortOrder[a.name] || 99;
+    const orderB = sortOrder[b.name] || 99;
+    return orderA - orderB;
+  });
 
   return (
-    <div className="min-h-screen bg-[#070B14] py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#070B14] py-16 px-4 sm:px-6 lg:px-8 text-center md:text-left">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-[#00E5FF] text-sm font-bold tracking-widest uppercase mb-4">Pricing Plans</h2>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            Launch Your <span className="text-[#00E5FF]">Pro Soccer</span> Career
-          </h1>
-          <p className="text-[#B7BFCD] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            From youth to elite, pick a plan that fits your ambition and potential.
-          </p>
+          <h2 className="text-[#4FD1C5] text-sm font-bold tracking-widest uppercase mb-4">
+            Athlete Plans
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-          {playerPlans.map((plan, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch pt-8">
+          {sortedPlans.map((plan: any) => (
             <SubscriptionPlanCard
-              key={index}
-              {...plan}
+              key={plan.id}
+              name={plan.name}
+              price={plan.price.toString()}
+              period={plan.interval}
+              description={plan.description || `Optimized plan for ${plan.name} athletes.`}
+              isCustom={plan.price === 0}
+              isPopular={plan.name === "Pro" || plan.name === "Elite"}
+              buttonText={getButtonText(plan.name)}
+              features={plan.features.map((feature: any) => ({
+                text: feature.feature.name,
+                included: true,
+              }))}
               onSelect={() => handleSelectPlan(plan.name)}
             />
           ))}
