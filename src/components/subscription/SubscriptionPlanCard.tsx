@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { Check } from "lucide-react";
 
 interface PlanFeature {
   text: string;
@@ -60,7 +60,7 @@ const SubscriptionPlanCard = ({
       <div className="space-y-5 mb-12 grow">
         {features.map((feature, index) => (
           <div key={index} className="flex items-start gap-4">
-            <CheckCircle2
+            <Check
               className={`size-4 mt-1 shrink-0 ${
                 feature.included ? "text-[#4FD1C5]" : "text-gray-700"
               }`}
