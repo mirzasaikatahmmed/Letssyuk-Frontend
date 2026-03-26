@@ -61,6 +61,10 @@ import VerifyOtp from "@/main/auth/verify-otp/VerifyOtp";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import PublicRoute from "@/components/auth/PublicRoute";
 
+import AgentSubscription from "@/main/agent/subscription/AgentSubscription";
+import ClubSubscription from "@/main/club/subscription/ClubSubscription";
+import PlayerSubscription from "@/main/player/subscription/PlayerSubscription";
+
 export const Routes = createBrowserRouter([
   {
     path: "/",
@@ -122,6 +126,10 @@ export const Routes = createBrowserRouter([
                 element: <PlayerData />,
               },
               {
+                path: "subscription",
+                element: <PlayerSubscription />,
+              },
+              {
                 path: "profile",
                 element: <PlayerProfile />,
               },
@@ -180,6 +188,10 @@ export const Routes = createBrowserRouter([
                 element: <ClubOverview />,
               },
               {
+                path: "subscription",
+                element: <ClubSubscription />,
+              },
+              {
                 path: "players",
                 element: <PlayerManagement />,
               },
@@ -226,6 +238,10 @@ export const Routes = createBrowserRouter([
               {
                 path: "overview",
                 element: <AgentOverview />,
+              },
+              {
+                path: "subscription",
+                element: <AgentSubscription />,
               },
               {
                 path: "support",
