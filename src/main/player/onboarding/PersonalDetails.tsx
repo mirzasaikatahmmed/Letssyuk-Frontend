@@ -12,6 +12,7 @@ type FormValues = {
   dob: string;
   nationality: string;
   gender: string;
+  religion: string;
   language: string;
 };
 
@@ -27,6 +28,20 @@ const PersonalDetails = () => {
     const list = ISO6391.getAllNames().sort((a, b) => a.localeCompare(b));
     return list;
   }, []);
+
+  const religions = [
+    "Islam",
+    "Christianity",
+    "Hinduism",
+    "Buddhism",
+    "Sikhism",
+    "Judaism",
+    "Jainism",
+    "Shinto",
+    "Other",
+    "Atheist / Irreligious",
+    "Prefer not to say",
+  ];
 
   const {
     register,
@@ -148,6 +163,22 @@ const PersonalDetails = () => {
             {errors.gender && (
               <p className="text-red-400 text-xs">{errors.gender.message}</p>
             )}
+          </div>
+
+          {/* Religion */}
+          <div className="flex flex-col gap-2">
+            <label className="text-gray-300 text-sm font-medium">Religion</label>
+            <select
+              {...register("religion")}
+              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/30 transition-all cursor-pointer"
+            >
+              <option value="">Select Religion</option>
+              {religions.map((religion) => (
+                <option key={religion} value={religion} className="bg-[#111821]">
+                  {religion}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Language */}
