@@ -30,8 +30,48 @@ export const clubOnboardingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Club'],
     }),
-    // We will add the other endpoints here later
+    upsertServices: builder.mutation({
+      query: ({ clubId, ...data }) => ({
+        url: `/club-onboarding/${clubId}/services`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Club'],
+    }),
+    upsertRecruitment: builder.mutation({
+      query: ({ clubId, ...data }) => ({
+        url: `/club-onboarding/${clubId}/recruitment`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Club'],
+    }),
+    upsertOutput: builder.mutation({
+      query: ({ clubId, ...data }) => ({
+        url: `/club-onboarding/${clubId}/output`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Club'],
+    }),
+    upsertConsent: builder.mutation({
+      query: ({ clubId, ...data }) => ({
+        url: `/club-onboarding/${clubId}/consent`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Club'],
+    }),
   }),
 });
 
-export const { useGetClubOnboardingQuery, useUpsertClubInfoMutation, useUpsertPrimaryContactMutation, useUpsertTeamsMutation } = clubOnboardingApi;
+export const { 
+  useGetClubOnboardingQuery, 
+  useUpsertClubInfoMutation, 
+  useUpsertPrimaryContactMutation, 
+  useUpsertTeamsMutation, 
+  useUpsertServicesMutation,
+  useUpsertRecruitmentMutation,
+  useUpsertOutputMutation,
+  useUpsertConsentMutation
+} = clubOnboardingApi;
