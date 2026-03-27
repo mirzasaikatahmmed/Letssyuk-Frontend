@@ -1,5 +1,6 @@
 import { ShieldCheck } from "lucide-react";
 import logo from "@/assets/logo/logo.png";
+import LanguageDropdown from "@/components/LanguageDropdown";
 
 const OnboardingNavbar = () => {
   return (
@@ -18,12 +19,16 @@ const OnboardingNavbar = () => {
             </div>
           </div>
 
-          {/* Badge Section */}
-          <div className="flex items-center gap-2 px-3 py-1.5 border border-slate-800 bg-slate-900/30 rounded-lg">
-            <ShieldCheck size={16} className="text-cyan-500" />
-            <span className="text-gray-400 text-[11px] font-medium tracking-wide">
-              GDPR Protected
-            </span>
+          <div className="flex items-center gap-4">
+            <LanguageDropdown />
+            
+            {/* Badge Section */}
+            <div className="flex items-center gap-2 px-3 py-1.5 border border-slate-800 bg-slate-900/30 rounded-lg">
+              <ShieldCheck size={16} className="text-cyan-500" />
+              <span className="text-gray-400 text-[11px] font-medium tracking-wide">
+                GDPR Protected
+              </span>
+            </div>
           </div>
         </div>
 

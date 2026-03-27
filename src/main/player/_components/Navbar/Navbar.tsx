@@ -2,6 +2,7 @@
 import { useLocation } from 'react-router';
 import { Bell } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LanguageDropdown from "@/components/LanguageDropdown";
 
 const PlayerDNavbar = () => {
   const location = useLocation();
@@ -33,6 +34,9 @@ const PlayerDNavbar = () => {
       </div>
       
       <div className="flex items-center gap-4">
+        {/* Language Dropdown */}
+        <LanguageDropdown />
+
         {/* Notification Bell */}
         <div className="relative p-2 bg-[#162129] rounded-lg border border-gray-700 cursor-pointer hover:bg-[#1f2e38] transition-colors">
           <Bell size={18} className="text-[#53DDF5]" />

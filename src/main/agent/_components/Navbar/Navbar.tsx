@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router";
 import { Bell, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import LanguageDropdown from "@/components/LanguageDropdown";
 
 const AgentDNavbar = () => {
   const location = useLocation();
@@ -51,6 +52,9 @@ const AgentDNavbar = () => {
             className="bg-transparent text-sm text-white outline-none w-48 placeholder:text-gray-600 font-medium"
           />
         </div>
+
+        {/* Language Dropdown */}
+        <LanguageDropdown />
 
         {/* Notification Bell with Pulse Badge */}
         <div
