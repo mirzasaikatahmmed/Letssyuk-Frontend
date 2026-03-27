@@ -9,7 +9,7 @@ import ExecutiveSummary from "./_components/ExecutiveSummary";
 
 const PlayerScoutingTab = () => {
   const { data: userData, isLoading: isUserLoading } = useGetMeQuery();
-  const clubId = userData?.clubOwned?.id;
+  const clubId = userData?.clubOwned?.id || (userData as any)?.data?.clubOwned?.id;
 
   const {
     data: scoutingRes,

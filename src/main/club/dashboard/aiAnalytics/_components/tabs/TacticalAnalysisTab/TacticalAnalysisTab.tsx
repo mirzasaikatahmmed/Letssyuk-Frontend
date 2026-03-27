@@ -11,7 +11,7 @@ import DecisionMakingPatterns from "./_components/DecisionMakingPatterns";
 
 const TacticalAnalysisTab = () => {
   const { data: userData, isLoading: isUserLoading } = useGetMeQuery();
-  const clubId = userData?.clubOwned?.id;
+  const clubId = userData?.clubOwned?.id || (userData as any)?.data?.clubOwned?.id;
 
   const {
     data: tacticalRes,
