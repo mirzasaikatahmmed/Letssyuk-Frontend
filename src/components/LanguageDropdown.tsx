@@ -7,24 +7,23 @@ import LoadingSpinner from "./LoadingSpinner";
 export interface Language {
     code: string;
     name: string;
-    flag: string;
 }
 
 const languages: Language[] = [
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "bn", name: "Bengali", flag: "🇧🇩" },
-    { code: "hi", name: "Hindi", flag: "🇮🇳" },
-    { code: "ar", name: "Arabic", flag: "🇸🇦" },
-    { code: "es", name: "Spanish", flag: "🇪🇸" },
-    { code: "fr", name: "French", flag: "🇫🇷" },
-    { code: "de", name: "German", flag: "🇩🇪" },
-    { code: "zh-CN", name: "Chinese", flag: "🇨🇳" },
-    { code: "ja", name: "Japanese", flag: "🇯🇵" },
-    { code: "ko", name: "Korean", flag: "🇰🇷" },
-    { code: "ru", name: "Russian", flag: "🇷🇺" },
-    { code: "pt", name: "Portuguese", flag: "🇵🇹" },
-    { code: "it", name: "Italian", flag: "🇮🇹" },
-    { code: "th", name: "Thai", flag: "🇹🇭" },
+    { code: "en", name: "English" },
+    { code: "ar", name: "Arabic" },
+    { code: "es", name: "Spanish" },
+    { code: "bn", name: "Bengali" },
+    { code: "hi", name: "Hindi" },
+    { code: "fr", name: "French" },
+    { code: "de", name: "German" },
+    { code: "zh-CN", name: "Chinese" },
+    { code: "ja", name: "Japanese" },
+    { code: "ko", name: "Korean" },
+    { code: "ru", name: "Russian" },
+    { code: "pt", name: "Portuguese" },
+    { code: "it", name: "Italian" },
+    { code: "th", name: "Thai" },
 ];
 
 interface LanguageDropdownProps {
@@ -36,6 +35,16 @@ export const LanguageDropdown = ({ onLanguageChange }: LanguageDropdownProps) =>
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const [ready, setReady] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+
+    // Apply RTL for Arabic and other RTL languages
+    useEffect(() => {
+        if (selectedLanguage.code === 'ar' || selectedLanguage.code === 'he' || selectedLanguage.code === 'fa' || selectedLanguage.code === 'ur') {
+            document.documentElement.dir = 'rtl';
+        } else {
+            document.documentElement.dir = 'ltr';
+        }
+        document.documentElement.lang = selectedLanguage.code;
+    }, [selectedLanguage.code]);
 
     // Check if Google Translate is ready
     useEffect(() => {
@@ -130,8 +139,7 @@ export const LanguageDropdown = ({ onLanguageChange }: LanguageDropdownProps) =>
                 title={ready ? 'Change Language' : 'Loading translation...'}
                 disabled={!ready}
             >
-                <span className="text-lg">{selectedLanguage.flag}</span>
-                <span className="hidden sm:inline">{selectedLanguage.name}</span>
+                <span>{selectedLanguage.name}</span>
                 <ChevronDown className="h-4 w-4" />
 
                 {/* Loading indicator when translate not ready */}
@@ -172,7 +180,6 @@ export const LanguageDropdown = ({ onLanguageChange }: LanguageDropdownProps) =>
                                                 : 'cursor-pointer'
                                             }`}
                                     >
-                                        <span className="text-lg">{language.flag}</span>
                                         <span>{language.name}</span>
                                         {selectedLanguage.code === language.code && (
                                             <span className="ml-auto text-[#53DDF5] text-xs">✓</span>
