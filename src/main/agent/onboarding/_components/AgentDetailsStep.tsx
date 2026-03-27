@@ -8,25 +8,79 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAgentFormContext } from "../context/AgentFormContext";
-import { useMemo } from "react";
-import countryList from "react-select-country-list";
+import { useState, useEffect } from "react";
+import { 
+  useUpsertAgentDetailsMutation, 
+  useGetAgentsQuery 
+} from "@/redux/features/agent/agentOnboardingApi";
+import { toast } from "sonner";
+import { ChevronRight } from "lucide-react";
+import Loading from "@/components/share/Loading/Loading";
 
 interface AgentDetailsStepProps {
   onNext: () => void;
 }
 
+const COUNTRIES = [
+  'ENGLAND', 'SPAIN', 'GERMANY', 'ITALY', 'FRANCE', 'PORTUGAL',
+  'NETHERLANDS', 'BELGIUM', 'TURKEY', 'SCOTLAND', 'SWITZERLAND',
+  'AUSTRIA', 'GREECE', 'DENMARK', 'SWEDEN', 'NORWAY', 'POLAND',
+  'UKRAINE', 'CZECH_REPUBLIC', 'CROATIA'
+];
+
+const formatString = (str: string) => {
+  return str.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+};
+
 export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
-  const { formData, updateFormData } = useAgentFormContext();
+  const [fullName, setFullName] = useState("");
+  const [agencyName, setAgencyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("");
 
-  // Country list data
-  const countries = useMemo(() => countryList().getData(), []);
+  const { data: agentsData, isLoading: isFetching } = useGetAgentsQuery({});
+  const [upsertAgentDetails, { isLoading: isSubmitting }] = useUpsertAgentDetailsMutation();
 
-  const canProceed =
-    formData.fullName && formData.email && formData.phone && formData.country;
+  useEffect(() => {
+    if (agentsData?.data && agentsData.data.length > 0) {
+      const agent = agentsData.data[0];
+      setFullName(agent.fullName || "");
+      setAgencyName(agent.agencyName || "");
+      setEmail(agent.email || "");
+      setPhone(agent.phone || "");
+      setCountry(agent.country ? agent.country.toUpperCase() : "");
+    }
+  }, [agentsData]);
+
+  const canProceed = fullName && email && phone && country;
+
+  const handleNext = async () => {
+    if (!canProceed) return;
+
+    try {
+      await upsertAgentDetails({
+        fullName,
+        agencyName,
+        email,
+        phone,
+        country: formatString(country),
+      }).unwrap();
+      
+      toast.success("Agent details saved!");
+      onNext();
+    } catch (error) {
+      console.error("Failed to save agent details:", error);
+      toast.error("Failed to save. Please try again.");
+    }
+  };
+
+  if (isFetching) {
+    return <Loading count={3} className="bg-transparent max-w-4xl mx-auto" />;
+  }
 
   return (
-    <div className="w-full max-w-4xl  bg-[#11161D]">
+    <div className="w-full max-w-4xl bg-[#11161D]">
       <div className="space-y-6 border border-[#53DDF5]/30 rounded-2xl p-8">
         <h2 className="text-2xl font-bold text-white mb-2">Agent Details</h2>
         <p className="text-gray-400 text-sm mb-6">
@@ -44,8 +98,8 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
             <Input
               id="fullName"
               placeholder="Enter your full name"
-              value={formData.fullName}
-              onChange={(e) => updateFormData({ fullName: e.target.value })}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
             />
           </div>
@@ -60,8 +114,8 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
             <Input
               id="agencyName"
               placeholder="Enter your agency name"
-              value={formData.agencyName}
-              onChange={(e) => updateFormData({ agencyName: e.target.value })}
+              value={agencyName}
+              onChange={(e) => setAgencyName(e.target.value)}
               className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl"
             />
           </div>
@@ -78,8 +132,8 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
                 id="email"
                 type="email"
                 placeholder="your.email@example.com"
-                value={formData.email}
-                onChange={(e) => updateFormData({ email: e.target.value })}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl w-full"
               />
             </div>
@@ -93,8 +147,8 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
               <Input
                 id="phone"
                 placeholder="+44 20 1234 5678"
-                value={formData.phone}
-                onChange={(e) => updateFormData({ phone: e.target.value })}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="mt-2 bg-[#161d26] border-slate-700 text-white placeholder:text-gray-500 focus:border-[#53DDF5]/50 h-12 rounded-xl w-full"
               />
             </div>
@@ -108,16 +162,16 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
               Country of Operation
             </Label>
             <Select
-              value={formData.country}
-              onValueChange={(value) => updateFormData({ country: value })}
+              value={country}
+              onValueChange={setCountry}
             >
-              <SelectTrigger className="mt-2 bg-[#161d26] border-slate-700 text-white h-12 rounded-xl w-full">
+              <SelectTrigger className="mt-2 bg-[#161d26] border-slate-700 text-white h-12 rounded-xl w-full cursor-pointer">
                 <SelectValue placeholder="Select country" />
               </SelectTrigger>
-              <SelectContent className="bg-[#161d26] border-slate-700 text-white">
-                {countries.map((country) => (
-                  <SelectItem key={country.value} value={country.value}>
-                    {country.label}
+              <SelectContent className="bg-black text-white border-slate-700 max-h-64">
+                {COUNTRIES.map((country) => (
+                  <SelectItem key={country} value={country} className="cursor-pointer hover:bg-slate-800 hover:text-white focus:bg-slate-800 focus:text-white">
+                    {formatString(country)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -128,15 +182,16 @@ export default function AgentDetailsStep({ onNext }: AgentDetailsStepProps) {
 
       <div className="flex justify-end mt-8">
         <Button
-          onClick={onNext}
-          disabled={!canProceed}
-          className={`px-8 h-11 rounded-xl font-medium cursor-pointer ${
+          onClick={handleNext}
+          disabled={!canProceed || isSubmitting}
+          className={`px-8 h-11 rounded-xl font-medium transition-colors ${
             canProceed
-              ? "bg-[#53DDF5] hover:bg-[#53DDF5]/90 text-slate-950"
-              : "bg-slate-700 text-gray-500 cursor-not-allowed"
+              ? "bg-[#53DDF5] hover:bg-[#53DDF5]/90 text-slate-950 cursor-pointer"
+              : "bg-slate-800 text-slate-500 cursor-not-allowed border-none hover:bg-slate-800 hover:text-slate-500"
           }`}
         >
-          Continue &gt;
+          {isSubmitting ? "Saving..." : "Continue"}
+          {!isSubmitting && <ChevronRight className="h-4 w-4 ml-1 opacity-80" />}
         </Button>
       </div>
     </div>
