@@ -14,8 +14,16 @@ export const clubOnboardingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Club'],
     }),
+    upsertPrimaryContact: builder.mutation({
+      query: ({ clubId, ...data }) => ({
+        url: `/club-onboarding/${clubId}/contact`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Club'],
+    }),
     // We will add the other endpoints here later
   }),
 });
 
-export const { useGetClubOnboardingQuery, useUpsertClubInfoMutation } = clubOnboardingApi;
+export const { useGetClubOnboardingQuery, useUpsertClubInfoMutation, useUpsertPrimaryContactMutation } = clubOnboardingApi;
