@@ -6,12 +6,39 @@ import { MdDone } from "react-icons/md";
 import { SignalCard } from "./_components/SignalCard";
 import AIRecommendations from "./_components/AiRecommendation/AiRecommendation";
 
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useGetProfileCompletionQuery } from "@/redux/api/playerApi";
+import { useNavigate } from "react-router";
+
 const PlayerDHome = () => {
+  const navigate = useNavigate();
+  const { data: userData } = useGetMeQuery();
+  
+  // Robustly get playerOwned from direct or wrapped response
+  const playerOwned = userData?.playerOwned || (userData as any)?.data?.playerOwned;
+  const playerId = playerOwned?.id;
+
+  const { data: completionData } = useGetProfileCompletionQuery(playerId, {
+    skip: !playerId,
+  });
+
+  const completion = completionData?.data || {
+    percent: 0,
+    completedSteps: 0,
+    totalSteps: 9,
+  };
+
+  const circumference = 314;
+  const strokeDashoffset =
+    circumference - (circumference * completion.percent) / 100;
+
   return (
     <div className=" space-y-8 bg-[#0B0E14] min-h-screen text-white">
       <div>
         <h1 className="text-3xl font-bold">Career Overview</h1>
-        <p className="text-gray-400 text-sm">Your personal football career command centre</p>
+        <p className="text-gray-400 text-sm">
+          Your personal football career command centre
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -19,28 +46,54 @@ const PlayerDHome = () => {
         <Card className="md:col-span-2 bg-[#235D6730] border-gray-800 p-6 flex items-center justify-between text-white">
           <div className="flex items-center gap-6">
             <div className="relative w-32 h-32 flex items-center justify-center">
-               <svg className="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="50" stroke="#1f2937" strokeWidth="8" fill="transparent" />
-                <circle cx="64" cy="64" r="50" stroke="#53DDF5" strokeWidth="8" fill="transparent" 
-                  strokeDasharray="314" strokeDashoffset="172" strokeLinecap="round" />
+              <svg className="w-full h-full transform -rotate-90">
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="50"
+                  stroke="#1f2937"
+                  strokeWidth="8"
+                  fill="transparent"
+                />
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="50"
+                  stroke="#53DDF5"
+                  strokeWidth="8"
+                  fill="transparent"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000 ease-out"
+                />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold">45%</span>
+                <span className="text-2xl font-bold">
+                  {completion.percent}%
+                </span>
                 <span className="text-[10px] text-gray-400">Complete</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <User className="text-[#53DDF5]" size={20} />
-                <h3 className="font-semibold text-lg">Complete Your Data & Profile</h3>
+                <h3 className="font-semibold text-lg">
+                  Complete Your Data & Profile
+                </h3>
               </div>
-              <p className="text-xs text-gray-400">2 sections remaining</p>
+              <p className="text-xs text-gray-400">
+                {completion.totalSteps - completion.completedSteps} sections
+                remaining
+              </p>
               <div className="bg-[#235D6780] p-3 rounded-lg border border-gray-800 max-w-md">
                 <p className="text-[11px] text-gray-300">
-                  <span className="text-[#53DDF5] font-bold">Tip:</span> Complete your profile and update daily to unlock personalized AI recommendations.
+                  <span className="text-[#53DDF5] font-bold">Tip:</span>{" "}
+                  Complete your profile and update daily to unlock personalized
+                  AI recommendations.
                 </p>
               </div>
-              <Button className="w-full bg-[#53DDF5] hover:bg-cyan-400 text-black font-semibold h-12">
+              <Button onClick={() => navigate("/player/dashboard/data")} className="w-full bg-[#53DDF5] hover:bg-cyan-400 text-black font-semibold h-12 cursor-pointer">
                 Complete Now &gt;
               </Button>
             </div>

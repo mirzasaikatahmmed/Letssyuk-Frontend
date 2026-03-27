@@ -64,12 +64,17 @@ import PublicRoute from "@/components/auth/PublicRoute";
 import AgentSubscription from "@/main/agent/subscription/AgentSubscription";
 import ClubSubscription from "@/main/club/subscription/ClubSubscription";
 import PlayerSubscription from "@/main/player/subscription/PlayerSubscription";
+import PaymentSuccess from "@/main/billing/PaymentSuccess";
 
 export const Routes = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
+      {
+        path: "billing/success",
+        element: <PaymentSuccess />,
+      },
       {
         element: <ProtectedRoute allowedRoles={["ATHLETE"]} />,
         children: [

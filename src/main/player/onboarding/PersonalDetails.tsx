@@ -1,10 +1,18 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Info, Save, ChevronRight } from "lucide-react";
 import { useOnboarding } from "@/context/OnboardingContext";
 import countryList from "react-select-country-list";
 import ISO6391 from "iso-639-1";
+import {
+  useUpsertPersonalMutation,
+  useGetPlayerDetailsQuery,
+} from "@/redux/api/playerApi";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { toast } from "sonner";
+import { useAppSelector } from "@/redux/hooks";
+import Loading from "@/components/share/Loading/Loading";
 
 type FormValues = {
   fullName: string;
@@ -12,12 +20,28 @@ type FormValues = {
   dob: string;
   nationality: string;
   gender: string;
+  religion: string;
   language: string;
 };
 
 const PersonalDetails = () => {
   const navigate = useNavigate();
-  const { data, updateStep } = useOnboarding();
+  const { updateStep } = useOnboarding();
+
+  const user = useAppSelector((state) => state.auth.user);
+  const { data: userData } = useGetMeQuery();
+
+  // Get player details using playerId from getMe response (checking both direct and data wrapped)
+  const playerOwned =
+    userData?.playerOwned || (userData as any)?.data?.playerOwned;
+  const playerId = playerOwned?.id;
+
+  const { data: playerData, isFetching: isPlayerLoading } =
+    useGetPlayerDetailsQuery(playerId, {
+      skip: !playerId,
+    });
+
+  const [upsertPersonal] = useUpsertPersonalMutation();
 
   // Country list data
   const countries = useMemo(() => countryList().getData(), []);
@@ -28,22 +52,127 @@ const PersonalDetails = () => {
     return list;
   }, []);
 
+  const religions = [
+    "Islam",
+    "Christianity",
+    "Hinduism",
+    "Buddhism",
+    "Sikhism",
+    "Judaism",
+    "Jainism",
+    "Shinto",
+    "Other",
+    "Atheist / Irreligious",
+    "Prefer not to say",
+  ];
+
+  // Helper: Format date for input type="date"
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return "";
+    return new Date(dateStr).toISOString().split("T")[0];
+  };
+
+  // Helper: Title case for display
+  const toTitleCase = (str?: string) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: data.personalDetails,
+    defaultValues: playerData?.data?.personal,
   });
 
-  const onSubmit = (values: FormValues) => {
-    updateStep("personalDetails", values);
-    navigate("../football-profile");
+  // Populate form with existing data from backend
+  useEffect(() => {
+    if (playerData?.data?.personal) {
+      const personal = playerData.data.personal;
+      reset({
+        fullName: personal.fullName || "",
+        email: personal.email || "",
+        dob: formatDate(personal.dob),
+        nationality: personal.nationality || "",
+        gender: toTitleCase(personal.gender),
+        religion: toTitleCase(personal.religion),
+        language: toTitleCase(personal.preferredLanguage),
+      });
+    }
+  }, [playerData, reset]);
+
+  const transformData = (values: FormValues) => {
+    return {
+      fullName: values.fullName,
+      email: values.email,
+      dob: values.dob,
+      nationality: values.nationality,
+      gender: values.gender.toUpperCase(),
+      religion: values.religion.toUpperCase(),
+      preferredLanguage: values.language.toUpperCase(),
+    };
   };
 
-  const onSaveLater = (values: FormValues) => {
-    updateStep("personalDetails", values);
+  const onSubmit = async (values: FormValues) => {
+    try {
+      if (!user?.id) {
+        toast.error("User ID not found. Please log in again.");
+        return;
+      }
+
+      toast.loading("Updating personal details...", { id: "personal-upsert" });
+      const payload = transformData(values);
+
+      const res = await upsertPersonal({
+        userId: user.id,
+        data: payload,
+      }).unwrap();
+
+      if (res.success) {
+        toast.success(res.message || "Personal details updated!", {
+          id: "personal-upsert",
+        });
+        updateStep("personalDetails", values);
+        navigate("../football-profile");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update personal details.", {
+        id: "personal-upsert",
+      });
+    }
   };
+
+  const onSaveLater = async (values: FormValues) => {
+    try {
+      if (!user?.id) {
+        toast.error("User ID not found. Please log in again.");
+        return;
+      }
+
+      toast.loading("Saving progress...", { id: "personal-save" });
+      const payload = transformData(values);
+
+      const res = await upsertPersonal({
+        userId: user.id,
+        data: payload,
+      }).unwrap();
+
+      if (res.success) {
+        toast.success("Progress saved successfully.", { id: "personal-save" });
+        updateStep("personalDetails", values);
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to save progress.", {
+        id: "personal-save",
+      });
+    }
+  };
+
+  if (isPlayerLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-4">
@@ -118,6 +247,7 @@ const PersonalDetails = () => {
               <option value="">Select your country</option>
               {countries.map((country) => (
                 <option
+                  selected={playerData?.data?.personal?.nationality}
                   key={country.value}
                   value={country.label}
                   className="bg-[#12121A]"
@@ -148,6 +278,28 @@ const PersonalDetails = () => {
             {errors.gender && (
               <p className="text-red-400 text-xs">{errors.gender.message}</p>
             )}
+          </div>
+
+          {/* Religion */}
+          <div className="flex flex-col gap-2">
+            <label className="text-gray-300 text-sm font-medium">
+              Religion
+            </label>
+            <select
+              {...register("religion")}
+              className="w-full bg-[#161d26] border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-hidden focus:ring-2 focus:ring-cyan-500/30 transition-all cursor-pointer"
+            >
+              <option value="">Select Religion</option>
+              {religions.map((religion) => (
+                <option
+                  key={religion}
+                  value={religion}
+                  className="bg-[#111821]"
+                >
+                  {religion}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Language */}
