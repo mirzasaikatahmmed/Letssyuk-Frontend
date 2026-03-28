@@ -14,10 +14,27 @@ export const agentOnboardingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Agent'],
     }),
+    upsertAgentLicense: builder.mutation({
+      query: (data) => ({
+        url: '/agents/onboard/license',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Agent'],
+    }),
+    uploadCloudinaryFile: builder.mutation({
+      query: (fileData: FormData) => ({
+        url: '/files/cloudinary/upload',
+        method: 'POST',
+        body: fileData,
+      }),
+    }),
   }),
 });
 
 export const {
   useGetAgentsQuery,
   useUpsertAgentDetailsMutation,
+  useUpsertAgentLicenseMutation,
+  useUploadCloudinaryFileMutation,
 } = agentOnboardingApi;
